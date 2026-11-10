@@ -1,0 +1,35 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "search": "بحث",
+    "language": "اللغة"
+  },
+  "nav": {
+    "club": "النادي",
+    "palmares": "البطولات",
+    "matches": "المباريات",
+    "tv": "التلفزيون",
+    "boutique": "المتجر",
+    "alumni": "الخريجون",
+    "news": "الأخبار",
+    "contact": "اتصل بنا",
+    "register": "التسجيل",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج"
+  },
+  "hero": {
+    "partnership": "الشريك الرسمي",
+    "realValladolid": "ريال بلد الوليد"
+  },
+  "footer": {
+    "allRightsReserved": "جميع الحقوق محفوظة",
+    "officialPartner": "الشريك الرسمي"
+  }
+}

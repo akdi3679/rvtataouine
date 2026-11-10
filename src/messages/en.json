@@ -1,0 +1,35 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "language": "Language"
+  },
+  "nav": {
+    "club": "Club",
+    "palmares": "Trophies",
+    "matches": "Matches",
+    "tv": "TV",
+    "boutique": "Shop",
+    "alumni": "Alumni",
+    "news": "News",
+    "contact": "Contact",
+    "register": "Register",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "hero": {
+    "partnership": "Official Partner",
+    "realValladolid": "Real Valladolid CF"
+  },
+  "footer": {
+    "allRightsReserved": "All rights reserved",
+    "officialPartner": "Official partner"
+  }
+}
