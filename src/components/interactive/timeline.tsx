@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Trophy, Award, Medal, Star, Sparkles } from "lucide-react";
 import type { Season, Trophy as TrophyType } from "@/data/trophies";
-
+import Image from "next/image";
 function getTrophyIcon(title: string) {
   if (title.includes("Champion")) return Trophy;
   if (title.includes("Tournoi") || title.includes("Coupe")) return Award;
@@ -155,9 +155,22 @@ function TrophyEntry({
       >
         <div className="relative">
           {/* Trophy icon — overflows top edge, violet gradient */}
+                   {/* Trophy image/icon — overflows top edge */}
           <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-dark shadow-xl ring-4 ring-white">
-              <Icon className="h-7 w-7 text-white" />
+            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-xl ring-4 ring-white">
+              {trophy.image ? (
+                <Image
+                  src={trophy.image}
+                  alt={trophy.title}
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-contain p-1"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-dark">
+                  <Icon className="h-7 w-7 text-white" />
+                </div>
+              )}
             </div>
           </div>
 

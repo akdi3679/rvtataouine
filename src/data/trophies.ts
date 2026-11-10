@@ -22,7 +22,9 @@ export const seasons: Season[] = [
         title: "Champion Régional U15",
         competition: "Ligue du Sud",
         category: "U15",
-        description: "Titre remporté après une saison parfaite avec 18 victoires en 20 matchs.",
+        description:
+          "Titre remporté après une saison parfaite avec 18 victoires en 20 matchs.",
+        image: "/images/trophet/trophy1.png",
       },
       {
         year: 2026,
@@ -30,6 +32,7 @@ export const seasons: Season[] = [
         competition: "Tournoi interrégional",
         category: "U15",
         description: "Victoire en finale face à l'AS Gabès (3-1).",
+        image: "/images/trophet/trophy2.png",
       },
     ],
     highlights: [
@@ -46,14 +49,18 @@ export const seasons: Season[] = [
         title: "Vice-Champion U18",
         competition: "Championnat National",
         category: "U18",
-        description: "Performance historique en atteignant la finale nationale.",
+        description:
+          "Performance historique en atteignant la finale nationale.",
+        image: "/images/trophet/trophy3.png",
       },
       {
         year: 2025,
-        title: "Coupe de Tataouine",
-        competition: "Tournoi local",
-        category: "U12",
-        description: "Premier trophée pour la catégorie U12.",
+        title: "Fair-Play Award",
+        competition: "Ligue du Sud",
+        category: "Toutes catégories",
+        description:
+          "Récompense pour l'exemplarité de nos joueurs sur et en dehors du terrain.",
+        image: "/images/trophet/trophy4.png",
       },
     ],
     highlights: [
@@ -62,50 +69,11 @@ export const seasons: Season[] = [
       "Premier stage en Espagne pour 10 joueurs",
     ],
   },
-  {
-    year: "2023-2024",
-    trophies: [
-      {
-        year: 2024,
-        title: "Champion Régional U12",
-        competition: "Ligue du Sud",
-        category: "U12",
-        description: "Premier titre régional de l'académie.",
-      },
-    ],
-    highlights: [
-      "Mohamed Trabelsi obtient une bourse NCAA",
-      "5 joueurs en centre de formation professionnel",
-      "L'académie atteint les 100 joueurs inscrits",
-    ],
-  },
-  {
-    year: "2022-2023",
-    trophies: [
-      {
-        year: 2023,
-        title: "Fair-Play Award",
-        competition: "Ligue du Sud",
-        category: "Toutes catégories",
-        description: "Récompense pour l'exemplarité de nos joueurs sur et en dehors du terrain.",
-      },
-    ],
-    highlights: [
-      "Lancement du partenariat avec Real Valladolid CF",
-      "Création de la catégorie U18",
-    ],
-  },
-  {
-    year: "2021-2022",
-    trophies: [],
-    highlights: [
-      "Fondation de l'académie",
-      "Premiers 30 joueurs inscrits",
-      "Ouverture des installations",
-    ],
-  },
 ];
 
-export const totalTrophies = seasons.reduce((acc, s) => acc + s.trophies.length, 0);
+export const totalTrophies = seasons.reduce(
+  (acc, s) => acc + s.trophies.length,
+  0,
+);
 export const totalPlayers = 150;
 export const totalProPlayers = 23;

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
-  Award,
   Users,
+  Trophy,
   GraduationCap,
   Plane,
   Star,
   Quote,
-  Trophy,
 } from "lucide-react";
+import { alumni, testimonials } from "@/data/alumni";
 
 export const metadata: Metadata = {
   title: "Alumni | ARV Tataouine",
@@ -19,18 +20,6 @@ const stats = [
   { icon: Trophy, value: "23", label: "Devenus pros" },
   { icon: GraduationCap, value: "5", label: "Bourses NCAA" },
   { icon: Plane, value: "30+", label: "Stages en Espagne" },
-];
-
-const alumni = [
-  { name: "Ahmed Ben Ali", promo: "2020", current: "Espérance de Tunis", role: "Milieu de terrain" },
-  { name: "Mohamed Trabelsi", promo: "2019", current: "Université de Californie", role: "Défenseur" },
-  { name: "Yassine Hamdi", promo: "2021", current: "Real Valladolid CF", role: "Attaquant" },
-];
-
-const testimonials = [
-  { name: "Fatma Khelifi", initials: "FK", role: "Parent, U12", quote: "Mon fils a progressé incroyablement en 6 mois. Les entraîneurs sont professionnels et attentionnés." },
-  { name: "Mohamed Bouazizi", initials: "MB", role: "Parent, U15", quote: "L'académie offre des opportunités incroyables. Mon fils a participé à un stage en Espagne." },
-  { name: "Sami Amara", initials: "SA", role: "Parent, U10", quote: "Les installations sont modernes et bien entretenues. Mon fils adore venir aux entraînements." },
 ];
 
 export default function AlumniPage() {
@@ -75,11 +64,17 @@ export default function AlumniPage() {
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {alumni.map((a) => (
               <div
-                key={a.name}
+                key={a.id}
                 className="overflow-hidden rounded-2xl border border-border bg-white"
               >
-                <div className="flex aspect-video items-center justify-center bg-gradient-to-br from-accent/15 to-primary/15">
-                  <Award className="h-16 w-16 text-accent/50" />
+                <div className="relative aspect-[4/5] bg-secondary">
+                  <Image
+                    src={a.image}
+                    alt={a.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover object-top"
+                  />
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-foreground">{a.name}</h3>
@@ -104,7 +99,7 @@ export default function AlumniPage() {
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {testimonials.map((t) => (
               <div
-                key={t.name}
+                key={t.id}
                 className="rounded-2xl border border-border bg-white p-6"
               >
                 <Quote className="h-6 w-6 text-accent/30" />

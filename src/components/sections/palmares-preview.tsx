@@ -13,7 +13,7 @@ import {
   Trophy,
 } from "lucide-react";
 import { seasons, totalTrophies } from "@/data/trophies";
-
+import Image from "next/image";
 type Honour = {
   title: string;
   count: number;
@@ -21,6 +21,7 @@ type Honour = {
   Icon: typeof Trophy;
   tintClass: string;
   iconClass: string;
+  image?: string;    // ← ajouter
 };
 
 function buildHonours(): Honour[] {
@@ -72,8 +73,17 @@ function buildHonours(): Honour[] {
     },
   };
 
-  return Object.entries(groups).map(([title, g]) => {
+   return Object.entries(groups).map(([title, g]) => {
     const m = meta[title] ?? meta.Distinction;
+    const firstTrophy = allTrophies.find((t) => {
+      if (title === "Champion Régional")
+        return t.title.includes("Champion") && !t.title.includes("Vice");
+      if (title === "Coupes & Tournois")
+        return t.title.includes("Tournoi") || t.title.includes("Coupe");
+      if (title === "Vice-Champion") return t.title.includes("Vice-Champion");
+      if (title === "Fair-Play") return t.title.includes("Fair-Play");
+      return false;
+    });
     return {
       title,
       count: g.count,
@@ -81,6 +91,7 @@ function buildHonours(): Honour[] {
       Icon: m.Icon,
       tintClass: m.tint,
       iconClass: m.icon,
+      image: firstTrophy?.image,
     };
   });
 }
@@ -93,10 +104,20 @@ function HonourCard({ honour }: { honour: Honour }) {
       data-card-index
       className="group flex w-[200px] flex-shrink-0 snap-center flex-col items-center rounded-xl border border-border bg-white p-5 text-center transition-all hover:border-accent/30 hover:shadow-md"
     >
-      <div
-        className={`flex h-16 w-16 items-center justify-center rounded-full ${honour.tintClass} transition-transform duration-300 group-hover:scale-110`}
-      >
-        <Icon className={`h-8 w-8 ${honour.iconClass}`} />
+           <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-white ring-1 ring-border transition-transform duration-300 group-hover:scale-110">
+        {honour.image ? (
+          <Image
+            src={honour.image}
+            alt={honour.title}
+            width={64}
+            height={64}
+            className="h-full w-full object-contain p-1"
+          />
+        ) : (
+          <div className={`flex h-full w-full items-center justify-center rounded-2xl ${honour.tintClass}`}>
+            <Icon className={`h-8 w-8 ${honour.iconClass}`} />
+          </div>
+        )}
       </div>
       <h3 className="mt-4 line-clamp-2 text-sm font-bold leading-tight text-foreground">
         {honour.title}
