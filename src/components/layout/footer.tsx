@@ -12,7 +12,7 @@ import {
 import { footerNavigation } from "@/data/navigation";
 import { brand } from "@/data/brand";
 import { PartnersCarousel } from "@/components/global/partners-carousel";
-
+import Image from "next/image";
 function TikTok({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -77,13 +77,19 @@ export function Footer() {
 
         {/* 3 ─ Centered logo + tagline */}
         <section className="text-center">
-          <Link
-            href="/"
-            className="inline-flex h-14 w-14 items-center justify-center rounded-lg bg-primary text-white font-black text-xl shadow-lg"
-            aria-label={brand.name}
-          >
-            ARV
-          </Link>
+         <Link
+  href="/"
+  className="inline-flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-lg overflow-hidden"
+  aria-label={brand.name}
+>
+  <Image
+    src="/images/logo/logo.png"
+    alt="ARV Tataouine"
+    width={56}
+    height={56}
+    className="h-full w-full object-contain p-1"
+  />
+</Link>
           <div className="mt-3">
             <div className="text-sm font-bold text-background">{brand.name}</div>
             <div className="mt-1 text-xs text-background/60">{brand.tagline}</div>

@@ -12,7 +12,7 @@ import { articles } from "@/data/news";
 import { products } from "@/data/products";
 import { videos } from "@/data/videos";
 import { CartButton } from "@/components/interactive/cart-button";
-
+import Image from "next/image";
 const SCROLL_THRESHOLD = 20;
 const DELTA_THRESHOLD = 8;
 const TOP_THRESHOLD = 80;
@@ -152,13 +152,19 @@ export function Navbar() {
             </div>
           ) : (
             <>
-              <Link
-                href={`/${currentLocale}`}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white text-primary font-bold text-lg shadow-sm hover:bg-white/90 transition-colors"
-              >
-                ARV
-              </Link>
-
+             <Link
+  href={`/${currentLocale}`}
+  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white shadow-sm hover:bg-white/90 transition-colors overflow-hidden"
+>
+  <Image
+    src="/images/logo/logo.png"
+    alt="ARV Tataouine"
+    width={40}
+    height={40}
+    priority
+    className="h-full w-full object-contain p-0.5"
+  />
+</Link>
               <div className="flex-1 flex justify-center min-w-0 px-2">
                 <div className="hidden md:flex items-center gap-0.5 lg:gap-1">
                   <div className="relative">
@@ -335,9 +341,17 @@ function MobileMenu({ open, onClose, currentLang }: { open: boolean; onClose: ()
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-primary font-bold text-sm">ARV</div>
-              <span className="font-bold text-white">Menu</span>
-            </div>
+  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-white overflow-hidden">
+    <Image
+      src="/images/logo/logo.png"
+      alt="ARV Tataouine"
+      width={36}
+      height={36}
+      className="h-full w-full object-contain p-0.5"
+    />
+  </div>
+  <span className="font-bold text-white">Menu</span>
+</div>
             <button
               onClick={onClose}
               className="p-2 rounded-md text-white/80 hover:bg-white/10 hover:text-white transition-colors"

@@ -94,6 +94,7 @@ function NextMatchHero({ match }: { match: Match }) {
           </span>
         </div>
 
+                {/* Match — la star */}
         <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-3 sm:gap-8">
           {/* Home */}
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-end sm:gap-4">
@@ -103,7 +104,7 @@ function NextMatchHero({ match }: { match: Match }) {
               textSizeClass="text-lg sm:text-xl"
               variant="dark"
             />
-            <p className="text-center text-sm font-bold text-white sm:text-right sm:text-lg">
+            <p className="line-clamp-2 min-h-[2.5rem] text-center text-sm font-bold leading-tight text-white sm:min-h-0 sm:text-right sm:text-lg">
               {match.homeTeam.name}
             </p>
           </div>
@@ -126,7 +127,7 @@ function NextMatchHero({ match }: { match: Match }) {
               textSizeClass="text-lg sm:text-xl"
               variant="dark"
             />
-            <p className="text-center text-sm font-bold text-white sm:text-left sm:text-lg">
+            <p className="line-clamp-2 min-h-[2.5rem] text-center text-sm font-bold leading-tight text-white sm:min-h-0 sm:text-left sm:text-lg">
               {match.awayTeam.name}
             </p>
           </div>
