@@ -3,8 +3,8 @@ export type MatchResult = "win" | "draw" | "loss";
 
 export interface Match {
   id: string;
-  date: string; // ISO
-  time: string; // HH:MM
+  date: string;
+  time: string;
   competition: string;
   category: string;
   homeTeam: { name: string; logo?: string; score?: number };
@@ -21,8 +21,8 @@ export const upcomingMatches: Match[] = [
     time: "15:00",
     competition: "Championnat Régional U15",
     category: "U15",
-    homeTeam: { name: "ARV Tataouine", score: undefined },
-    awayTeam: { name: "AS Gabès", score: undefined },
+    homeTeam: { name: "ARV Tataouine" },
+    awayTeam: { name: "Phoenix Baka Academy" },
     location: "Stade Municipal, Tataouine",
     status: "upcoming",
   },
@@ -32,8 +32,8 @@ export const upcomingMatches: Match[] = [
     time: "10:00",
     competition: "Championnat Régional U12",
     category: "U12",
-    homeTeam: { name: "ARV Tataouine", score: undefined },
-    awayTeam: { name: "ES Ghomrassen", score: undefined },
+    homeTeam: { name: "APUA" },
+    awayTeam: { name: "ARV Tataouine" },
     location: "Stade Municipal, Tataouine",
     status: "upcoming",
   },
@@ -43,8 +43,8 @@ export const upcomingMatches: Match[] = [
     time: "14:00",
     competition: "Coupe de la Ligue U18",
     category: "U18",
-    homeTeam: { name: "JS Tataouine", score: undefined },
-    awayTeam: { name: "ARV Tataouine", score: undefined },
+    homeTeam: { name: "E.S.B" },
+    awayTeam: { name: "ARV Tataouine" },
     location: "Stade Olympique, Tataouine",
     status: "upcoming",
   },
@@ -55,11 +55,11 @@ export const recentMatches: Match[] = [
     id: "m-100",
     date: "2026-11-05",
     time: "15:00",
-    competition: "Tournoi Régional de Sfax",
+    competition: "Championnat Régional U15",
     category: "U15",
     homeTeam: { name: "ARV Tataouine", score: 3 },
-    awayTeam: { name: "AS Gabès", score: 1 },
-    location: "Stade Municipal, Sfax",
+    awayTeam: { name: "Phoenix Baka Academy", score: 1 },
+    location: "Stade Municipal, Tataouine",
     status: "finished",
     result: "win",
   },
@@ -70,7 +70,7 @@ export const recentMatches: Match[] = [
     competition: "Championnat Régional U12",
     category: "U12",
     homeTeam: { name: "ARV Tataouine", score: 4 },
-    awayTeam: { name: "AS Chenini", score: 1 },
+    awayTeam: { name: "APUA", score: 1 },
     location: "Stade Municipal, Tataouine",
     status: "finished",
     result: "win",
@@ -81,9 +81,9 @@ export const recentMatches: Match[] = [
     time: "14:00",
     competition: "Championnat Régional U18",
     category: "U18",
-    homeTeam: { name: "ES Zarzis", score: 2 },
+    homeTeam: { name: "E.S.B", score: 2 },
     awayTeam: { name: "ARV Tataouine", score: 2 },
-    location: "Stade Jordaan, Zarzis",
+    location: "Stade Olympique, Tataouine",
     status: "finished",
     result: "draw",
   },
@@ -94,7 +94,7 @@ export const recentMatches: Match[] = [
     competition: "Championnat Régional U15",
     category: "U15",
     homeTeam: { name: "ARV Tataouine", score: 1 },
-    awayTeam: { name: "US Médenine", score: 2 },
+    awayTeam: { name: "E.S.B", score: 2 },
     location: "Stade Municipal, Tataouine",
     status: "finished",
     result: "loss",
