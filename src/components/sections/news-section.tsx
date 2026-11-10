@@ -10,7 +10,7 @@ import {
   FileText,
 } from "lucide-react";
 import { articles, type Article } from "@/data/news";
-
+import Image from "next/image";
 const FILTERS = [
   { id: "all", label: "Tous" },
   { id: "match", label: "Compétition" },
@@ -42,20 +42,20 @@ function FeaturedCard({ article }: { article: Article }) {
       href={`/actualites/${article.slug}`}
       className="group grid overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow hover:shadow-lg md:grid-cols-2"
     >
-      <div
-        className={`relative aspect-[16/9] bg-gradient-to-br md:aspect-auto md:min-h-[340px] ${
-          GRADIENTS[article.category] || GRADIENTS.match
-        }`}
-      >
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white/40 backdrop-blur">
-            <FileText className="h-10 w-10 text-primary" />
-          </div>
-        </div>
-        <span className="absolute left-4 top-4 inline-flex rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary shadow-sm">
-          {article.categoryLabel}
-        </span>
-      </div>
+     <div className="relative aspect-[16/9] md:aspect-auto md:min-h-[340px]">
+  <Image
+    src={article.image}
+    alt={article.title}
+    fill
+    sizes="(max-width: 768px) 100vw, 50vw"
+    className="object-cover"
+    priority
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+  <span className="absolute left-4 top-4 inline-flex rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary shadow-sm">
+    {article.categoryLabel}
+  </span>
+</div>
 
       <div className="flex flex-col justify-center p-6 md:p-8 lg:p-10">
         <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -100,18 +100,19 @@ function SmallCard({ article }: { article: Article }) {
       data-card-index
       className="group flex w-[260px] flex-shrink-0 snap-center flex-col overflow-hidden rounded-xl border border-border bg-white transition-all hover:border-primary/30 hover:shadow-md"
     >
-      <div
-        className={`relative aspect-[16/9] bg-gradient-to-br ${
-          GRADIENTS[article.category] || GRADIENTS.match
-        }`}
-      >
-        <div className="absolute inset-0 flex items-center justify-center">
-          <FileText className="h-10 w-10 text-primary/50" />
-        </div>
-        <span className="absolute left-2 top-2 inline-flex rounded-full bg-white/95 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary shadow-sm">
-          {article.categoryLabel}
-        </span>
-      </div>
+     <div className="relative aspect-[16/9]">
+  <Image
+    src={article.image}
+    alt={article.title}
+    fill
+    sizes="260px"
+    className="object-cover"
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />
+  <span className="absolute left-2 top-2 inline-flex rounded-full bg-white/95 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary shadow-sm">
+    {article.categoryLabel}
+  </span>
+</div>
       <div className="flex flex-1 flex-col p-3">
         <h3 className="line-clamp-2 text-sm font-bold leading-tight text-foreground transition-colors group-hover:text-primary">
           {article.title}

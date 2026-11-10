@@ -2,6 +2,7 @@ export interface Article {
   slug: string;
   title: string;
   excerpt: string;
+  image: string;                    // ← ajouter cette ligne
   category: "match" | "stage" | "academie" | "alumni" | "conseil";
   categoryLabel: string;
   author: {
@@ -9,17 +10,12 @@ export interface Article {
     role: string;
     initials: string;
   };
-  publishedAt: string; // ISO date
-  readTime: number; // minutes
+  publishedAt: string;
+  readTime: number;
   featured: boolean;
-  content: {
-    type: "paragraph" | "heading" | "quote" | "list";
-    text: string;
-    items?: string[];
-  }[];
+  content: {...}[];
   tags: string[];
 }
-
 export const articles: Article[] = [
   {
     slug: "victoire-u15-tournoi-sfax",
@@ -27,6 +23,8 @@ export const articles: Article[] = [
     excerpt: "Nos jeunes talents ont remporté le tournoi régional de Sfax face à 12 équipes, démontrant la qualité de notre formation technique et tactique.",
     category: "match",
     categoryLabel: "Compétition",
+    image: "/images/news/victoire-u15-tournoi-sfax.jpg",
+
     author: { name: "Karim Trabelsi", role: "Directeur Technique", initials: "KT" },
     publishedAt: "2026-11-05T10:00:00Z",
     readTime: 4,
@@ -53,6 +51,8 @@ export const articles: Article[] = [
     excerpt: "Dix de nos joueurs sélectionnés participeront à un stage de deux semaines dans les installations du Real Valladolid CF en Espagne.",
     category: "stage",
     categoryLabel: "Stage",
+    image: "/images/news/stage-estival-real-valladolid-2027.jpg",
+
     author: { name: "Leila Hamdi", role: "Coordinatrice Pédagogique", initials: "LH" },
     publishedAt: "2026-11-02T08:00:00Z",
     readTime: 5,
@@ -79,6 +79,8 @@ export const articles: Article[] = [
     excerpt: "Ancien joueur de notre académie, Ahmed Ben Ali a signé son premier contrat professionnel avec l'Espérance Sportive de Tunis.",
     category: "alumni",
     categoryLabel: "Alumni",
+    image: "/images/news/ahmed-ben-alui-signe-esperance.jpg",
+
     author: { name: "Karim Trabelsi", role: "Directeur Technique", initials: "KT" },
     publishedAt: "2026-10-28T14:00:00Z",
     readTime: 3,
@@ -96,6 +98,8 @@ export const articles: Article[] = [
     excerpt: "L'académie se dote d'une salle d'analyse vidéo équipée des dernières technologies pour accompagner la progression de nos joueurs.",
     category: "academie",
     categoryLabel: "Académie",
+    image: "/images/news/nouveaux-equipements-salle-analyse.jpg",
+
     author: { name: "Tarek Bouazizi", role: "Analyste Vidéo", initials: "TB" },
     publishedAt: "2026-10-22T09:00:00Z",
     readTime: 4,
@@ -120,6 +124,8 @@ export const articles: Article[] = [
     excerpt: "Notre kinésithérapeute partage ses conseils pour une alimentation adaptée à la pratique intensive du football chez les jeunes.",
     category: "conseil",
     categoryLabel: "Conseil",
+    image: "/images/news/conseils-nutrition-jeune-footballeur.jpg",
+
     author: { name: "Dr. Amira Mansour", role: "Kinésithérapeute", initials: "AM" },
     publishedAt: "2026-10-15T11:00:00Z",
     readTime: 6,
@@ -145,6 +151,8 @@ export const articles: Article[] = [
     excerpt: "Nos U12 ont entamé leur championnat régional avec deux victoires et un match nul, montrant de belles promesses pour la suite.",
     category: "match",
     categoryLabel: "Compétition",
+    image: "/images/news/resultats-u12-championnat-regional.jpg",
+
     author: { name: "Mehdi Gharbi", role: "Entraîneur U11-U13", initials: "MG" },
     publishedAt: "2026-10-08T16:00:00Z",
     readTime: 3,

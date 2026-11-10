@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Clock, FileText, Newspaper, ArrowUpRight } from "lucide-react";
 import { articles, type Article } from "@/data/news";
-
+import Image from "next/image";
 const FILTERS = [
   { id: "all", label: "Tout" },
   { id: "match", label: "Compétition" },
@@ -55,14 +55,14 @@ function FeaturedHero({ article }: { article: Article }) {
     <Link href={`/actualites/${article.slug}`} className="group block">
       <div className="relative aspect-[16/10] overflow-hidden rounded-2xl md:aspect-[21/9]">
         {/* Gradient background */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${c.gradient} transition-transform duration-700 group-hover:scale-105`}
-        />
-
-        {/* Decorative icon */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-10">
-          <FileText className="h-48 w-48 text-white" />
-        </div>
+       <Image
+  src={article.image}
+  alt={article.title}
+  fill
+  sizes="100vw"
+  className="object-cover transition-transform duration-700 group-hover:scale-105"
+  priority
+/>
 
         {/* Dark overlay for legibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
@@ -126,12 +126,13 @@ function ArticleCard({ article }: { article: Article }) {
     >
       {/* Thumbnail */}
       <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${c.gradient} transition-transform duration-500 group-hover:scale-105`}
-        />
-        <div className="absolute inset-0 flex items-center justify-center opacity-15">
-          <FileText className="h-16 w-16 text-white" />
-        </div>
+       <Image
+  src={article.image}
+  alt={article.title}
+  fill
+  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+  className="object-cover transition-transform duration-500 group-hover:scale-105"
+/>
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 
         <span

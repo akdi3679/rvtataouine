@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { getArticleBySlug, getRelatedArticles } from "@/data/news";
 import { formatDate } from "@/lib/utils";
-
+import Image from "next/image";
 const CATEGORY: Record<
   string,
   { gradient: string; badge: string; bullet: string }
@@ -128,14 +128,17 @@ export default async function ArticlePage({
 
       {/* Hero cover — wider than the text */}
       <div className="mx-auto max-w-5xl px-6">
-        <div className="relative aspect-[16/9] overflow-hidden rounded-2xl">
-          <div className={`absolute inset-0 bg-gradient-to-br ${c.gradient}`} />
-          <div className="absolute inset-0 flex items-center justify-center opacity-15">
-            <FileText className="h-32 w-32 text-white" />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
-        </div>
-      </div>
+  <div className="relative aspect-[16/9] overflow-hidden rounded-2xl">
+    <Image
+      src={article.image}
+      alt={article.title}
+      fill
+      sizes="(max-width: 1024px) 100vw, 1024px"
+      className="object-cover"
+      priority
+    />
+  </div>
+</div>
 
       {/* Body — narrow column, editorial typography */}
       <div className="mx-auto max-w-3xl px-6 py-10 lg:py-14">
@@ -260,19 +263,18 @@ export default async function ArticlePage({
                     href={`/actualites/${r.slug}`}
                     className="group flex flex-col"
                   >
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-br ${rc.gradient} transition-transform duration-500 group-hover:scale-105`}
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-15">
-                        <FileText className="h-12 w-12 text-white" />
-                      </div>
-                      <span
-                        className={`absolute left-3 top-3 rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${rc.badge}`}
-                      >
-                        {r.categoryLabel}
-                      </span>
-                    </div>
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
+  <Image
+    src={r.image}
+    alt={r.title}
+    fill
+    sizes="(max-width: 640px) 100vw, 33vw"
+    className="object-cover transition-transform duration-500 group-hover:scale-105"
+  />
+  <span className={`absolute left-3 top-3 rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${rc.badge}`}>
+    {r.categoryLabel}
+  </span>
+</div>
                     <div className="mt-3">
                       <h3 className="line-clamp-2 text-sm font-bold leading-snug text-foreground transition-colors group-hover:text-accent">
                         {r.title}
