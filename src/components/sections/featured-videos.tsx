@@ -74,20 +74,27 @@ export function FeaturedVideosSection() {
             Voir toute la chaîne <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-        <div className="grid gap-8 md:grid-cols-3">
-          {featured.map((video) => (
-            <div key={video.id}>
-              <VideoCard video={video} />
-              <div className="mt-3">
-                <span className="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
-                  {video.categoryLabel}
-                </span>
-                <h3 className="mt-2 font-bold text-foreground line-clamp-2">
-                  {video.title}
-                </h3>
+
+        {/* Mobile: horizontal scroll · md+: 3-col grid */}
+        <div className="-mx-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-6 md:mx-0 md:overflow-visible md:px-0 md:snap-none">
+          <div className="flex gap-4 md:grid md:grid-cols-3 md:gap-8">
+            {featured.map((video) => (
+              <div
+                key={video.id}
+                className="w-[280px] flex-shrink-0 snap-center md:w-auto md:flex-shrink"
+              >
+                <VideoCard video={video} />
+                <div className="mt-3">
+                  <span className="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                    {video.categoryLabel}
+                  </span>
+                  <h3 className="mt-2 font-bold text-foreground line-clamp-2">
+                    {video.title}
+                  </h3>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
