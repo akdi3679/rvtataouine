@@ -7,41 +7,33 @@ export interface WallpaperTemplate {
 }
 
 export const logos = [
-  { id: "arv-primary", name: "ARV", path: "/images/logos/arv-primary.png" },
-  { id: "arv-gold", name: "ARV Or", path: "/images/logos/arv-gold.png" },
-  { id: "arv-white", name: "ARV Blanc", path: "/images/logos/arv-white.png" },
   {
-    id: "real-valladolid",
-    name: "Real Valladolid",
-    path: "/images/logos/real-valladolid.png",
+    id: "logo1",
+    name: "Logo 1",
+    path: "/images/wallpaper/logo1.png",
   },
   {
-    id: "partnership",
-    name: "Partenariat",
-    path: "/images/logos/partnership.png",
+    id: "logo2",
+    name: "Logo 2",
+    path: "/images/wallpaper/logo2.png",
   },
 ];
 
 export const backgrounds = [
   {
-    id: "stadium",
-    name: "Stade",
-    path: "/images/wallpapers/bg-stadium.jpg",
+    id: "wal1",
+    name: "Fond 1",
+    path: "/images/wallpaper/wal1.jpg",
   },
   {
-    id: "pitch",
-    name: "Terrain",
-    path: "/images/wallpapers/bg-pitch.jpg",
+    id: "wal2",
+    name: "Fond 2",
+    path: "/images/wallpaper/wal2.jpg",
   },
   {
-    id: "training",
-    name: "Entraînement",
-    path: "/images/wallpapers/bg-training.jpg",
-  },
-  {
-    id: "dark",
-    name: "Nuit",
-    path: "/images/wallpapers/bg-dark.jpg",
+    id: "wal3",
+    name: "Fond 3",
+    path: "/images/wallpaper/wal3.jpg",
   },
 ];
 
@@ -58,14 +50,8 @@ export const wallpaperTemplates: WallpaperTemplate[] = [
     id: "official",
     name: "Wallpaper officiel",
     description: "Personnalisez votre fond d'écran aux couleurs de l'académie",
-    availableLogos: [
-      "arv-primary",
-      "arv-gold",
-      "arv-white",
-      "real-valladolid",
-      "partnership",
-    ],
-    availableBackgrounds: ["stadium", "pitch", "training", "dark"],
+    availableLogos: ["logo1", "logo2"],
+    availableBackgrounds: ["wal1", "wal2", "wal3"],
   },
 ];
 
