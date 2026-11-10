@@ -112,15 +112,15 @@ export default function ClubPage() {
             </div>
 
             <div className="flex justify-center lg:justify-end">
-              <Image
-                src="/images/academy/kids-trophy.jpg"
-                alt="Enfants de l'académie avec le trophée"
-                width={800}
-                height={1000}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="h-auto w-full max-w-[520px]"
-                priority
-              />
+            <Image
+  src="/images/academy/club.jpg"
+  alt="L'Académie Real Valladolid Tataouine"
+  width={800}
+  height={1000}
+  sizes="(max-width: 1024px) 100vw, 50vw"
+  className="h-auto w-full max-w-[520px]"
+  priority
+/>
             </div>
           </div>
         </div>

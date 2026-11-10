@@ -3,30 +3,46 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { X, ArrowRight, Calendar, Sparkles } from "lucide-react";
+import { X, ArrowRight, Calendar } from "lucide-react";
 
-const STORAGE_KEY = "arv-inscription-popup";
-const DELAY_MS = 8000;
-const RENEW_DAYS = 7;
+const STORAGE_KEY = "arv-inscription-popup-last-shown";
+const INITIAL_DELAY_MS = 8000; // 8s avant la 1ère apparition (1er visit)
+const REPEAT_AFTER_MS = 20 * 60 * 1000; // 20 minutes
+const CHECK_INTERVAL_MS = 30 * 1000; // vérifie toutes les 30s
 
 export function InscriptionPopup() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
+  // Timer — 8s première fois, puis toutes les 20 min
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const ts = Number(stored);
-      const daysSince = (Date.now() - ts) / (1000 * 60 * 60 * 24);
-      if (daysSince < RENEW_DAYS) return;
-    }
+    const check = () => {
+      if (open) return;
 
-    const timer = setTimeout(() => setOpen(true), DELAY_MS);
-    return () => clearTimeout(timer);
-  }, []);
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const lastShown = raw ? Number(raw) : 0;
 
+      if (lastShown === 0) {
+        // Première visite — affiche après 8s
+        setOpen(true);
+      } else if (Date.now() - lastShown >= REPEAT_AFTER_MS) {
+        // 20 min passées — affiche à nouveau
+        setOpen(true);
+      }
+    };
+
+    const initialTimer = setTimeout(check, INITIAL_DELAY_MS);
+    const interval = setInterval(check, CHECK_INTERVAL_MS);
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(interval);
+    };
+  }, [open]);
+
+  // Lock scroll pendant l'ouverture
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -36,6 +52,7 @@ export function InscriptionPopup() {
     };
   }, [open]);
 
+  // ESC pour fermer
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -75,42 +92,36 @@ export function InscriptionPopup() {
 
       {/* Card */}
       <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl animate-in slide-in-from-bottom-4 fade-in duration-300">
-        {/* Close */}
+        {/* Close — sobre sur fond blanc */}
         <button
           onClick={dismiss}
-          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur transition-colors hover:bg-black/60"
+          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           aria-label="Fermer"
         >
           <X className="h-4 w-4" />
         </button>
 
-        {/* Image — same as Notre promesse */}
-        <div className="relative h-52 overflow-hidden">
+        {/* Image — sans fond, sans gradient, taille naturelle */}
+        <div className="flex justify-center px-8 pt-8">
           <Image
-            src="/images/academy/kids-trophy.jpg"
-            alt="Enfants de l'académie avec le trophée"
-            fill
-            sizes="(max-width: 640px) 100vw, 448px"
-            className="object-cover object-[center_30%]"
+            src="/images/academy/popup.jpg"
+            alt="Enfants de l'académie"
+            width={400}
+            height={400}
             priority
+            className="h-auto w-full max-w-[240px] object-contain"
           />
-          {/* Dark gradient for badge legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-
-          {/* Badge */}
-          <div className="absolute left-4 top-4">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur">
-              <Sparkles className="h-3 w-3" />
-              Inscriptions 2026/27
-            </span>
-          </div>
         </div>
 
         {/* Body */}
-        <div className="p-6">
+        <div className="px-6 pb-6 pt-4 text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-accent">
+            Inscriptions 2026/27
+          </span>
+
           <h2
             id="inscription-popup-title"
-            className="text-2xl font-black leading-tight text-foreground"
+            className="mt-3 text-2xl font-black leading-tight text-foreground"
           >
             Rejoignez l&apos;académie
           </h2>
@@ -119,7 +130,7 @@ export function InscriptionPopup() {
             d&apos;évaluation gratuite, sans engagement.
           </p>
 
-          <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
             <Calendar className="h-3.5 w-3.5" />
             <span>Places limitées · Sessions dès septembre</span>
           </div>
