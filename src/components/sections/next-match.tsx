@@ -2,28 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import {
-  ArrowRight,
-  ChevronLeft,
-  ChevronRight,
-  MapPin,
-} from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 import {
   getNextMatch,
   recentMatches,
   upcomingMatches,
   type Match,
 } from "@/data/matches";
-
-function teamInitials(name: string) {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 3)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
-}
+import { TeamCrest } from "@/components/global/team-crest";
 
 function shortDate(iso: string) {
   return new Date(iso).toLocaleDateString("fr-FR", {
@@ -42,7 +28,6 @@ function useNow(intervalMs = 1000) {
   return now;
 }
 
-/* ─── Countdown — 4 units, centered ─────────────── */
 function Countdown({
   targetDate,
   targetTime,
@@ -93,7 +78,6 @@ function Countdown({
   );
 }
 
-/* ─── Card ───────────────────────────────────────── */
 function MatchCard({ match, isNext }: { match: Match; isNext: boolean }) {
   const isFinished = match.status === "finished";
 
@@ -102,51 +86,45 @@ function MatchCard({ match, isNext }: { match: Match; isNext: boolean }) {
       href="/matchs"
       data-card-index
       className={`group relative flex-shrink-0 w-[240px] snap-center rounded-xl bg-white overflow-hidden flex flex-col transition-all ${
-  isNext
-    ? "border-2 border-accent shadow-lg shadow-accent/30"
-    : "border border-border shadow-sm hover:shadow-md hover:border-primary/30"
-}`}
+        isNext
+          ? "border-2 border-accent shadow-lg shadow-accent/30"
+          : "border border-border shadow-sm hover:shadow-md hover:border-primary/30"
+      }`}
     >
-      {/* Next-match badge — flush top strip, red */}
       {isNext && (
-  <div className="relative flex justify-center -mt-px">
-    <svg width="160" height="16" viewBox="0 0 160 16" aria-hidden="true">
-      <path
-        d="M 30 0 L 130 0 Q 134 0 132 3 L 127 13 Q 125 16 121 16 L 39 16 Q 35 16 33 13 L 28 3 Q 26 0 30 0 Z"
-        className="fill-accent"
-      />
-    </svg>
-    <span className="absolute inset-0 flex items-center justify-center text-[8px] font-black uppercase tracking-wider text-white">
-      Prochain match
-    </span>
-  </div>
-)}
+        <div className="relative flex justify-center -mt-px">
+          <svg width="160" height="16" viewBox="0 0 160 16" aria-hidden="true">
+            <path
+              d="M 30 0 L 130 0 Q 134 0 132 3 L 127 13 Q 125 16 121 16 L 39 16 Q 35 16 33 13 L 28 3 Q 26 0 30 0 Z"
+              className="fill-accent"
+            />
+          </svg>
+          <span className="absolute inset-0 flex items-center justify-center text-[8px] font-black uppercase tracking-wider text-white">
+            Prochain match
+          </span>
+        </div>
+      )}
 
       <div className="flex flex-1 flex-col p-3">
-        {/* Competition · category — violet title */}
         <p className="text-center text-[9px] font-bold uppercase tracking-wider text-primary truncate">
           {match.competition} · {match.category}
         </p>
 
-        {/* Emblems + middle info */}
         <div className="mt-3 flex items-center justify-between gap-1">
           {/* Home */}
           <div className="flex flex-1 flex-col items-center gap-1.5 min-w-0">
-            <div
-              className={`flex h-12 w-12 items-center justify-center rounded-full text-xs font-black transition-colors ${
-                isNext
-                  ? "bg-accent text-white"
-                  : "bg-primary/10 text-primary group-hover:bg-primary/15"
-              }`}
-            >
-              {teamInitials(match.homeTeam.name)}
-            </div>
+            <TeamCrest
+              teamName={match.homeTeam.name}
+              sizeClass="h-12 w-12"
+              textSizeClass="text-xs"
+              className={isNext ? "!ring-2 !ring-accent/40" : ""}
+            />
             <p className="line-clamp-2 text-center text-[10px] font-semibold leading-tight text-foreground">
               {match.homeTeam.name}
             </p>
           </div>
 
-          {/* Center: score or time + date */}
+          {/* Center */}
           <div className="flex-shrink-0 px-1 text-center min-w-[60px]">
             {isFinished ? (
               <>
@@ -177,22 +155,18 @@ function MatchCard({ match, isNext }: { match: Match; isNext: boolean }) {
 
           {/* Away */}
           <div className="flex flex-1 flex-col items-center gap-1.5 min-w-0">
-            <div
-              className={`flex h-12 w-12 items-center justify-center rounded-full text-xs font-black transition-colors ${
-                isNext
-                  ? "bg-accent text-white"
-                  : "bg-primary/10 text-primary group-hover:bg-primary/15"
-              }`}
-            >
-              {teamInitials(match.awayTeam.name)}
-            </div>
+            <TeamCrest
+              teamName={match.awayTeam.name}
+              sizeClass="h-12 w-12"
+              textSizeClass="text-xs"
+              className={isNext ? "!ring-2 !ring-accent/40" : ""}
+            />
             <p className="line-clamp-2 text-center text-[10px] font-semibold leading-tight text-foreground">
               {match.awayTeam.name}
             </p>
           </div>
         </div>
 
-        {/* Stadium */}
         <div className="mt-3 flex items-center justify-center gap-1 border-t border-border pt-2.5 text-[9px] text-muted-foreground">
           <MapPin className="h-2.5 w-2.5 flex-shrink-0" />
           <span className="truncate">{match.location}</span>
@@ -202,7 +176,6 @@ function MatchCard({ match, isNext }: { match: Match; isNext: boolean }) {
   );
 }
 
-/* ─── Section ────────────────────────────────────── */
 export function NextMatchSection() {
   const nextMatch = getNextMatch();
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -221,9 +194,11 @@ export function NextMatchSection() {
     .slice(0, 4);
 
   const allMatches = [...pastThree, ...nextFour];
+
   const centerScrollLeft = (el: HTMLDivElement, card: HTMLElement) =>
     card.offsetLeft - (el.clientWidth - card.clientWidth) / 2;
-   const updateIndicators = () => {
+
+  const updateIndicators = () => {
     if (rafRef.current !== null) return;
     rafRef.current = requestAnimationFrame(() => {
       rafRef.current = null;
@@ -272,7 +247,7 @@ export function NextMatchSection() {
     );
     const targetIdx = allMatches.findIndex((m) => m.id === nextMatch.id);
     const target = cards[targetIdx];
-       if (target) {
+    if (target) {
       el.scrollLeft = Math.max(0, centerScrollLeft(el, target));
     }
     requestAnimationFrame(() => updateIndicators());
@@ -288,7 +263,7 @@ export function NextMatchSection() {
     });
   };
 
-    const scrollToIndex = (index: number) => {
+  const scrollToIndex = (index: number) => {
     const el = scrollerRef.current;
     if (!el) return;
     const cards = el.querySelectorAll<HTMLElement>("[data-card-index]");
@@ -316,7 +291,6 @@ export function NextMatchSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-8 lg:py-10">
-        {/* Heading + timer centered · button top-right (md+) */}
         <div className="relative mb-6">
           <div className="flex flex-col items-center text-center">
             <h2 className="text-xs font-medium uppercase tracking-widest text-foreground">
@@ -339,14 +313,13 @@ export function NextMatchSection() {
           </Link>
         </div>
 
-        {/* Carousel */}
         <div className="relative">
           <div
             className={`pointer-events-none absolute inset-y-0 left-0 w-10 z-10 bg-gradient-to-r from-white to-transparent transition-opacity ${
               canLeft ? "opacity-100" : "opacity-0"
             }`}
           />
-          <div
+                             <div
             className={`pointer-events-none absolute inset-y-0 right-0 w-10 z-10 bg-gradient-to-l from-white to-transparent transition-opacity ${
               canRight ? "opacity-100" : "opacity-0"
             }`}
@@ -363,13 +336,12 @@ export function NextMatchSection() {
           </div>
         </div>
 
-        {/* Indicator row — arrows + morphing dots */}
         <div className="mt-5 flex items-center justify-center gap-3">
           <button
             onClick={() => scrollBy(-1)}
             disabled={!canLeft}
-            className={`flex h-8 w-8 items-center justify-center  bg-white text-gray transition-all ${
-              canLeft ? " hover:text-gray" : "opacity-30 cursor-not-allowed"
+            className={`flex h-8 w-8 items-center justify-center rounded-full bg-white text-muted-foreground transition-all ${
+              canLeft ? "hover:text-foreground" : "opacity-30 cursor-not-allowed"
             }`}
             aria-label="Matchs précédents"
           >
@@ -407,8 +379,8 @@ export function NextMatchSection() {
           <button
             onClick={() => scrollBy(1)}
             disabled={!canRight}
-            className={`flex h-8 w-8 items-center justify-center  bg-white text-gray transition-all ${
-              canRight ? " hover:text-gray" : "opacity-30 cursor-not-allowed"
+            className={`flex h-8 w-8 items-center justify-center rounded-full bg-white text-muted-foreground transition-all ${
+              canRight ? "hover:text-foreground" : "opacity-30 cursor-not-allowed"
             }`}
             aria-label="Matchs suivants"
           >
@@ -416,7 +388,6 @@ export function NextMatchSection() {
           </button>
         </div>
 
-        {/* Mobile-only bottom button */}
         <div className="mt-5 flex justify-center md:hidden">
           <Link
             href="/matchs"

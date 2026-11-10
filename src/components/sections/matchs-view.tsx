@@ -4,15 +4,13 @@ import { useState, useEffect, useMemo } from "react";
 import {
   ArrowRight,
   Calendar,
-  Clock,
   MapPin,
   Goal,
   Shield,
   TrendingUp,
 } from "lucide-react";
 import { recentMatches, upcomingMatches, type Match } from "@/data/matches";
-
-/* ── Helpers ──────────────────────────────────────────── */
+import { TeamCrest } from "@/components/global/team-crest";
 
 function useNow() {
   const [now, setNow] = useState(() => Date.now());
@@ -64,16 +62,6 @@ function Countdown({ date, time }: { date: string; time: string }) {
   );
 }
 
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 3)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
-}
-
 function shortDate(iso: string) {
   return new Date(iso).toLocaleDateString("fr-FR", {
     weekday: "short",
@@ -82,27 +70,22 @@ function shortDate(iso: string) {
   });
 }
 
-/* ── 1. Hero full-width — prochain match ──────────────── */
 function NextMatchHero({ match }: { match: Match }) {
   return (
     <section className="relative w-full overflow-hidden bg-primary">
-      {/* Photo — full bleed */}
       <div className="absolute inset-0">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url(/images/matchs/hero.jpg)" }}
           aria-hidden="true"
         />
-        {/* Gradient uniquement en bas pour lisibilité du texte */}
         <div
           className="absolute inset-0 bg-gradient-to-b from-transparent via-black/25 to-black/85"
           aria-hidden="true"
         />
       </div>
 
-      {/* Content */}
       <div className="relative mx-auto flex min-h-[420px] max-w-5xl flex-col justify-end px-6 pb-10 pt-20 text-white lg:min-h-[480px] lg:px-8 lg:pb-14 lg:pt-24">
-        {/* Hairline rouge + kicker */}
         <div className="mb-6 flex items-center gap-3">
           <span className="h-px w-10 bg-accent" />
           <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-white">
@@ -111,15 +94,15 @@ function NextMatchHero({ match }: { match: Match }) {
           </span>
         </div>
 
-        {/* Match — la star */}
         <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-3 sm:gap-8">
           {/* Home */}
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-end sm:gap-4">
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/30 backdrop-blur-md sm:h-24 sm:w-24">
-              <span className="text-lg font-black text-white sm:text-2xl">
-                {initials(match.homeTeam.name)}
-              </span>
-            </div>
+            <TeamCrest
+              teamName={match.homeTeam.name}
+              sizeClass="h-16 w-16 sm:h-20 sm:w-20"
+              textSizeClass="text-lg sm:text-xl"
+              variant="dark"
+            />
             <p className="text-center text-sm font-bold text-white sm:text-right sm:text-lg">
               {match.homeTeam.name}
             </p>
@@ -137,39 +120,36 @@ function NextMatchHero({ match }: { match: Match }) {
 
           {/* Away */}
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-start sm:gap-4">
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/30 backdrop-blur-md sm:h-24 sm:w-24">
-              <span className="text-lg font-black text-white sm:text-2xl">
-                {initials(match.awayTeam.name)}
-              </span>
-            </div>
+            <TeamCrest
+              teamName={match.awayTeam.name}
+              sizeClass="h-16 w-16 sm:h-20 sm:w-20"
+              textSizeClass="text-lg sm:text-xl"
+              variant="dark"
+            />
             <p className="text-center text-sm font-bold text-white sm:text-left sm:text-lg">
               {match.awayTeam.name}
             </p>
           </div>
         </div>
 
-        {/* Meta */}
         <p className="mt-4 text-center text-xs font-medium text-white/70 sm:text-sm">
           {match.competition} · {match.location}
         </p>
 
-        {/* Bottom strip: countdown + CTA séparés par hairline */}
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/15 pt-5 sm:flex-row">
           <Countdown date={match.date} time={match.time} />
           <a
-  href="/inscription"
-  className="inline-flex items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-accent/25 transition-all hover:bg-accent/90 hover:scale-[1.02]"
->
-  Inscrire mon enfant
-  <ArrowRight className="h-3.5 w-3.5" />
-</a>
+            href="/inscription"
+            className="inline-flex items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-accent/25 transition-all hover:bg-accent/90 hover:scale-[1.02]"
+          >
+            Inscrire mon enfant
+            <ArrowRight className="h-3.5 w-3.5" />
+          </a>
         </div>
       </div>
     </section>
   );
 }
-
-/* ── 2. Prochain match — row style football site ─────── */
 
 function UpcomingRow({ match }: { match: Match }) {
   const d = new Date(match.date);
@@ -180,7 +160,6 @@ function UpcomingRow({ match }: { match: Match }) {
 
   return (
     <div className="py-4 sm:grid sm:grid-cols-[80px_1fr_60px_1fr_100px] sm:items-center sm:gap-4 sm:py-3">
-      {/* Date badge */}
       <div className="mb-3 flex w-14 flex-col items-center rounded-lg bg-secondary px-2 py-1.5 sm:mb-0 sm:w-auto">
         <span className="text-base font-black leading-none text-foreground">
           {day}
@@ -190,13 +169,15 @@ function UpcomingRow({ match }: { match: Match }) {
         </span>
       </div>
 
-      {/* Mobile layout */}
+      {/* Mobile */}
       <div className="space-y-2 sm:hidden">
         <div className="flex items-center justify-between gap-2">
           <div className="flex flex-1 items-center gap-2 min-w-0">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-foreground">
-              {initials(match.homeTeam.name)}
-            </div>
+            <TeamCrest
+              teamName={match.homeTeam.name}
+              sizeClass="h-9 w-9"
+              textSizeClass="text-[10px]"
+            />
             <span className="truncate text-sm font-bold text-foreground">
               {match.homeTeam.name}
             </span>
@@ -208,9 +189,11 @@ function UpcomingRow({ match }: { match: Match }) {
             <span className="truncate text-right text-sm font-bold text-foreground">
               {match.awayTeam.name}
             </span>
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-foreground">
-              {initials(match.awayTeam.name)}
-            </div>
+            <TeamCrest
+              teamName={match.awayTeam.name}
+              sizeClass="h-9 w-9"
+              textSizeClass="text-[10px]"
+            />
           </div>
         </div>
         <div className="flex items-center justify-between text-[10px] text-muted-foreground">
@@ -228,8 +211,7 @@ function UpcomingRow({ match }: { match: Match }) {
         </p>
       </div>
 
-      {/* Desktop layout */}
-      {/* Home */}
+      {/* Desktop — Home (right aligned, logo right) */}
       <div className="hidden min-w-0 items-center justify-end gap-2 sm:flex">
         <div className="min-w-0 text-right">
           <p className="truncate text-sm font-bold text-foreground">
@@ -239,9 +221,11 @@ function UpcomingRow({ match }: { match: Match }) {
             {match.location}
           </p>
         </div>
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-foreground">
-          {initials(match.homeTeam.name)}
-        </div>
+        <TeamCrest
+          teamName={match.homeTeam.name}
+          sizeClass="h-10 w-10"
+          textSizeClass="text-[10px]"
+        />
       </div>
 
       {/* Time */}
@@ -251,11 +235,13 @@ function UpcomingRow({ match }: { match: Match }) {
         </span>
       </div>
 
-      {/* Away */}
+      {/* Desktop — Away (left aligned, logo left) */}
       <div className="hidden min-w-0 items-center justify-start gap-2 sm:flex">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-foreground">
-          {initials(match.awayTeam.name)}
-        </div>
+        <TeamCrest
+          teamName={match.awayTeam.name}
+          sizeClass="h-10 w-10"
+          textSizeClass="text-[10px]"
+        />
         <div className="min-w-0">
           <p className="truncate text-sm font-bold text-foreground">
             {match.awayTeam.name}
@@ -266,7 +252,6 @@ function UpcomingRow({ match }: { match: Match }) {
         </div>
       </div>
 
-      {/* Category */}
       <div className="hidden text-right sm:block">
         <span className="inline-block rounded bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary">
           {match.category}
@@ -293,8 +278,6 @@ function UpcomingList({ matches }: { matches: Match[] }) {
     </div>
   );
 }
-
-/* ── 3. Historique — alignement fixe ──────────────────── */
 
 function HistoryList({ matches }: { matches: Match[] }) {
   if (matches.length === 0) {
@@ -334,12 +317,12 @@ function HistoryList({ matches }: { matches: Match[] }) {
             key={match.id}
             className="grid grid-cols-[40px_1fr_64px] items-center gap-3 py-4 sm:grid-cols-[40px_1fr_64px_110px_90px] sm:gap-4"
           >
-            {/* Logo */}
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-foreground">
-              {initials(opponent)}
-            </div>
+            <TeamCrest
+              teamName={opponent}
+              sizeClass="h-10 w-10"
+              textSizeClass="text-[10px]"
+            />
 
-            {/* Name + meta */}
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold text-foreground">
                 {opponent}
@@ -349,7 +332,6 @@ function HistoryList({ matches }: { matches: Match[] }) {
               </p>
             </div>
 
-            {/* Score — FIXED width column, always aligned */}
             <div className="text-center">
               <span className="text-xl font-black tabular-nums text-foreground">
                 {ourScore}
@@ -358,7 +340,6 @@ function HistoryList({ matches }: { matches: Match[] }) {
               </span>
             </div>
 
-            {/* Result — desktop */}
             <div className="hidden justify-center sm:flex">
               <span
                 className={`inline-flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 text-[11px] font-semibold ${result.text}`}
@@ -368,12 +349,10 @@ function HistoryList({ matches }: { matches: Match[] }) {
               </span>
             </div>
 
-            {/* Date — desktop */}
             <div className="hidden text-right text-xs font-medium text-muted-foreground sm:block">
               {shortDate(match.date)}
             </div>
 
-            {/* Mobile sub-row */}
             <div className="col-span-3 flex items-center justify-between pt-1 sm:hidden">
               <span
                 className={`inline-flex items-center gap-1.5 text-[11px] font-semibold ${result.text}`}
@@ -391,8 +370,6 @@ function HistoryList({ matches }: { matches: Match[] }) {
     </div>
   );
 }
-
-/* ── 4. Bilan simplifié — radar + stats friendly ──────── */
 
 function RadarChart({
   values,
@@ -561,7 +538,6 @@ function Bilan({ matches }: { matches: Match[] }) {
 
   return (
     <div className="grid gap-4 lg:grid-cols-2">
-      {/* Radar card */}
       <div className="rounded-2xl border border-border bg-white p-6">
         <div className="flex items-center justify-between">
           <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -574,7 +550,6 @@ function Bilan({ matches }: { matches: Match[] }) {
         </div>
       </div>
 
-      {/* Summary card — simple, kid-friendly */}
       <div className="rounded-2xl border border-border bg-white p-6">
         <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
           Forme récente
@@ -642,8 +617,6 @@ function Bilan({ matches }: { matches: Match[] }) {
   );
 }
 
-/* ── Vue principale ───────────────────────────────────── */
-
 export function MatchsView() {
   const nextMatch = upcomingMatches[0];
   const restUpcoming = upcomingMatches.slice(1);
@@ -657,10 +630,8 @@ export function MatchsView() {
 
   return (
     <div className="bg-white">
-      {/* 1 ─ Full-width hero, above the title */}
       {nextMatch && <NextMatchHero match={nextMatch} />}
 
-      {/* 2 ─ Page title */}
       <section className="border-b border-border/60">
         <div className="mx-auto max-w-4xl px-6 py-10 lg:px-8 lg:py-14">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
@@ -676,7 +647,6 @@ export function MatchsView() {
       </section>
 
       <section className="mx-auto max-w-4xl px-6 py-10 lg:px-8 lg:py-14">
-        {/* 3 ─ Prochains matchs */}
         {restUpcoming.length > 0 && (
           <div className="mb-14">
             <div className="mb-5">
@@ -692,7 +662,6 @@ export function MatchsView() {
           </div>
         )}
 
-        {/* 4 ─ Historique */}
         <div className="mb-14">
           <div className="mb-5">
             <h2 className="text-xl font-black text-foreground sm:text-2xl">
@@ -706,7 +675,6 @@ export function MatchsView() {
           <HistoryList matches={sortedRecent} />
         </div>
 
-        {/* 5 ─ Bilan */}
         <div>
           <div className="mb-5">
             <h2 className="text-xl font-black text-foreground sm:text-2xl">
