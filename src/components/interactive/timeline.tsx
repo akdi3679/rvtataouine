@@ -156,26 +156,25 @@ function TrophyEntry({
         <div className="relative">
           {/* Trophy icon — overflows top edge, violet gradient */}
                    {/* Trophy image/icon — overflows top edge */}
+                   {/* Trophy image — overflows top edge, no bg, no frame */}
           <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
-            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-xl ring-4 ring-white">
-              {trophy.image ? (
-                <Image
-                  src={trophy.image}
-                  alt={trophy.title}
-                  width={64}
-                  height={64}
-                  className="h-full w-full object-contain p-1"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-dark">
-                  <Icon className="h-7 w-7 text-white" />
-                </div>
-              )}
-            </div>
+            {trophy.image ? (
+              <Image
+                src={trophy.image}
+                alt={trophy.title}
+                width={120}
+                height={120}
+                className="h-20 w-20 object-contain drop-shadow-xl sm:h-24 sm:w-24"
+              />
+            ) : (
+              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-dark shadow-xl ring-4 ring-white">
+                <Icon className="h-8 w-8 text-white" />
+              </div>
+            )}
           </div>
 
           {/* Card */}
-          <div className="rounded-2xl border border-border bg-white px-6 pb-6 pt-12 shadow-sm transition-shadow duration-300 hover:shadow-md">
+          <div className="rounded-2xl border border-border bg-white px-6 pb-6 pt-16 shadow-sm transition-shadow duration-300 hover:shadow-md">
             {/* Season + category */}
             <div className="flex items-baseline justify-between gap-3">
               <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-muted-foreground">

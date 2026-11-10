@@ -102,24 +102,28 @@ function HonourCard({ honour }: { honour: Honour }) {
     <Link
       href="/palmares"
       data-card-index
-      className="group flex w-[200px] flex-shrink-0 snap-center flex-col items-center rounded-xl border border-border bg-white p-5 text-center transition-all hover:border-accent/30 hover:shadow-md"
+      className="group relative flex w-[200px] flex-shrink-0 snap-center flex-col items-center rounded-xl border border-border bg-white px-5 pb-5 pt-16 text-center transition-all hover:border-accent/30 hover:shadow-md"
     >
-           <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-white ring-1 ring-border transition-transform duration-300 group-hover:scale-110">
+      {/* Trophy — overflows top edge, no bg, no frame */}
+      <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
         {honour.image ? (
           <Image
             src={honour.image}
             alt={honour.title}
-            width={64}
-            height={64}
-            className="h-full w-full object-contain p-1"
+            width={120}
+            height={120}
+            className="h-24 w-24 object-contain drop-shadow-xl transition-transform duration-300 group-hover:scale-110"
           />
         ) : (
-          <div className={`flex h-full w-full items-center justify-center rounded-2xl ${honour.tintClass}`}>
+          <div
+            className={`flex h-20 w-20 items-center justify-center rounded-2xl shadow-xl ring-4 ring-white ${honour.tintClass}`}
+          >
             <Icon className={`h-8 w-8 ${honour.iconClass}`} />
           </div>
         )}
       </div>
-      <h3 className="mt-4 line-clamp-2 text-sm font-bold leading-tight text-foreground">
+
+      <h3 className="line-clamp-2 text-sm font-bold leading-tight text-foreground">
         {honour.title}
       </h3>
       <p className="mt-1 line-clamp-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
@@ -265,11 +269,11 @@ export function PalmaresPreviewSection() {
             }`}
           />
 
-          <div
-            ref={scrollerRef}
-            onScroll={updateIndicators}
-            className="flex gap-3 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-6 lg:px-8 py-2"
-          >
+         <div
+  ref={scrollerRef}
+  onScroll={updateIndicators}
+  className="flex gap-3 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-6 lg:px-8 pb-2 pt-16"
+>
             {honours.map((honour) => (
               <HonourCard key={honour.title} honour={honour} />
             ))}
