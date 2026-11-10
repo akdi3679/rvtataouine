@@ -66,15 +66,15 @@ export default function PalmaresPage() {
 
             {/* Right: big image, no card, full */}
             <div className="flex justify-center lg:justify-end">
-              <Image
-                src="/images/academy/kids-trophy.jpg"
-                alt="Enfants de l'académie avec le trophée"
-                width={800}
-                height={1000}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="h-auto w-full max-w-[560px]"
-                priority
-              />
+             <Image
+  src="/images/academy/palmares.jpg"
+  alt="Trophées remportés par l'académie"
+  width={800}
+  height={1000}
+  sizes="(max-width: 1024px) 100vw, 50vw"
+  className="h-auto w-full max-w-[560px]"
+  priority
+/>
             </div>
           </div>
         </div>
