@@ -2,18 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Play, ArrowRight } from "lucide-react";
 import { getFeaturedVideos, videos, type Video } from "@/data/videos";
 
 function VideoCard({ video }: { video: Video }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const thumbnailUrl = `https://i.ytimg.com/vi/${video.youtubeId}/maxresdefault.jpg`;
-  const fallbackThumbnail = `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`;
-
   if (isLoaded) {
     return (
-      <div className="relative w-full overflow-hidden rounded-2xl" style={{ aspectRatio: "16/9" }}>
+      <div
+        className="relative w-full overflow-hidden rounded-2xl"
+        style={{ aspectRatio: "16/9" }}
+      >
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
           title={video.title}
@@ -32,14 +33,12 @@ function VideoCard({ video }: { video: Video }) {
       style={{ aspectRatio: "16/9" }}
       aria-label={`Lire la vidéo : ${video.title}`}
     >
-      <img
-        src={thumbnailUrl}
+      <Image
+        src={video.thumbnail}
         alt={video.title}
-        loading="lazy"
-        onError={(e) => {
-          (e.target as HTMLImageElement).src = fallbackThumbnail;
-        }}
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        fill
+        sizes="(max-width: 768px) 100vw, 33vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
       <div className="absolute bottom-4 left-4">
@@ -68,29 +67,27 @@ export function FeaturedVideosSection() {
               En vidéo
             </h2>
           </div>
-          <Link href="/tv" className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80">
+          <Link
+            href="/tv"
+            className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80"
+          >
             Voir toute la chaîne <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-
-        {/* Mobile: horizontal scroll · md+: 3-col grid */}
-        <div className="-mx-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-6 md:mx-0 md:overflow-visible md:px-0 md:snap-none">
-          <div className="flex gap-4 md:grid md:grid-cols-3 md:gap-8">
-            {featured.map((video) => (
-              <div
-                key={video.id}
-                className="w-[280px] flex-shrink-0 snap-center md:w-auto md:flex-shrink"
-              >
-                <VideoCard video={video} />
-                <div className="mt-3">
-                  <span className="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
-                    {video.categoryLabel}
-                  </span>
-                  <h3 className="mt-2 font-bold text-foreground line-clamp-2">{video.title}</h3>
-                </div>
+        <div className="grid gap-8 md:grid-cols-3">
+          {featured.map((video) => (
+            <div key={video.id}>
+              <VideoCard video={video} />
+              <div className="mt-3">
+                <span className="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                  {video.categoryLabel}
+                </span>
+                <h3 className="mt-2 font-bold text-foreground line-clamp-2">
+                  {video.title}
+                </h3>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

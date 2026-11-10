@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { Play, Camera, X } from "lucide-react";
+import Image from "next/image";
+import { Play, X, Camera } from "lucide-react";
 import { videos, videoCategories, type Video } from "@/data/videos";
+import { GALLERY } from "@/data/gallery";
 
 const CATEGORY_GRADIENT: Record<string, string> = {
   match: "from-accent via-accent/80 to-accent-dark",
@@ -11,52 +13,6 @@ const CATEGORY_GRADIENT: Record<string, string> = {
   "behind-scenes": "from-warning via-warning/80 to-accent/70",
   tutorial: "from-success via-success/80 to-primary/70",
 };
-
-const GALLERY = [
-  {
-    id: "g1",
-    label: "Tournoi de Sfax — finale U15",
-    span: "col-span-2 row-span-2",
-    gradient: "from-accent via-accent/80 to-accent-dark",
-  },
-  {
-    id: "g2",
-    label: "Séance technique U12",
-    span: "col-span-2",
-    gradient: "from-primary via-primary/80 to-primary-dark",
-  },
-  {
-    id: "g3",
-    label: "Stage en Espagne",
-    span: "col-span-1",
-    gradient: "from-info via-info/80 to-primary/70",
-  },
-  {
-    id: "g4",
-    label: "Remise des trophées",
-    span: "col-span-1",
-    gradient: "from-warning via-warning/80 to-accent/70",
-  },
-  {
-    id: "g5",
-    label: "Entraînement au stade",
-    span: "col-span-2",
-    gradient: "from-success via-success/80 to-primary/70",
-  },
-  {
-    id: "g6",
-    label: "Coulisses du tournoi",
-    span: "col-span-2",
-    gradient: "from-primary/80 via-accent/80 to-accent-dark",
-  },
-];
-
-function thumb(id: string) {
-  return `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-}
-function thumbFallback(id: string) {
-  return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-}
 
 function TvHero({ video, onPlay }: { video: Video; onPlay: () => void }) {
   const c = CATEGORY_GRADIENT[video.category] ?? CATEGORY_GRADIENT.match;
@@ -78,12 +34,17 @@ function TvHero({ video, onPlay }: { video: Video; onPlay: () => void }) {
           className="group relative mt-8 block w-full overflow-hidden rounded-2xl text-left"
           aria-label={`Regarder : ${video.title}`}
         >
-          {/* Poster vertical mobile → cinématique horizontal desktop */}
           <div className="relative aspect-[4/5] sm:aspect-[21/9]">
-            <div className={`absolute inset-0 bg-gradient-to-br ${c}`} />
+            <Image
+              src={video.thumbnail}
+              alt={video.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 1280px"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              priority
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
-            {/* Badges */}
             <div className="absolute right-4 top-4 z-10 flex items-center gap-2 sm:right-6 sm:top-6">
               <span className="rounded-md bg-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
                 {video.categoryLabel}
@@ -93,14 +54,12 @@ function TvHero({ video, onPlay }: { video: Video; onPlay: () => void }) {
               </span>
             </div>
 
-            {/* Center play — mobile only, big circular */}
             <div className="absolute inset-0 z-10 flex items-center justify-center pb-20 sm:hidden">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-2xl transition-transform group-hover:scale-105">
                 <Play className="ml-1 h-7 w-7 fill-foreground text-foreground" />
               </div>
             </div>
 
-            {/* Bottom content */}
             <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-7 lg:p-10">
               <div className="flex items-end justify-between gap-4">
                 <div className="min-w-0 max-w-2xl">
@@ -113,13 +72,10 @@ function TvHero({ video, onPlay }: { video: Video; onPlay: () => void }) {
                   <p className="mt-2 hidden max-w-xl text-sm text-white/80 sm:line-clamp-2 sm:block">
                     {video.description}
                   </p>
-                  {/* Mobile-only meta line */}
                   <p className="mt-2 text-[11px] font-medium text-white/60 sm:hidden">
                     {video.publishedAt} · {video.duration}
                   </p>
                 </div>
-
-                {/* Desktop-only "Regarder" pill */}
                 <div className="hidden shrink-0 sm:block">
                   <span className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-foreground shadow-xl transition-transform group-hover:scale-105">
                     <Play className="h-4 w-4 fill-foreground" />
@@ -162,33 +118,24 @@ function VideoGrid({
           className="group flex flex-col text-left"
           aria-label={`Regarder : ${v.title}`}
         >
-          {/* Thumbnail */}
           <div className="relative aspect-video overflow-hidden rounded-xl bg-foreground">
-            <img
-              src={thumb(v.youtubeId)}
+            <Image
+              src={v.thumbnail}
               alt={v.title}
-              loading="lazy"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = thumbFallback(v.youtubeId);
-              }}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-
-            {/* Play overlay */}
             <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-2xl">
                 <Play className="ml-0.5 h-6 w-6 fill-foreground" />
               </span>
             </div>
-
-            {/* Duration */}
             <span className="absolute right-2 top-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-semibold text-white">
               {v.duration}
             </span>
           </div>
-
-          {/* Meta */}
           <div className="mt-3">
             <span className="inline-flex rounded-full bg-secondary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-foreground">
               {v.categoryLabel}
@@ -228,13 +175,14 @@ function Gallery() {
               key={item.id}
               className={`group relative overflow-hidden rounded-xl ${item.span}`}
             >
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${item.gradient} transition-transform duration-500 group-hover:scale-105`}
+              <Image
+                src={item.image}
+                alt={item.label}
+                fill
+                sizes="(max-width: 640px) 50vw, 25vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 flex items-center justify-center opacity-15">
-                <Camera className="h-10 w-10 text-white" />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
                 <p className="text-xs font-semibold text-white sm:text-sm">
                   {item.label}
@@ -326,10 +274,8 @@ export function TvView() {
   return (
     <>
       <div className="bg-white">
-        {/* Hero */}
         <TvHero video={featured} onPlay={() => setActive(featured)} />
 
-        {/* All videos — filter + grid */}
         <section className="pb-14 lg:pb-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mb-6 flex items-end justify-between gap-4">
@@ -344,7 +290,6 @@ export function TvView() {
               </div>
             </div>
 
-            {/* Filters */}
             <div className="-mx-6 mb-8 overflow-x-auto scrollbar-hide px-6 lg:mx-0 lg:px-0">
               <ul className="flex gap-1.5 whitespace-nowrap">
                 {videoCategories.map((c) => {
@@ -376,12 +321,10 @@ export function TvView() {
               </ul>
             </div>
 
-            {/* Grid */}
             <VideoGrid items={filtered} onPlay={setActive} />
           </div>
         </section>
 
-        {/* Gallery */}
         <Gallery />
       </div>
 

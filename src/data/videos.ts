@@ -2,13 +2,13 @@ export interface Video {
   id: string;
   title: string;
   description: string;
-  youtubeId: string; // YouTube video ID
+  youtubeId: string;
   category: "match" | "training" | "interview" | "behind-scenes" | "tutorial";
   categoryLabel: string;
-  duration: string; // "MM:SS"
+  duration: string;
   publishedAt: string;
   featured: boolean;
-  thumbnail?: string;
+  thumbnail: string;
 }
 
 export const videos: Video[] = [
@@ -16,12 +16,13 @@ export const videos: Video[] = [
     id: "v-001",
     title: "Finale du Tournoi de Sfax — Highlights U15",
     description: "Les meilleurs moments de notre victoire en finale du tournoi régional de Sfax.",
-    youtubeId: "dQw4w9WgXcQ", // Replace with real ID
+    youtubeId: "dQw4w9WgXcQ",
     category: "match",
     categoryLabel: "Match",
     duration: "8:42",
     publishedAt: "2026-11-06",
     featured: true,
+    thumbnail: "/images/tv/thumb1.jpg",
   },
   {
     id: "v-002",
@@ -33,6 +34,7 @@ export const videos: Video[] = [
     duration: "12:15",
     publishedAt: "2026-11-01",
     featured: false,
+    thumbnail: "/images/tv/thumb2.jpg",
   },
   {
     id: "v-003",
@@ -44,6 +46,7 @@ export const videos: Video[] = [
     duration: "6:30",
     publishedAt: "2026-10-28",
     featured: true,
+    thumbnail: "/images/tv/thumb3.jpg",
   },
   {
     id: "v-004",
@@ -55,6 +58,7 @@ export const videos: Video[] = [
     duration: "15:20",
     publishedAt: "2026-10-15",
     featured: false,
+    thumbnail: "/images/tv/thumb4.jpg",
   },
   {
     id: "v-005",
@@ -66,6 +70,7 @@ export const videos: Video[] = [
     duration: "4:15",
     publishedAt: "2026-10-10",
     featured: false,
+    thumbnail: "/images/tv/thumb5.jpg",
   },
   {
     id: "v-006",
@@ -77,6 +82,7 @@ export const videos: Video[] = [
     duration: "92:00",
     publishedAt: "2026-11-07",
     featured: false,
+    thumbnail: "/images/tv/thumb6.jpg",
   },
 ];
 
