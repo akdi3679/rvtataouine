@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ShoppingBag, ArrowRight } from "lucide-react";
 import { products, formatPrice } from "@/data/products";
-
+import Image from "next/image";
 export function FeaturedProductsSection() {
   const featured = products.filter((p) => p.featured).slice(0, 3);
   if (!featured.length) return null;
@@ -38,17 +38,27 @@ export function FeaturedProductsSection() {
                 className="group flex w-[240px] flex-shrink-0 snap-center flex-col sm:w-auto sm:flex-shrink"
               >
                 {/* Image area */}
-                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-secondary/60">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <ShoppingBag className="h-16 w-16 text-foreground/15 transition-transform duration-500 group-hover:scale-105" />
-                  </div>
+              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-secondary/60">
+  {product.images[0] ? (
+    <Image
+      src={product.images[0]}
+      alt={product.name}
+      fill
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      className="object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+  ) : (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <ShoppingBag className="h-16 w-16 text-foreground/15" />
+    </div>
+  )}
 
-                  {product.isNew && (
-                    <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
-                      Nouveau
-                    </span>
-                  )}
-                </div>
+  {product.isNew && (
+    <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
+      Nouveau
+    </span>
+  )}
+</div>
 
                 {/* Info */}
                 <div className="mt-3 flex items-start justify-between gap-3 px-1">
@@ -82,4 +92,4 @@ export function FeaturedProductsSection() {
       </div>
     </section>
   );
-}
+} 

@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { getProductBySlug, formatPrice } from "@/data/products";
 import { AddToCartButton } from "@/components/interactive/add-to-cart-button";
-
+import Image from "next/image";
 export async function generateMetadata({
   params,
 }: {
@@ -46,16 +46,27 @@ export default async function ProductPage({
         </Link>
 
         <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
-          <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary/60">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <ShoppingBag className="h-24 w-24 text-foreground/15" />
-            </div>
-            {product.isNew && (
-              <span className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-                Nouveau
-              </span>
-            )}
-          </div>
+         <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary/60">
+  {product.images[0] ? (
+    <Image
+      src={product.images[0]}
+      alt={product.name}
+      fill
+      sizes="(max-width: 1024px) 100vw, 50vw"
+      className="object-cover"
+      priority
+    />
+  ) : (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <ShoppingBag className="h-24 w-24 text-foreground/15" />
+    </div>
+  )}
+  {product.isNew && (
+    <span className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+      Nouveau
+    </span>
+  )}
+</div>
 
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">

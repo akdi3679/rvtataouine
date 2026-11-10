@@ -4,7 +4,7 @@ import { ShoppingBag } from "lucide-react";
 import { products, formatPrice, productCategories } from "@/data/products";
 import { wallpaperTemplates } from "@/data/wallpapers";
 import { WallpaperGenerator } from "@/components/interactive/wallpaper-generator";
-
+import Image from "next/image";
 export const metadata: Metadata = {
   title: "Boutique | ARV Tataouine",
   description: "Maillots et équipements officiels de l'académie.",
@@ -48,15 +48,25 @@ export default function BoutiquePage() {
                           className="group flex flex-col"
                         >
                           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-secondary/60">
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <ShoppingBag className="h-16 w-16 text-foreground/15 transition-transform duration-500 group-hover:scale-105" />
-                            </div>
-                            {p.isNew && (
-                              <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
-                                Nouveau
-                              </span>
-                            )}
-                          </div>
+  {p.images[0] ? (
+    <Image
+      src={p.images[0]}
+      alt={p.name}
+      fill
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+      className="object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+  ) : (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <ShoppingBag className="h-16 w-16 text-foreground/15" />
+    </div>
+  )}
+  {p.isNew && (
+    <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
+      Nouveau
+    </span>
+  )}
+</div>
                           <div className="mt-3 flex items-start justify-between gap-3 px-1">
                             <div className="min-w-0">
                               <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
