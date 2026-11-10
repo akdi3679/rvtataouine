@@ -94,8 +94,8 @@ function NextMatchHero({ match }: { match: Match }) {
           </span>
         </div>
 
-                {/* Match — la star */}
-        <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-3 sm:gap-8">
+                       {/* Match — la star */}
+        <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3 sm:gap-8">
           {/* Home */}
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-end sm:gap-4">
             <TeamCrest
@@ -104,13 +104,13 @@ function NextMatchHero({ match }: { match: Match }) {
               textSizeClass="text-lg sm:text-xl"
               variant="dark"
             />
-            <p className="line-clamp-2 min-h-[2.5rem] text-center text-sm font-bold leading-tight text-white sm:min-h-0 sm:text-right sm:text-lg">
+            <p className="text-center text-sm font-bold leading-tight text-white sm:text-right sm:text-lg">
               {match.homeTeam.name}
             </p>
           </div>
 
-          {/* Time */}
-          <div className="flex flex-col items-center gap-1 pb-3 sm:pb-5">
+          {/* Time — pt pour aligner visuellement avec le centre des crests */}
+          <div className="flex flex-col items-center gap-1 pt-4 sm:pt-6">
             <span className="text-3xl font-black tabular-nums text-white sm:text-5xl">
               {match.time}
             </span>
@@ -127,7 +127,7 @@ function NextMatchHero({ match }: { match: Match }) {
               textSizeClass="text-lg sm:text-xl"
               variant="dark"
             />
-            <p className="line-clamp-2 min-h-[2.5rem] text-center text-sm font-bold leading-tight text-white sm:min-h-0 sm:text-left sm:text-lg">
+            <p className="text-center text-sm font-bold leading-tight text-white sm:text-left sm:text-lg">
               {match.awayTeam.name}
             </p>
           </div>

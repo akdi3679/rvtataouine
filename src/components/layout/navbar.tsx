@@ -152,9 +152,9 @@ export function Navbar() {
             </div>
           ) : (
             <>
-             <Link
+            <Link
   href={`/${currentLocale}`}
-  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white shadow-sm hover:bg-white/90 transition-colors overflow-hidden"
+  className="flex h-10 w-10 shrink-0 items-center justify-center transition-opacity hover:opacity-80"
 >
   <Image
     src="/images/logo/logo.png"
@@ -162,7 +162,7 @@ export function Navbar() {
     width={40}
     height={40}
     priority
-    className="h-full w-full object-contain p-0.5"
+    className="h-full w-full object-contain"
   />
 </Link>
               <div className="flex-1 flex justify-center min-w-0 px-2">
@@ -341,16 +341,15 @@ function MobileMenu({ open, onClose, currentLang }: { open: boolean; onClose: ()
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
             <div className="flex items-center gap-3">
-  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-white overflow-hidden">
-    <Image
-      src="/images/logo/logo.png"
-      alt="ARV Tataouine"
-      width={36}
-      height={36}
-      className="h-full w-full object-contain p-0.5"
-    />
-  </div>
-  <span className="font-bold text-white">Menu</span>
+ <div className="flex h-9 w-9 items-center justify-center">
+  <Image
+    src="/images/logo/logo.png"
+    alt="ARV Tataouine"
+    width={36}
+    height={36}
+    className="h-full w-full object-contain"
+  />
+</div>  <span className="font-bold text-white">Menu</span>
 </div>
             <button
               onClick={onClose}

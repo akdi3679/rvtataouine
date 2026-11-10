@@ -77,9 +77,9 @@ export function Footer() {
 
         {/* 3 ─ Centered logo + tagline */}
         <section className="text-center">
-         <Link
+       <Link
   href="/"
-  className="inline-flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-lg overflow-hidden"
+  className="inline-flex h-14 w-14 items-center justify-center transition-opacity hover:opacity-80"
   aria-label={brand.name}
 >
   <Image
@@ -87,7 +87,7 @@ export function Footer() {
     alt="ARV Tataouine"
     width={56}
     height={56}
-    className="h-full w-full object-contain p-1"
+    className="h-full w-full object-contain"
   />
 </Link>
           <div className="mt-3">
