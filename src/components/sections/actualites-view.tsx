@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Clock, FileText, Newspaper, ArrowUpRight } from "lucide-react";
-import { articles, type Article } from "@/data/news";
+import type { Article } from "@/data/news";
 import Image from "next/image";
 const FILTERS = [
   { id: "all", label: "Tout" },
@@ -172,7 +172,7 @@ function ArticleCard({ article }: { article: Article }) {
   );
 }
 
-export function ActualitesView() {
+export function ActualitesView({ articles }: { articles: Article[] }) {
   const [filter, setFilter] = useState<string>("all");
 
   const filtered = useMemo(

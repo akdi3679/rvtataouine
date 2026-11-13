@@ -50,7 +50,7 @@ function VideoCard({ video }: { video: Video }) {
   );
 }
 
-export function FeaturedVideosSection() {
+export function FeaturedVideosSection({ team }: { team?: string } = {}) {
   const featuredRaw = getFeaturedVideos(3);
   const featured = featuredRaw.length >= 3 ? featuredRaw : videos.slice(0, 3);
 
@@ -68,7 +68,7 @@ export function FeaturedVideosSection() {
             </h2>
           </div>
           <Link
-            href="/valladolid/tv"
+            href={team ? `/tv?team=${team}` : "/tv"}
             className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80"
           >
             Voir toute la chaîne <ArrowRight className="h-4 w-4" />

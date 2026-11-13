@@ -18,14 +18,14 @@ export default function ValladolidHomePage() {
       <HeroCarousel />
       <NextMatchSection />
       <PartnersStrip />
-      <NewsSection />
+      <NewsSection team="valladolid" />
       <AcademyStorySection />
             <RecentResultsSection />
 
       <ClubPreviewSection />
       <PalmaresPreviewSection />
-      <FeaturedVideosSection />
-      <FeaturedProductsSection />
+      <FeaturedVideosSection team="valladolid" />
+      <FeaturedProductsSection team="valladolid" />
       <NewsletterSection />
       <FinalCTASection />
     </div>

@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { Play, X, Camera } from "lucide-react";
-import { videos, videoCategories, type Video } from "@/data/videos";
+import { videoCategories, type Video } from "@/data/videos";
 import { GALLERY } from "@/data/gallery";
 
 const CATEGORY_GRADIENT: Record<string, string> = {
@@ -336,7 +336,7 @@ function VideoPlayer({
   );
 }
 
-export function TvView() {
+export function TvView({ videos }: { videos: Video[] }) {
   const [active, setActive] = useState<Video | null>(null);
   const [filter, setFilter] = useState<string>("all");
 

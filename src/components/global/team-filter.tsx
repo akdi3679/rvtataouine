@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { TEAM_THEME, type TeamId } from "@/data/team-theme";
 
 const OPTIONS: { id: TeamId | "all"; label: string }[] = [
@@ -13,17 +13,10 @@ const OPTIONS: { id: TeamId | "all"; label: string }[] = [
 export function TeamFilter({ currentTeam }: { currentTeam: TeamId | "all" }) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const handleClick = (id: TeamId | "all") => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (id === "all") {
-      params.delete("team");
-    } else {
-      params.set("team", id);
-    }
-    const qs = params.toString();
-    router.push(`${pathname}${qs ? `?${qs}` : ""}`, { scroll: false });
+    const url = id === "all" ? pathname : `${pathname}?team=${id}`;
+    router.push(url, { scroll: false });
   };
 
   return (

@@ -170,7 +170,7 @@ function getFooterColumns(section: TeamId) {
         links: [
           { label: "Notre histoire", href: "/valladolid/club" },
           { label: "Palmarès", href: "/valladolid/palmares" },
-          { label: "TV", href: "/valladolid/tv" },
+          { label: "TV", href: "/tv?team=valladolid" },
         ],
       },
       {
@@ -178,15 +178,15 @@ function getFooterColumns(section: TeamId) {
         links: [
           { label: "Matchs", href: "/valladolid/matchs" },
           { label: "Alumni", href: "/valladolid/alumni" },
-          { label: "Actualités", href: "/valladolid/actualites" },
+          { label: "Actualités", href: "/actualites?team=valladolid" },
           { label: "Inscription", href: "/valladolid/inscription" },
         ],
       },
       {
         title: "Boutique",
         links: [
-          { label: "Maillots", href: "/valladolid/boutique" },
-          { label: "Équipement", href: "/valladolid/boutique" },
+          { label: "Maillots", href: "/boutique?team=valladolid" },
+          { label: "Équipement", href: "/boutique?team=valladolid" },
         ],
       },
       {

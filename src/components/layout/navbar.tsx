@@ -58,9 +58,9 @@ const SECTIONS: Record<TeamId, SectionConfig> = {
     ],
     primaryLinks: [
       { label: "Matchs", href: "/valladolid/matchs" },
-      { label: "TV", href: "/valladolid/tv" },
-      { label: "Actualités", href: "/valladolid/actualites" },
-      { label: "Boutique", href: "/valladolid/boutique" },
+      { label: "TV", href: "/tv?team=valladolid" },
+      { label: "Actualités", href: "/actualites?team=valladolid" },
+      { label: "Boutique", href: "/boutique?team=valladolid" },
       { label: "Contact", href: "/valladolid/contact" },
     ],
     mobileGroups: [
@@ -76,13 +76,13 @@ const SECTIONS: Record<TeamId, SectionConfig> = {
         title: "Compétition",
         links: [
           { label: "Matchs", href: "/valladolid/matchs" },
-          { label: "TV", href: "/valladolid/tv" },
-          { label: "Actualités", href: "/valladolid/actualites" },
+          { label: "TV", href: "/tv?team=valladolid" },
+          { label: "Actualités", href: "/actualites?team=valladolid" },
         ],
       },
       {
         title: "Boutique",
-        links: [{ label: "Boutique", href: "/valladolid/boutique" }],
+        links: [{ label: "Boutique", href: "/boutique?team=valladolid" }],
       },
       {
         title: "Contact",
@@ -166,15 +166,15 @@ const SEARCH_INDEX: SearchItem[] = [
   })),
   ...articles.map((a) => ({
     id: `a-${a.slug}`, type: "article" as const, title: a.title,
-    subtitle: a.categoryLabel, href: `/valladolid/actualites/${a.slug}`,
+    subtitle: a.categoryLabel, href: `/actualites/${a.slug}`,
   })),
   ...products.map((p) => ({
     id: `pr-${p.slug}`, type: "product" as const, title: p.name,
-    subtitle: `${p.price} TND`, href: `/valladolid/boutique/${p.slug}`,
+    subtitle: `${p.price} TND`, href: `/boutique/${p.slug}`,
   })),
   ...videos.map((v) => ({
     id: `v-${v.id}`, type: "video" as const, title: v.title,
-    subtitle: v.categoryLabel, href: "/valladolid/tv",
+    subtitle: v.categoryLabel, href: "/tv",
   })),
 ];
 
@@ -301,8 +301,7 @@ export function Navbar() {
                     </div>
                   )}
                   {section.primaryLinks.map((l) => {
-                    const href = `/${currentLocale}${l.href}`;
-                    const active = pathname === href;
+                    const basePath = l.href.split("?")[0];`r`n                    const href = `/${currentLocale}${l.href}`;`r`n                    const active = pathname === `/${currentLocale}${basePath}`;
                     return (
                       <Link
                         key={l.href}

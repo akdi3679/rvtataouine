@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "i.ytimg.com" },
     ],
   },
+  async redirects() {
+    return [
+      { source: "/:locale/valladolid/boutique", destination: "/:locale/boutique?team=valladolid", permanent: true },
+      { source: "/:locale/valladolid/boutique/:slug", destination: "/:locale/boutique/:slug", permanent: true },
+      { source: "/:locale/valladolid/tv", destination: "/:locale/tv?team=valladolid", permanent: true },
+      { source: "/:locale/valladolid/actualites", destination: "/:locale/actualites?team=valladolid", permanent: true },
+      { source: "/:locale/valladolid/actualites/:slug", destination: "/:locale/actualites/:slug", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
