@@ -38,17 +38,24 @@ export default async function BoutiquePage({
 
   return (
     <div className="flex flex-col bg-white">
-      <section className="pt-10 lg:pt-14">
+           <section className="pt-10 lg:pt-14">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">
-            Boutique officielle
-          </h1>
-          <p className="mt-3 max-w-2xl text-base text-muted-foreground">
-            Portez les couleurs de l&apos;académie avec nos maillots,
-            équipements et merchandising officiels.
-          </p>
-          <div className="mt-6">
-            <TeamFilter currentTeam={team} />
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex-1">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
+                Boutique
+              </p>
+              <h1 className="mt-3 text-4xl font-black tracking-tight text-foreground sm:text-5xl">
+                Boutique officielle
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base">
+                Portez les couleurs de l&apos;académie avec nos maillots,
+                équipements et merchandising officiels.
+              </p>
+            </div>
+            <div className="shrink-0">
+              <TeamFilter currentTeam={team} />
+            </div>
           </div>
         </div>
       </section>

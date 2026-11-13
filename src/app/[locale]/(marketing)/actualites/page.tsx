@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { articles, type Article } from "@/data/news";
 import { ActualitesView } from "@/components/sections/actualites-view";
-import { TeamFilter } from "@/components/global/team-filter";
 import type { TeamId } from "@/data/team-theme";
 
 export const metadata: Metadata = {
@@ -27,14 +26,5 @@ export default async function ActualitesPage({
   const filtered: Article[] =
     team === "all" ? articles : articles.filter((a) => a.team === team);
 
-  return (
-    <>
-      <section className="bg-white border-b border-border/60">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 pt-8 pb-4">
-          <TeamFilter currentTeam={team} />
-        </div>
-      </section>
-      <ActualitesView articles={filtered} />
-    </>
-  );
+  return <ActualitesView articles={filtered} team={team} />;
 }

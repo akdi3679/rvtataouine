@@ -132,7 +132,7 @@ function SmallCard({ article }: { article: Article }) {
   );
 }
 
-function EndCard() {
+function EndCard({ team }: { team?: string }) {
   return (
     <Link
       href={team ? `/actualites?team=${team}` : "/actualites"}
@@ -312,7 +312,7 @@ export function NewsSection({ team }: { team?: string } = {}) {
               {rest.map((article) => (
                 <SmallCard key={article.slug} article={article} />
               ))}
-              <EndCard />
+              <EndCard team={team} />
             </div>
           </div>
         )}

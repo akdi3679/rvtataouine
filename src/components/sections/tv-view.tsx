@@ -5,7 +5,8 @@ import Image from "next/image";
 import { Play, X, Camera } from "lucide-react";
 import { videoCategories, type Video } from "@/data/videos";
 import { GALLERY } from "@/data/gallery";
-
+import { TeamFilter } from "@/components/global/team-filter";
+import type { TeamId } from "@/data/team-theme";
 const CATEGORY_GRADIENT: Record<string, string> = {
   match: "from-accent via-accent/80 to-accent-dark",
   training: "from-primary via-primary/80 to-primary-dark",
@@ -14,20 +15,27 @@ const CATEGORY_GRADIENT: Record<string, string> = {
   tutorial: "from-success via-success/80 to-primary/70",
 };
 
-function TvHero({ video, onPlay }: { video: Video; onPlay: () => void }) {
+function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; team: TeamId | "all" }) {
   const c = CATEGORY_GRADIENT[video.category] ?? CATEGORY_GRADIENT.match;
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-7xl px-6 pt-10 pb-8 lg:px-8 lg:pt-14 lg:pb-10">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
-          ARV TV
-        </p>
-        <h1 className="mt-3 text-4xl font-black tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-          En vidéo
-        </h1>
-        <p className="mt-3 max-w-xl text-sm text-muted-foreground sm:text-base">
-          Les meilleurs moments, interviews et coulisses de l&apos;académie.
-        </p>
+           <div className="mx-auto max-w-7xl px-6 pt-10 pb-8 lg:px-8 lg:pt-14 lg:pb-10">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
+              ARV TV
+            </p>
+            <h1 className="mt-3 text-4xl font-black tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              En vidéo
+            </h1>
+            <p className="mt-3 max-w-xl text-sm text-muted-foreground sm:text-base">
+              Les meilleurs moments, interviews et coulisses de l&apos;académie.
+            </p>
+          </div>
+          <div className="shrink-0">
+            <TeamFilter currentTeam={team} />
+          </div>
+        </div>
 
         <button
           onClick={onPlay}
@@ -336,7 +344,7 @@ function VideoPlayer({
   );
 }
 
-export function TvView({ videos }: { videos: Video[] }) {
+export function TvView({ videos, team }: { videos: Video[]; team: TeamId | "all" }) {
   const [active, setActive] = useState<Video | null>(null);
   const [filter, setFilter] = useState<string>("all");
 
@@ -356,8 +364,7 @@ export function TvView({ videos }: { videos: Video[] }) {
   return (
     <>
       <div className="bg-white">
-        <TvHero video={featured} onPlay={() => setActive(featured)} />
-
+<TvHero video={featured} onPlay={() => setActive(featured)} team={team} />
         <section className="pb-14 lg:pb-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mb-6 flex items-end justify-between gap-4">

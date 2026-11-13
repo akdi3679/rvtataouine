@@ -4,6 +4,8 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Clock, FileText, Newspaper, ArrowUpRight } from "lucide-react";
 import type { Article } from "@/data/news";
+import { TeamFilter } from "@/components/global/team-filter";
+import type { TeamId } from "@/data/team-theme";
 import Image from "next/image";
 const FILTERS = [
   { id: "all", label: "Tout" },
@@ -172,7 +174,7 @@ function ArticleCard({ article }: { article: Article }) {
   );
 }
 
-export function ActualitesView({ articles }: { articles: Article[] }) {
+export function ActualitesView({ articles, team }: { articles: Article[]; team: TeamId | "all" }) {
   const [filter, setFilter] = useState<string>("all");
 
   const filtered = useMemo(
@@ -194,10 +196,10 @@ export function ActualitesView({ articles }: { articles: Article[] }) {
   return (
     <div className="bg-white">
       {/* Page header */}
-      <section className="border-b border-border/60">
+           <section className="border-b border-border/60">
         <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8 lg:py-14">
-          <div className="flex items-end justify-between gap-6">
-            <div>
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex-1">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
                 Le journal de l&apos;académie
               </p>
@@ -209,10 +211,13 @@ export function ActualitesView({ articles }: { articles: Article[] }) {
                 passe à l&apos;académie, mis à jour chaque semaine.
               </p>
             </div>
-            <span className="hidden shrink-0 items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1.5 text-xs font-medium text-muted-foreground sm:flex">
-              <Newspaper className="h-3.5 w-3.5" />
-              {filtered.length} {filtered.length === 1 ? "article" : "articles"}
-            </span>
+            <div className="flex shrink-0 items-center gap-3">
+              <span className="hidden items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1.5 text-xs font-medium text-muted-foreground md:flex">
+                <Newspaper className="h-3.5 w-3.5" />
+                {filtered.length} {filtered.length === 1 ? "article" : "articles"}
+              </span>
+              <TeamFilter currentTeam={team} />
+            </div>
           </div>
 
           {/* Filters */}

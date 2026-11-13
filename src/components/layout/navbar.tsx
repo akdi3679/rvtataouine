@@ -301,7 +301,9 @@ export function Navbar() {
                     </div>
                   )}
                   {section.primaryLinks.map((l) => {
-                    const basePath = l.href.split("?")[0];`r`n                    const href = `/${currentLocale}${l.href}`;`r`n                    const active = pathname === `/${currentLocale}${basePath}`;
+                    const basePath = l.href.split("?")[0];
+                    const href = `/${currentLocale}${l.href}`;
+                    const active = pathname === `/${currentLocale}${basePath}`;
                     return (
                       <Link
                         key={l.href}

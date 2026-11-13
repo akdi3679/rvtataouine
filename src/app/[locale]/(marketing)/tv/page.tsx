@@ -27,14 +27,5 @@ export default async function TvPage({
   const filtered: Video[] =
     team === "all" ? videos : videos.filter((v) => v.team === team);
 
-  return (
-    <>
-      <section className="bg-white border-b border-border/60">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 pt-8 pb-4">
-          <TeamFilter currentTeam={team} />
-        </div>
-      </section>
-      <TvView videos={filtered} />
-    </>
-  );
+  return <TvView videos={filtered} team={team} />;
 }
