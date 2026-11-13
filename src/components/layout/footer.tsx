@@ -11,8 +11,11 @@ import {
   Mail,
   MapPin,
 } from "lucide-react";
+import { TEAM_THEME, FALLBACK_LOGO, type TeamId } from "@/data/team-theme";
 import { usePathname } from "next/navigation";
-import { getSectionFromPath, type TeamId } from "@/data/team-theme";
+import { getSectionFromPath, TEAM_THEME, FALLBACK_LOGO, type TeamId } from "@/data/team-theme";
+
+
 import { brand } from "@/data/brand";
 import { PartnersCarousel } from "@/components/global/partners-carousel";
 import Image from "next/image";
@@ -46,6 +49,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 const pathname = usePathname();
 const section = getSectionFromPath(pathname);
+const theme = TEAM_THEME[section];
 const columns = getFooterColumns(section);
   return (
     <footer className="relative bg-foreground text-background">
@@ -69,14 +73,17 @@ const columns = getFooterColumns(section);
 
         {/* 3 ─ Centered logo + tagline */}
         <section className="text-center">
-       <Link
+      <Link
   href="/"
   className="inline-flex h-14 w-14 items-center justify-center transition-opacity hover:opacity-80"
-  aria-label={brand.name}
+  aria-label={theme.name}
 >
   <Image
-    src="/images/logo/logo.png"
-    alt="ARV Tataouine"
+    src={theme.logoPath}
+    onError={(e) => {
+      (e.target as HTMLImageElement).src = FALLBACK_LOGO;
+    }}
+    alt={theme.name}
     width={56}
     height={56}
     className="h-full w-full object-contain"

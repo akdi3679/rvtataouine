@@ -9,6 +9,7 @@ export interface TeamTheme {
   textClass: string;
   bgSoftClass: string;
   borderClass: string;
+  logoPath: string;
 }
 
 export const TEAM_THEME: Record<TeamId, TeamTheme> = {
@@ -21,6 +22,7 @@ export const TEAM_THEME: Record<TeamId, TeamTheme> = {
     textClass: "text-[#1F5F8B]",
     bgSoftClass: "bg-[#1F5F8B]/10",
     borderClass: "border-[#1F5F8B]",
+    logoPath: "/images/logo/logo.png",
   },
   valladolid: {
     id: "valladolid",
@@ -31,6 +33,7 @@ export const TEAM_THEME: Record<TeamId, TeamTheme> = {
     textClass: "text-primary",
     bgSoftClass: "bg-primary/10",
     borderClass: "border-primary",
+    logoPath: "/images/logo/valladolid.png",
   },
   ennour: {
     id: "ennour",
@@ -41,6 +44,7 @@ export const TEAM_THEME: Record<TeamId, TeamTheme> = {
     textClass: "text-[#7A1F2B]",
     bgSoftClass: "bg-[#7A1F2B]/10",
     borderClass: "border-[#7A1F2B]",
+    logoPath: "/images/logo/ennour.png",
   },
   avenir: {
     id: "avenir",
@@ -51,8 +55,11 @@ export const TEAM_THEME: Record<TeamId, TeamTheme> = {
     textClass: "text-[#0F2A47]",
     bgSoftClass: "bg-[#0F2A47]/10",
     borderClass: "border-[#0F2A47]",
+    logoPath: "/images/logo/avenir.png",
   },
 };
+
+const FALLBACK_LOGO = "/images/logo/logo.png";
 
 export function getSectionFromPath(pathname: string): TeamId {
   if (pathname.includes("/valladolid")) return "valladolid";
@@ -60,3 +67,9 @@ export function getSectionFromPath(pathname: string): TeamId {
   if (pathname.includes("/avenir")) return "avenir";
   return "group";
 }
+
+export function getLogoPath(team: TeamId): string {
+  return TEAM_THEME[team]?.logoPath ?? FALLBACK_LOGO;
+}
+
+export { FALLBACK_LOGO };
