@@ -11,11 +11,13 @@ export interface Season {
   year: string;
   trophies: Trophy[];
   highlights: string[];
+  team: string;
 }
 
 export const seasons: Season[] = [
   {
     year: "2025-2026",
+    team: "valladolid",
     trophies: [
       {
         year: 2026,
@@ -43,6 +45,7 @@ export const seasons: Season[] = [
   },
   {
     year: "2024-2025",
+    team: "valladolid",
     trophies: [
       {
         year: 2025,
@@ -75,5 +78,9 @@ export const totalTrophies = seasons.reduce(
   (acc, s) => acc + s.trophies.length,
   0,
 );
+export function getSeasonsByTeam(team: string): Season[] {
+  if (team === "all") return seasons;
+  return seasons.filter((s) => s.team === team);
+}
 export const totalPlayers = 150;
 export const totalProPlayers = 23;

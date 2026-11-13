@@ -40,7 +40,7 @@ export function HowItWorksSection() {
 
         <div className="mt-12 text-center">
           <Link
-            href="/inscription"
+            href="/valladolid/inscription"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-base font-semibold text-white transition-all hover:bg-primary/90 hover:scale-105"
           >
             Commencer l'inscription

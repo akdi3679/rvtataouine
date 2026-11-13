@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Facebook,
@@ -9,7 +11,8 @@ import {
   Mail,
   MapPin,
 } from "lucide-react";
-import { footerNavigation } from "@/data/navigation";
+import { usePathname } from "next/navigation";
+import { getSectionFromPath, type TeamId } from "@/data/team-theme";
 import { brand } from "@/data/brand";
 import { PartnersCarousel } from "@/components/global/partners-carousel";
 import Image from "next/image";
@@ -41,7 +44,9 @@ const socials = [
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-
+const pathname = usePathname();
+const section = getSectionFromPath(pathname);
+const columns = getFooterColumns(section);
   return (
     <footer className="relative bg-foreground text-background">
       <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8 lg:py-12 space-y-10">
@@ -55,24 +60,11 @@ export function Footer() {
 
         {/* 2 ─ Nav columns */}
         <section>
-          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 sm:grid-cols-4">
-            <FooterColumn
-              title={footerNavigation.club.title}
-              links={footerNavigation.club.links}
-            />
-            <FooterColumn
-              title={footerNavigation.competition.title}
-              links={footerNavigation.competition.links}
-            />
-            <FooterColumn
-              title={footerNavigation.boutique.title}
-              links={footerNavigation.boutique.links}
-            />
-            <FooterColumn
-              title={footerNavigation.legal.title}
-              links={footerNavigation.legal.links}
-            />
-          </div>
+         <div className={`mx-auto grid max-w-5xl grid-cols-2 gap-6 ${columns.length === 4 ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}>
+  {columns.map((col) => (
+    <FooterColumn key={col.title} title={col.title} links={col.links} />
+  ))}
+</div>
         </section>
 
         {/* 3 ─ Centered logo + tagline */}
@@ -152,16 +144,17 @@ export function Footer() {
           </p>
           <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-background/50">
             <li>
-              <Link href="/mentions-legales">Mentions légales</Link>
+             <Link href="/valladolid/mentions-legales">Mentions légales</Link>
+
             </li>
             <li>
-              <Link href="/politique-confidentialite">Confidentialité</Link>
+<Link href="/valladolid/politique-confidentialite">Confidentialité</Link>
             </li>
             <li>
-              <Link href="/cookies">Cookies</Link>
+<Link href="/valladolid/cookies">Cookies</Link>
             </li>
             <li>
-              <Link href="/cgv">CGV</Link>
+<Link href="/valladolid/cgv">CGV</Link>
             </li>
           </ul>
         </section>
@@ -169,7 +162,72 @@ export function Footer() {
     </footer>
   );
 }
+function getFooterColumns(section: TeamId) {
+  if (section === "valladolid") {
+    return [
+      {
+        title: "Club",
+        links: [
+          { label: "Notre histoire", href: "/valladolid/club" },
+          { label: "Palmarès", href: "/valladolid/palmares" },
+          { label: "TV", href: "/valladolid/tv" },
+        ],
+      },
+      {
+        title: "Compétition",
+        links: [
+          { label: "Matchs", href: "/valladolid/matchs" },
+          { label: "Alumni", href: "/valladolid/alumni" },
+          { label: "Actualités", href: "/valladolid/actualites" },
+          { label: "Inscription", href: "/valladolid/inscription" },
+        ],
+      },
+      {
+        title: "Boutique",
+        links: [
+          { label: "Maillots", href: "/valladolid/boutique" },
+          { label: "Équipement", href: "/valladolid/boutique" },
+        ],
+      },
+      {
+        title: "Légal",
+        links: [
+          { label: "Mentions légales", href: "/valladolid/mentions-legales" },
+          { label: "Confidentialité", href: "/valladolid/politique-confidentialite" },
+          { label: "Cookies", href: "/valladolid/cookies" },
+          { label: "CGV", href: "/valladolid/cgv" },
+        ],
+      },
+    ];
+  }
 
+  return [
+    {
+      title: "Le Groupe",
+      links: [
+        { label: "Real Valladolid", href: "/valladolid" },
+        { label: "Ennour Sportif", href: "/ennour" },
+        { label: "Avenir Sportif", href: "/avenir" },
+      ],
+    },
+    {
+      title: "Contact",
+      links: [
+        { label: "Nous contacter", href: "/valladolid/contact" },
+        { label: "Inscription", href: "/valladolid/inscription" },
+      ],
+    },
+    {
+      title: "Légal",
+      links: [
+        { label: "Mentions légales", href: "/valladolid/mentions-legales" },
+        { label: "Confidentialité", href: "/valladolid/politique-confidentialite" },
+        { label: "Cookies", href: "/valladolid/cookies" },
+        { label: "CGV", href: "/valladolid/cgv" },
+      ],
+    },
+  ];
+}
 function FooterColumn({
   title,
   links,

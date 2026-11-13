@@ -100,7 +100,7 @@ function HonourCard({ honour }: { honour: Honour }) {
   const { Icon } = honour;
   return (
     <Link
-      href="/palmares"
+      href="/valladolid/palmares"
       data-card-index
       className="group relative flex w-[200px] flex-shrink-0 snap-center flex-col items-center rounded-xl border border-border bg-white px-5 pb-5 pt-16 text-center transition-all hover:border-accent/30 hover:shadow-md"
     >
@@ -139,7 +139,7 @@ function HonourCard({ honour }: { honour: Honour }) {
 function EndCard() {
   return (
     <Link
-      href="/palmares"
+      href="/valladolid/palmares"
       data-card-index
       className="group flex w-[200px] flex-shrink-0 snap-center flex-col items-center justify-center gap-3 rounded-xl bg-gradient-to-br from-accent to-accent-dark p-5 text-center transition-all hover:from-accent/90"
     >
@@ -248,7 +248,7 @@ export function PalmaresPreviewSection() {
             </p>
           </div>
           <Link
-            href="/palmares"
+            href="/valladolid/palmares"
             className="hidden shrink-0 items-center gap-2 rounded-md border border-accent px-4 py-2 text-xs font-semibold text-accent transition-colors hover:bg-accent hover:text-white sm:inline-flex"
           >
             Tout voir
@@ -341,7 +341,7 @@ export function PalmaresPreviewSection() {
         {/* Mobile-only bottom button */}
         <div className="mt-5 flex justify-center sm:hidden">
           <Link
-            href="/palmares"
+            href="/valladolid/palmares"
             className="inline-flex items-center gap-2 rounded-md border border-accent px-6 py-2.5 text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
           >
             Voir tout le palmarès

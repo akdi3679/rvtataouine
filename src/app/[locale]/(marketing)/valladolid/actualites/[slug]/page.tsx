@@ -80,7 +80,7 @@ export default async function ArticlePage({
       {/* Header — narrow column */}
       <header className="mx-auto max-w-3xl px-6 pt-10 pb-8 lg:pt-16">
         <Link
-          href="/actualites"
+          href="/valladolid/actualites"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -247,7 +247,7 @@ export default async function ArticlePage({
                 À lire aussi
               </h2>
               <Link
-                href="/actualites"
+                href="/valladolid/actualites"
                 className="hidden shrink-0 items-center gap-1 text-sm font-semibold text-foreground transition-colors hover:text-accent sm:inline-flex"
               >
                 Tous les articles
@@ -260,7 +260,7 @@ export default async function ArticlePage({
                 return (
                   <Link
                     key={r.slug}
-                    href={`/actualites/${r.slug}`}
+                    href={`/valladolid/actualites/${r.slug}`}
                     className="group flex flex-col"
                   >
                   <div className="relative aspect-[16/10] overflow-hidden rounded-xl">

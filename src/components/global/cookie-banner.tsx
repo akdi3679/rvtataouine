@@ -63,7 +63,7 @@ export function CookieBanner() {
               Nous utilisons uniquement des cookies nécessaires au
               fonctionnement du site.{" "}
               <Link
-                href="/cookies"
+                href="/valladolid/cookies"
                 className="font-semibold text-foreground underline underline-offset-2 hover:opacity-70"
               >
                 En savoir plus

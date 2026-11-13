@@ -71,7 +71,7 @@ export function InscriptionPopup() {
   const goToInscription = () => {
     localStorage.setItem(STORAGE_KEY, String(Date.now()));
     setOpen(false);
-    router.push("/inscription");
+    router.push("/valladolid/inscription");
   };
 
   if (!open) return null;

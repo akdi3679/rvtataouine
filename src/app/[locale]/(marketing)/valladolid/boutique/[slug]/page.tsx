@@ -38,7 +38,7 @@ export default async function ProductPage({
     <div className="bg-white">
       <div className="mx-auto max-w-6xl px-6 py-10 lg:px-8 lg:py-16">
         <Link
-          href="/boutique"
+          href="/valladolid/boutique"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />

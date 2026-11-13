@@ -83,7 +83,7 @@ function MatchCard({ match, isNext }: { match: Match; isNext: boolean }) {
 
   return (
     <Link
-      href="/matchs"
+      href="/valladolid/matchs"
       data-card-index
       className={`group relative flex-shrink-0 w-[240px] snap-center rounded-xl bg-white overflow-hidden flex flex-col transition-all ${
         isNext
@@ -305,7 +305,7 @@ export function NextMatchSection() {
           </div>
 
           <Link
-            href="/matchs"
+            href="/valladolid/matchs"
             className="absolute top-0 right-0 hidden md:inline-flex items-center gap-2 rounded-lg border border-primary px-4 py-2 text-xs font-semibold text-primary hover:bg-primary hover:text-white transition-colors shrink-0"
           >
             Calendrier
@@ -390,7 +390,7 @@ export function NextMatchSection() {
 
         <div className="mt-5 flex justify-center md:hidden">
           <Link
-            href="/matchs"
+            href="/valladolid/matchs"
             className="inline-flex items-center gap-2 rounded-lg border border-primary px-6 py-2.5 text-sm font-semibold text-primary hover:bg-primary hover:text-white transition-colors"
           >
             Voir le calendrier

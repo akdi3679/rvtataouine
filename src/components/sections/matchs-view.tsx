@@ -140,7 +140,7 @@ function NextMatchHero({ match }: { match: Match }) {
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/15 pt-5 sm:flex-row">
           <Countdown date={match.date} time={match.time} />
           <a
-            href="/inscription"
+            href="/valladolid/inscription"
             className="inline-flex items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-accent/25 transition-all hover:bg-accent/90 hover:scale-[1.02]"
           >
             Inscrire mon enfant

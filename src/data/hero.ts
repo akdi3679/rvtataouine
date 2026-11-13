@@ -17,7 +17,7 @@ export const heroSlides: HeroSlide[] = [
     category: "Actualité",
     title: "Victoire éclatante des U15 au tournoi de Sfax",
     ctaLabel: "En savoir plus",
-    ctaHref: "/actualites/victoire-u15-tournoi-sfax",
+    ctaHref: "/valladolid/actualites/victoire-u15-tournoi-sfax",
     duration: 6,
   },
     {
@@ -27,7 +27,7 @@ export const heroSlides: HeroSlide[] = [
     category: "Événement International",
     title: "International U13 Cup — L'Europe à Tataouine, mars 2027",
     ctaLabel: "Découvrir le tournoi",
-    ctaHref: "/actualites/international-u13-cup-2027-tataouine",
+    ctaHref: "/valladolid/actualites/international-u13-cup-2027-tataouine",
     duration: 6,
   },
   {
@@ -37,7 +37,7 @@ export const heroSlides: HeroSlide[] = [
     category: "Produit",
     title: "Nouveau maillot domicile 2026/2027",
     ctaLabel: "Voir la boutique",
-    ctaHref: "/boutique",
+    ctaHref: "/valladolid/boutique",
     duration: 6,
   },
   {
@@ -47,7 +47,7 @@ export const heroSlides: HeroSlide[] = [
     category: "Club",
     title: "Nos nouvelles installations d'analyse vidéo",
     ctaLabel: "Visiter le club",
-    ctaHref: "/club",
+    ctaHref: "/valladolid/club",
     duration: 6,
   },
 ];

@@ -21,6 +21,7 @@ export interface Product {
   isNew?: boolean;
   details: string[];
   care?: string[];
+  team: string;    // ← AJOUTER
 }
 
 export const products: Product[] = [
@@ -31,6 +32,7 @@ export const products: Product[] = [
       "Le maillot officiel de l'Académie pour la saison 2026/27. Tissu respirant, coupe athlétique et écusson brodé.",
     category: "maillot",
     categoryLabel: "Maillots",
+     team: "valladolid",    
     price: 85,
     images: ["/images/boutique/wear1.png"],
     featured: true,
@@ -121,4 +123,8 @@ export function getProductsByCategory(category: string): Product[] {
 
 export function formatPrice(price: number): string {
   return `${price} TND`;
+}
+export function getProductsByTeam(team: string): Product[] {
+  if (team === "all") return products;
+  return products.filter((p) => p.team === team);
 }

@@ -5,33 +5,33 @@ export interface NavItem {
 }
 
 export const mainNavigation: NavItem[] = [
-  { label: "Club", href: "/club" },
-  { label: "Palmarès", href: "/palmares" },
-  { label: "Matchs", href: "/matchs" },
-  { label: "TV", href: "/tv" },
-  { label: "Boutique", href: "/boutique" },
-  { label: "Alumni", href: "/alumni" },
-  { label: "Actualités", href: "/actualites" },
-  { label: "Contact", href: "/contact" },
+  { label: "Club", href: "/valladolid/club" },
+  { label: "Palmarès", href: "/valladolid/palmares" },
+  { label: "Matchs", href: "/valladolid/matchs" },
+  { label: "TV", href: "/valladolid/tv" },
+  { label: "Boutique", href: "/valladolid/boutique" },
+  { label: "Alumni", href: "/valladolid/alumni" },
+  { label: "Actualités", href: "/valladolid/actualites" },
+  { label: "Contact", href: "/valladolid/contact" },
 ];
 
 export const footerNavigation = {
   club: {
     title: "Club",
     links: [
-      { label: "Notre histoire", href: "/club" },
+      { label: "Notre histoire", href: "/valladolid/club" },
       { label: "Équipe", href: "/equipe" },
-      { label: "Palmarès", href: "/palmares" },
-      { label: "TV", href: "/tv" },
+      { label: "Palmarès", href: "/valladolid/palmares" },
+      { label: "TV", href: "/valladolid/tv" },
     ],
   },
   competition: {
     title: "Compétition",
     links: [
-      { label: "Matchs", href: "/matchs" },
-      { label: "Alumni", href: "/alumni" },
-      { label: "Actualités", href: "/actualites" },
-      { label: "Inscription", href: "/inscription" },
+      { label: "Matchs", href: "/valladolid/matchs" },
+      { label: "Alumni", href: "/valladolid/alumni" },
+      { label: "Actualités", href: "/valladolid/actualites" },
+      { label: "Inscription", href: "/valladolid/inscription" },
     ],
   },
   boutique: {
@@ -46,10 +46,10 @@ export const footerNavigation = {
   legal: {
     title: "Légal",
     links: [
-      { label: "Mentions légales", href: "/mentions-legales" },
-      { label: "Confidentialité", href: "/politique-confidentialite" },
-      { label: "Cookies", href: "/cookies" },
-      { label: "CGV", href: "/cgv" },
+      { label: "Mentions légales", href: "/valladolid/mentions-legales" },
+      { label: "Confidentialité", href: "/valladolid/politique-confidentialite" },
+      { label: "Cookies", href: "/valladolid/cookies" },
+      { label: "CGV", href: "/valladolid/cgv" },
     ],
   },
 };

@@ -113,7 +113,7 @@ export function NewsletterSection() {
                     J'accepte de recevoir la newsletter de l'académie et de
                     pouvoir me désabonner à tout moment. Consultez notre{" "}
                     <Link
-                      href="/politique-confidentialite"
+                      href="/valladolid/politique-confidentialite"
                       className="font-semibold text-foreground underline underline-offset-2 hover:opacity-70"
                     >
                       politique de confidentialité

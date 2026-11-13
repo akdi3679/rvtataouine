@@ -50,7 +50,7 @@ export function ClubPreviewSection() {
             </div>
 
             <Link
-              href="/club"
+              href="/valladolid/club"
               className="group mt-10 inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 text-sm font-semibold text-background transition-opacity hover:opacity-85"
             >
               Découvrir notre club

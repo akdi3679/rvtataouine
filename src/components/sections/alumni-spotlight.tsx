@@ -85,7 +85,7 @@ export function AlumniSpotlightSection() {
 
         <div className="mt-12 text-center">
           <Link
-            href="/alumni"
+            href="/valladolid/alumni"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80"
           >
             Voir tous nos alumni et témoignages <ArrowRight className="h-4 w-4" />

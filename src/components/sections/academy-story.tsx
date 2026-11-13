@@ -96,7 +96,7 @@ export function AcademyStorySection() {
           {/* CTA — centered in the left half */}
           <div className="mt-8 flex justify-center">
             <Link
-              href="/inscription"
+              href="/valladolid/inscription"
               className="inline-flex items-center gap-3 rounded-md bg-accent px-10 py-4 text-base font-bold text-white shadow-xl shadow-accent/25 transition-all hover:bg-accent/90 hover:shadow-2xl hover:shadow-accent/30 hover:-translate-y-0.5"
             >
               Inscrire mon enfant

@@ -96,14 +96,14 @@ export default function ClubPage() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
-                  href="/inscription"
+                  href="/valladolid/inscription"
                   className="inline-flex items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-accent/20 transition-all hover:bg-accent/90 hover:shadow-lg"
                 >
                   Inscrire mon enfant
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/valladolid/contact"
                   className="inline-flex items-center gap-2 rounded-md border border-border bg-white px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/30 hover:bg-secondary/50"
                 >
                   Visiter le club

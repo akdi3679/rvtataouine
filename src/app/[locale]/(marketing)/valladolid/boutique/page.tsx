@@ -44,7 +44,7 @@ export default function BoutiquePage() {
                       {catProducts.map((p) => (
                         <Link
                           key={p.slug}
-                          href={"/boutique/" + p.slug}
+                          href={"/valladolid/boutique/" + p.slug}
                           className="group flex flex-col"
                         >
                           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-secondary/60">

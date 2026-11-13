@@ -52,7 +52,7 @@ function FeaturedHero({ article }: { article: Article }) {
   const c = CATEGORY[article.category] ?? CATEGORY.match;
 
   return (
-    <Link href={`/actualites/${article.slug}`} className="group block">
+    <Link href={`/valladolid/actualites/${article.slug}`} className="group block">
       <div className="relative aspect-[16/10] overflow-hidden rounded-2xl md:aspect-[21/9]">
         {/* Gradient background */}
        <Image
@@ -121,7 +121,7 @@ function ArticleCard({ article }: { article: Article }) {
 
   return (
     <Link
-      href={`/actualites/${article.slug}`}
+      href={`/valladolid/actualites/${article.slug}`}
       className="group flex flex-col"
     >
       {/* Thumbnail */}

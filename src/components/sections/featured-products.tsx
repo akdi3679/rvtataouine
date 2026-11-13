@@ -20,7 +20,7 @@ export function FeaturedProductsSection() {
             </p>
           </div>
           <Link
-            href="/boutique"
+            href="/valladolid/boutique"
             className="group hidden shrink-0 items-center gap-1.5 text-sm font-semibold text-foreground transition-opacity hover:opacity-60 sm:inline-flex"
           >
             Voir la boutique
@@ -34,7 +34,7 @@ export function FeaturedProductsSection() {
             {featured.map((product) => (
               <Link
                 key={product.slug}
-                href={`/boutique/${product.slug}`}
+                href={`/valladolid/boutique/${product.slug}`}
                 className="group flex w-[240px] flex-shrink-0 snap-center flex-col sm:w-auto sm:flex-shrink"
               >
                 {/* Image area */}
@@ -82,7 +82,7 @@ export function FeaturedProductsSection() {
         {/* Mobile-only bottom button */}
         <div className="mt-6 flex justify-center sm:hidden">
           <Link
-            href="/boutique"
+            href="/valladolid/boutique"
             className="inline-flex items-center gap-2 rounded-md border border-foreground/20 px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
           >
             Voir la boutique

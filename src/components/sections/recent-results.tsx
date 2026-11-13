@@ -27,7 +27,7 @@ export function RecentResultsSection() {
             </p>
           </div>
           <Link
-            href="/matchs"
+            href="/valladolid/matchs"
             className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-foreground transition-opacity hover:opacity-60"
           >
             Tous les matchs
@@ -81,7 +81,7 @@ export function RecentResultsSection() {
             return (
               <Link
                 key={match.id}
-                href="/matchs"
+                href="/valladolid/matchs"
                 className={`grid grid-cols-[auto_1fr_auto] items-center gap-x-3 gap-y-2 px-4 py-3 transition-colors hover:bg-secondary/30 md:grid-cols-[auto_1fr_120px_120px_100px] md:gap-x-6 md:px-6 md:py-4 ${divider}`}
               >
                 <TeamCrest teamName={opponent} sizeClass="h-10 w-10" />

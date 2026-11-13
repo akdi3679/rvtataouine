@@ -24,7 +24,7 @@ export default function NotFound() {
           <Home className="h-4 w-4" />
           Retour à l'accueil
         </Link>
-        <Link href="/contact" className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary">
+        <Link href="/valladolid/contact" className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary">
           Nous contacter
         </Link>
       </div>
@@ -36,10 +36,10 @@ export default function NotFound() {
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
           {[
-            { href: "/club", label: "Notre Club", icon: Trophy, desc: "Histoire et philosophie" },
-            { href: "/matchs", label: "Matchs", icon: Calendar, desc: "Calendrier et résultats" },
-            { href: "/boutique", label: "Boutique", icon: ShoppingBag, desc: "Maillots et équipements" },
-            { href: "/actualites", label: "Actualités", icon: Search, desc: "Dernières nouvelles" },
+            { href: "/valladolid/club", label: "Notre Club", icon: Trophy, desc: "Histoire et philosophie" },
+            { href: "/valladolid/matchs", label: "Matchs", icon: Calendar, desc: "Calendrier et résultats" },
+            { href: "/valladolid/boutique", label: "Boutique", icon: ShoppingBag, desc: "Maillots et équipements" },
+            { href: "/valladolid/actualites", label: "Actualités", icon: Search, desc: "Dernières nouvelles" },
           ].map((link) => (
             <Link
               key={link.href}

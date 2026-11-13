@@ -19,7 +19,7 @@ export function RecentNewsSection() {
               Les dernières nouvelles
             </h2>
           </div>
-          <Link href="/actualites" className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80">
+          <Link href="/valladolid/actualites" className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80">
             Toutes les actualités <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -28,7 +28,7 @@ export function RecentNewsSection() {
           {recent.map((article) => (
             <Link
               key={article.slug}
-              href={`/actualites/${article.slug}`}
+              href={`/valladolid/actualites/${article.slug}`}
               className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/50 hover:shadow-lg"
             >
               <div className="aspect-video overflow-hidden bg-gradient-to-br from-primary/10 to-accent/10">
@@ -64,7 +64,7 @@ export function RecentNewsSection() {
         </div>
 
         <div className="mt-8 text-center sm:hidden">
-          <Link href="/actualites" className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
+          <Link href="/valladolid/actualites" className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
             Toutes les actualités <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

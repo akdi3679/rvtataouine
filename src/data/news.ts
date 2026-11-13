@@ -10,6 +10,7 @@ export interface Article {
     role: string;
     initials: string;
   };
+  team: string;
   publishedAt: string;
   readTime: number;
   featured: boolean;
@@ -115,6 +116,7 @@ export const articles: Article[] = [
     image: "/images/news/ahmed-ben-alui-signe-esperance.jpg",
     category: "alumni",
     categoryLabel: "Alumni",
+    team: "valladolid",
     author: { name: "Karim Trabelsi", role: "Directeur Technique", initials: "KT" },
     publishedAt: "2026-10-28T14:00:00Z",
     readTime: 3,
@@ -278,4 +280,8 @@ export function getArticlesByCategory(category: string): Article[] {
 
 export function getFeaturedArticle(): Article | undefined {
   return articles.find((a) => a.featured);
+}
+export function getArticlesByTeam(team: string): Article[] {
+  if (team === "all") return articles;
+  return articles.filter((a) => a.team === team);
 }

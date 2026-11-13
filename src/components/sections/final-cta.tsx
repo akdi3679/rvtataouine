@@ -32,13 +32,13 @@ export function FinalCTASection() {
         {/* Boutons — mt-28 mobile (compense la translation), mt-10 desktop (position d'origine) */}
         <div className="mt-28 flex flex-col items-center justify-center gap-4 sm:flex-row lg:mt-10">
           <Link
-            href="/inscription"
+            href="/valladolid/inscription"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-bold text-gold transition-all hover:bg-accent/90 hover:scale-105"
           >
             Inscription <ArrowRight className="h-5 w-5" />
           </Link>
           <Link
-            href="/contact"
+            href="/valladolid/contact"
             className="inline-flex items-center gap-2 rounded-full border-2 border-foreground/15 bg-transparent px-8 py-4 text-base font-semibold text-foreground transition-all hover:border-foreground/40 hover:bg-foreground/5"
           >
             Essai gratuit

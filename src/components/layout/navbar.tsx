@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Menu, ChevronDown, ChevronLeft, Search, User, X,
   FileText, ShoppingBag, Video,
@@ -12,39 +13,144 @@ import { articles } from "@/data/news";
 import { products } from "@/data/products";
 import { videos } from "@/data/videos";
 import { CartButton } from "@/components/interactive/cart-button";
-import Image from "next/image";
+import { TEAM_THEME, type TeamId } from "@/data/team-theme";
+
 const SCROLL_THRESHOLD = 20;
 const DELTA_THRESHOLD = 8;
 const TOP_THRESHOLD = 80;
 
-const MOBILE_GROUPS = [
-  { title: "Club", links: [
-    { label: "Notre Club", href: "club" },
-    { label: "Palmarès", href: "palmares" },
-    { label: "Alumni", href: "alumni" },
-  ]},
-  { title: "Compétition", links: [
-    { label: "Matchs", href: "matchs" },
-    { label: "TV", href: "tv" },
-    { label: "Actualités", href: "actualites" },
-  ]},
-  { title: "Boutique", links: [{ label: "Boutique", href: "boutique" }] },
-  { title: "Contact", links: [{ label: "Contact", href: "contact" }] },
-];
+interface SectionConfig {
+  bgClass: string;
+  clubLinks?: { label: string; href: string }[];
+  primaryLinks: { label: string; href: string }[];
+  mobileGroups: { title: string; links: { label: string; href: string }[] }[];
+}
 
-const PRIMARY_LINKS = [
-  { label: "Matchs", href: "matchs" },
-  { label: "TV", href: "tv" },
-  { label: "Actualités", href: "actualites" },
-  { label: "Boutique", href: "boutique" },
-  { label: "Contact", href: "contact" },
-];
+const SECTIONS: Record<TeamId, SectionConfig> = {
+  group: {
+    bgClass: TEAM_THEME.group.bgClass,
+    primaryLinks: [
+      { label: "Real Valladolid", href: "/valladolid" },
+      { label: "Ennour", href: "/ennour" },
+      { label: "Avenir", href: "/avenir" },
+    ],
+    mobileGroups: [
+      {
+        title: "Nos entités",
+        links: [
+          { label: "Real Valladolid", href: "/valladolid" },
+          { label: "Ennour Sportif", href: "/ennour" },
+          { label: "Avenir Sportif", href: "/avenir" },
+        ],
+      },
+      {
+        title: "Contact",
+        links: [{ label: "Nous contacter", href: "/valladolid/contact" }],
+      },
+    ],
+  },
+  valladolid: {
+    bgClass: TEAM_THEME.valladolid.bgClass,
+    clubLinks: [
+      { label: "Club", href: "/valladolid/club" },
+      { label: "Palmarès", href: "/valladolid/palmares" },
+      { label: "Alumni", href: "/valladolid/alumni" },
+    ],
+    primaryLinks: [
+      { label: "Matchs", href: "/valladolid/matchs" },
+      { label: "TV", href: "/valladolid/tv" },
+      { label: "Actualités", href: "/valladolid/actualites" },
+      { label: "Boutique", href: "/valladolid/boutique" },
+      { label: "Contact", href: "/valladolid/contact" },
+    ],
+    mobileGroups: [
+      {
+        title: "Club",
+        links: [
+          { label: "Notre Club", href: "/valladolid/club" },
+          { label: "Palmarès", href: "/valladolid/palmares" },
+          { label: "Alumni", href: "/valladolid/alumni" },
+        ],
+      },
+      {
+        title: "Compétition",
+        links: [
+          { label: "Matchs", href: "/valladolid/matchs" },
+          { label: "TV", href: "/valladolid/tv" },
+          { label: "Actualités", href: "/valladolid/actualites" },
+        ],
+      },
+      {
+        title: "Boutique",
+        links: [{ label: "Boutique", href: "/valladolid/boutique" }],
+      },
+      {
+        title: "Contact",
+        links: [{ label: "Contact", href: "/valladolid/contact" }],
+      },
+    ],
+  },
+  ennour: {
+    bgClass: TEAM_THEME.ennour.bgClass,
+    primaryLinks: [
+      { label: "Le Groupe", href: "/" },
+      { label: "Galerie", href: "/ennour#gallery" },
+      { label: "Contact", href: "/valladolid/contact" },
+    ],
+    mobileGroups: [
+      {
+        title: "Ennour Sportif",
+        links: [
+          { label: "Présentation", href: "/ennour" },
+          { label: "Galerie", href: "/ennour#gallery" },
+          { label: "Actualités", href: "/ennour#news" },
+        ],
+      },
+      {
+        title: "Le Groupe",
+        links: [{ label: "Retour au groupe", href: "/" }],
+      },
+    ],
+  },
+  avenir: {
+    bgClass: TEAM_THEME.avenir.bgClass,
+    primaryLinks: [
+      { label: "Le Groupe", href: "/" },
+      { label: "Galerie", href: "/avenir#gallery" },
+      { label: "Contact", href: "/valladolid/contact" },
+    ],
+    mobileGroups: [
+      {
+        title: "Avenir Sportif",
+        links: [
+          { label: "Présentation", href: "/avenir" },
+          { label: "Galerie", href: "/avenir#gallery" },
+          { label: "Actualités", href: "/avenir#news" },
+        ],
+      },
+      {
+        title: "Le Groupe",
+        links: [{ label: "Retour au groupe", href: "/" }],
+      },
+    ],
+  },
+};
 
-const CLUB_LINKS = [
-  { label: "Club", href: "club" },
-  { label: "Palmarès", href: "palmares" },
-  { label: "Alumni", href: "alumni" },
-];
+function useActiveTeam(): TeamId {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  if (pathname.includes("/valladolid")) return "valladolid";
+  if (pathname.includes("/ennour")) return "ennour";
+  if (pathname.includes("/avenir")) return "avenir";
+
+  const queryTeam = searchParams.get("team");
+  if (queryTeam === "valladolid" || queryTeam === "ennour" || queryTeam === "avenir") {
+    return queryTeam;
+  }
+
+  return "group";
+}
 
 type SearchItem = {
   id: string;
@@ -56,19 +162,19 @@ type SearchItem = {
 
 const SEARCH_INDEX: SearchItem[] = [
   ...mainNavigation.map((n) => ({
-    id: `p-${n.href}`, type: "page" as const, title: n.label, href: n.href,
+    id: `p-${n.href}`, type: "page" as const, title: n.label, href: `/valladolid${n.href}`,
   })),
   ...articles.map((a) => ({
     id: `a-${a.slug}`, type: "article" as const, title: a.title,
-    subtitle: a.categoryLabel, href: `/actualites/${a.slug}`,
+    subtitle: a.categoryLabel, href: `/valladolid/actualites/${a.slug}`,
   })),
   ...products.map((p) => ({
     id: `pr-${p.slug}`, type: "product" as const, title: p.name,
-    subtitle: `${p.price} TND`, href: `/boutique/${p.slug}`,
+    subtitle: `${p.price} TND`, href: `/valladolid/boutique/${p.slug}`,
   })),
   ...videos.map((v) => ({
     id: `v-${v.id}`, type: "video" as const, title: v.title,
-    subtitle: v.categoryLabel, href: "/tv",
+    subtitle: v.categoryLabel, href: "/valladolid/tv",
   })),
 ];
 
@@ -76,14 +182,14 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
   const [clubOpen, setClubOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
   const pathname = usePathname();
-
   const currentLocale = pathname.split("/")[1] || "fr";
+  const team = useActiveTeam();
+  const section = SECTIONS[team];
   const isBoutiquePage = pathname.includes("/boutique");
   const closeMobile = useCallback(() => setMobileOpen(false), []);
   const closeSearch = useCallback(() => setSearchOpen(false), []);
@@ -94,7 +200,7 @@ export function Navbar() {
       setScrolled(y > SCROLL_THRESHOLD);
       if (y < TOP_THRESHOLD) setHidden(false);
       else if (y > lastScrollY.current + DELTA_THRESHOLD) {
-        setHidden(true); setLangOpen(false); setClubOpen(false);
+        setHidden(true); setClubOpen(false);
       } else if (y < lastScrollY.current - DELTA_THRESHOLD) {
         setHidden(false);
       }
@@ -106,15 +212,7 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (!langOpen) return;
-    const h = () => setLangOpen(false);
-    const t = setTimeout(() => window.addEventListener("click", h), 0);
-    return () => { clearTimeout(t); window.removeEventListener("click", h); };
-  }, [langOpen]);
-
-  useEffect(() => {
     setSearchOpen(false);
-    setLangOpen(false);
     setClubOpen(false);
     setMobileOpen(false);
   }, [pathname]);
@@ -130,7 +228,7 @@ export function Navbar() {
         onFocus={() => setHidden(false)}
       >
         <nav
-          className={`mx-auto flex h-16 max-w-7xl items-center px-3 md:px-4 lg:px-8 bg-primary transition-shadow duration-300 ${
+          className={`mx-auto flex h-16 max-w-7xl items-center px-3 md:px-4 lg:px-8 transition-all duration-300 ${section.bgClass} ${
             scrolled ? "shadow-lg shadow-black/25" : ""
           }`}
         >
@@ -152,55 +250,58 @@ export function Navbar() {
             </div>
           ) : (
             <>
-            <Link
-  href={`/${currentLocale}`}
-  className="flex h-10 w-10 shrink-0 items-center justify-center transition-opacity hover:opacity-80"
->
-  <Image
-    src="/images/logo/logo.png"
-    alt="ARV Tataouine"
-    width={40}
-    height={40}
-    priority
-    className="h-full w-full object-contain"
-  />
-</Link>
+              <Link
+                href={`/${currentLocale}`}
+                className="flex h-10 w-10 shrink-0 items-center justify-center transition-opacity hover:opacity-80"
+              >
+                <Image
+                  src="/images/logo/logo.png"
+                  alt="ARV Tataouine"
+                  width={40}
+                  height={40}
+                  priority
+                  className="h-full w-full object-contain"
+                />
+              </Link>
+
               <div className="flex-1 flex justify-center min-w-0 px-2">
                 <div className="hidden md:flex items-center gap-0.5 lg:gap-1">
-                  <div className="relative">
-                    <button
-                      onClick={() => setClubOpen(!clubOpen)}
-                      onMouseEnter={() => setClubOpen(true)}
-                      onMouseLeave={() => setClubOpen(false)}
-                      className="flex items-center gap-1 px-2 lg:px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors"
-                      aria-haspopup="true"
-                      aria-expanded={clubOpen}
-                    >
-                      Club
-                      <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${clubOpen ? "rotate-180" : ""}`} />
-                    </button>
-                    {clubOpen && (
-                      <div
-                        className="absolute top-full left-0 mt-1 w-48 rounded-md border border-white/10 bg-primary shadow-lg overflow-hidden z-[60]"
+                  {section.clubLinks && (
+                    <div className="relative">
+                      <button
+                        onClick={() => setClubOpen(!clubOpen)}
                         onMouseEnter={() => setClubOpen(true)}
                         onMouseLeave={() => setClubOpen(false)}
-                        role="menu"
+                        className="flex items-center gap-1 px-2 lg:px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors"
+                        aria-haspopup="true"
+                        aria-expanded={clubOpen}
                       >
-                        {CLUB_LINKS.map((l) => (
-                          <Link
-                            key={l.href}
-                            href={`/${currentLocale}/${l.href}`}
-                            className="block px-4 py-2.5 text-sm text-white/90 hover:bg-white/10 hover:text-white transition-colors"
-                            role="menuitem"
-                          >
-                            {l.label}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  {PRIMARY_LINKS.map((l) => {
-                    const href = `/${currentLocale}/${l.href}`;
+                        Club
+                        <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${clubOpen ? "rotate-180" : ""}`} />
+                      </button>
+                      {clubOpen && (
+                        <div
+                          className={`absolute top-full left-0 mt-1 w-48 rounded-md border border-white/10 ${section.bgClass} shadow-lg overflow-hidden z-[60]`}
+                          onMouseEnter={() => setClubOpen(true)}
+                          onMouseLeave={() => setClubOpen(false)}
+                          role="menu"
+                        >
+                          {section.clubLinks.map((l) => (
+                            <Link
+                              key={l.href}
+                              href={`/${currentLocale}${l.href}`}
+                              className="block px-4 py-2.5 text-sm text-white/90 hover:bg-white/10 hover:text-white transition-colors"
+                              role="menuitem"
+                            >
+                              {l.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {section.primaryLinks.map((l) => {
+                    const href = `/${currentLocale}${l.href}`;
                     const active = pathname === href;
                     return (
                       <Link
@@ -221,7 +322,6 @@ export function Navbar() {
               </div>
 
               <div className="flex items-center gap-1 lg:gap-2 shrink-0">
-                {/* Desktop + tablet search — visible from md up, exactly as original */}
                 <div className="hidden md:block">
                   <InlineSearch
                     inputClassName="w-32 lg:w-48"
@@ -229,30 +329,31 @@ export function Navbar() {
                   />
                 </div>
 
-               {/* Language — native select, shows OS picker */}
-<div className="relative hidden md:block ">
-  <select
-    value={currentLocale}
-    onChange={(e) => {
-      window.location.href = pathname.replace(
-        `/${currentLocale}`,
-        `/${e.target.value}`,
-      );
-    }}
-    className="appearance-none bg-transparent text-sm font-medium text-white/90 hover:text-white border border-white/10 hover:border-white/25 rounded-md pl-3 pr-8 py-2 cursor-pointer focus:outline-none focus:ring-1 focus:ring-white/40 transition-colors"
-    aria-label="Choisir la langue"
-  >
-    {languageOptions.map((lang) => (
-      <option key={lang.code} value={lang.code} className="bg-white text-foreground">
-        {lang.label}
-      </option>
-    ))}
-  </select>
-  <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/70" />
-</div>
- {isBoutiquePage && (
+                <div className="relative hidden md:block">
+                  <select
+                    value={currentLocale}
+                    onChange={(e) => {
+                      window.location.href = pathname.replace(
+                        `/${currentLocale}`,
+                        `/${e.target.value}`,
+                      );
+                    }}
+                    className="appearance-none bg-transparent text-sm font-medium text-white/90 hover:text-white border border-white/10 hover:border-white/25 rounded-md pl-3 pr-8 py-2 cursor-pointer focus:outline-none focus:ring-1 focus:ring-white/40 transition-colors"
+                    aria-label="Choisir la langue"
+                  >
+                    {languageOptions.map((lang) => (
+                      <option key={lang.code} value={lang.code} className="bg-white text-foreground">
+                        {lang.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/70" />
+                </div>
+
+                {isBoutiquePage && (
                   <div className="hidden md:block"><CartButton /></div>
                 )}
+
                 <Link
                   href={`/${currentLocale}/login`}
                   className="hidden md:flex items-center justify-center p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition-colors"
@@ -261,9 +362,6 @@ export function Navbar() {
                   <User className="h-5 w-5" />
                 </Link>
 
-               
-
-                {/* Mobile cluster (< 768): search → profile → cart → burger */}
                 <div className="flex md:hidden items-center gap-1">
                   <button
                     onClick={() => setSearchOpen(true)}
@@ -294,14 +392,31 @@ export function Navbar() {
         </nav>
       </header>
 
-      <MobileMenu open={mobileOpen} onClose={closeMobile} currentLang={currentLocale} />
+      <MobileMenu
+        open={mobileOpen}
+        onClose={closeMobile}
+        currentLang={currentLocale}
+        bgClass={section.bgClass}
+        groups={section.mobileGroups}
+      />
     </>
   );
 }
 
-function MobileMenu({ open, onClose, currentLang }: { open: boolean; onClose: () => void; currentLang: string }) {
+function MobileMenu({
+  open,
+  onClose,
+  currentLang,
+  bgClass,
+  groups,
+}: {
+  open: boolean;
+  onClose: () => void;
+  currentLang: string;
+  bgClass: string;
+  groups: { title: string; links: { label: string; href: string }[] }[];
+}) {
   const pathname = usePathname();
-  const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -317,11 +432,6 @@ function MobileMenu({ open, onClose, currentLang }: { open: boolean; onClose: ()
     return () => { document.body.style.overflow = prev; };
   }, [open]);
 
-  // Close language dropdown whenever the drawer closes
-  useEffect(() => {
-    if (!open) setLangMenuOpen(false);
-  }, [open]);
-
   return (
     <>
       <div
@@ -332,7 +442,7 @@ function MobileMenu({ open, onClose, currentLang }: { open: boolean; onClose: ()
         aria-hidden="true"
       />
       <aside
-        className={`fixed top-0 right-0 z-[70] h-full w-full max-w-sm bg-primary border-l border-white/10 shadow-2xl transition-transform duration-300 ease-out md:hidden ${
+        className={`fixed top-0 right-0 z-[70] h-full w-full max-w-sm ${bgClass} border-l border-white/10 shadow-2xl transition-transform duration-300 ease-out md:hidden ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
         aria-label="Menu principal"
@@ -341,16 +451,15 @@ function MobileMenu({ open, onClose, currentLang }: { open: boolean; onClose: ()
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
             <div className="flex items-center gap-3">
- <div className="flex h-9 w-9 items-center justify-center">
-  <Image
-    src="/images/logo/logo.png"
-    alt="ARV Tataouine"
-    width={36}
-    height={36}
-    className="h-full w-full object-contain"
-  />
-</div>  <span className="font-bold text-white">Menu</span>
-</div>
+              <Image
+                src="/images/logo/logo.png"
+                alt="ARV Tataouine"
+                width={36}
+                height={36}
+                className="h-9 w-9 object-contain"
+              />
+              <span className="font-bold text-white">Menu</span>
+            </div>
             <button
               onClick={onClose}
               className="p-2 rounded-md text-white/80 hover:bg-white/10 hover:text-white transition-colors"
@@ -362,13 +471,13 @@ function MobileMenu({ open, onClose, currentLang }: { open: boolean; onClose: ()
 
           <nav className="flex-1 overflow-y-auto scrollbar-hide px-4 py-6">
             <ul className="space-y-1">
-              {MOBILE_GROUPS.map((group) => (
+              {groups.map((group) => (
                 <li key={group.title} className="mb-4">
                   <div className="px-4 py-2 text-xs font-semibold text-white/60 uppercase tracking-wider">
                     {group.title}
                   </div>
                   {group.links.map((l) => {
-                    const href = `/${currentLang}/${l.href}`;
+                    const href = `/${currentLang}${l.href}`;
                     const active = pathname === href;
                     return (
                       <Link
@@ -389,34 +498,32 @@ function MobileMenu({ open, onClose, currentLang }: { open: boolean; onClose: ()
               ))}
             </ul>
 
-            {/* Language selector — same pattern as header dropdown */}
-           {/* Language — native select, shows OS picker */}
-<div className="mt-8 pt-6 border-t border-white/10">
-  <div className="px-4 text-xs font-semibold text-white/60 uppercase tracking-wider mb-3">
-    Langue
-  </div>
-  <div className="mx-4 relative">
-    <select
-      value={currentLang}
-      onChange={(e) => {
-        window.location.href = pathname.replace(
-          `/${currentLang}`,
-          `/${e.target.value}`,
-        );
-        onClose();
-      }}
-      className="appearance-none w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-md pl-4 pr-10 py-2.5 text-sm font-medium text-white cursor-pointer focus:outline-none focus:ring-1 focus:ring-white/40 transition-colors"
-      aria-label="Choisir la langue"
-    >
-      {languageOptions.map((lang) => (
-        <option key={lang.code} value={lang.code} className="bg-white text-foreground">
-          {lang.label}
-        </option>
-      ))}
-    </select>
-    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
-  </div>
-</div>
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <div className="px-4 text-xs font-semibold text-white/60 uppercase tracking-wider mb-3">
+                Langue
+              </div>
+              <div className="mx-4 relative">
+                <select
+                  value={currentLang}
+                  onChange={(e) => {
+                    window.location.href = pathname.replace(
+                      `/${currentLang}`,
+                      `/${e.target.value}`,
+                    );
+                    onClose();
+                  }}
+                  className="appearance-none w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-md pl-4 pr-10 py-2.5 text-sm font-medium text-white cursor-pointer focus:outline-none focus:ring-1 focus:ring-white/40 transition-colors"
+                  aria-label="Choisir la langue"
+                >
+                  {languageOptions.map((lang) => (
+                    <option key={lang.code} value={lang.code} className="bg-white text-foreground">
+                      {lang.label}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+              </div>
+            </div>
           </nav>
         </div>
       </aside>

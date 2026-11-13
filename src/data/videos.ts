@@ -6,6 +6,7 @@ export interface Video {
   category: "match" | "training" | "interview" | "behind-scenes" | "tutorial";
   categoryLabel: string;
   duration: string;
+  team: string;
   publishedAt: string;
   featured: boolean;
   thumbnail: string;
@@ -32,6 +33,7 @@ export const videos: Video[] = [
     category: "training",
     categoryLabel: "Entraînement",
     duration: "12:15",
+    team: "valladolid",
     publishedAt: "2026-11-01",
     featured: false,
     thumbnail: "/images/tv/thumb2.jpg",
@@ -97,4 +99,8 @@ export const videoCategories = [
 
 export function getFeaturedVideos(limit = 3): Video[] {
   return videos.filter((v) => v.featured).slice(0, limit);
+}
+export function getVideosByTeam(team: string): Video[] {
+  if (team === "all") return videos;
+  return videos.filter((v) => v.team === team);
 }

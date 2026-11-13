@@ -39,7 +39,7 @@ function formatShortDate(iso: string) {
 function FeaturedCard({ article }: { article: Article }) {
   return (
     <Link
-      href={`/actualites/${article.slug}`}
+      href={`/valladolid/actualites/${article.slug}`}
       className="group grid overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow hover:shadow-lg md:grid-cols-2"
     >
      <div className="relative aspect-[16/9] md:aspect-auto md:min-h-[340px]">
@@ -96,7 +96,7 @@ function FeaturedCard({ article }: { article: Article }) {
 function SmallCard({ article }: { article: Article }) {
   return (
     <Link
-      href={`/actualites/${article.slug}`}
+      href={`/valladolid/actualites/${article.slug}`}
       data-card-index
       className="group flex w-[260px] flex-shrink-0 snap-center flex-col overflow-hidden rounded-xl border border-border bg-white transition-all hover:border-primary/30 hover:shadow-md"
     >
@@ -135,7 +135,7 @@ function SmallCard({ article }: { article: Article }) {
 function EndCard() {
   return (
     <Link
-      href="/actualites"
+      href="/valladolid/actualites"
       data-card-index
       className="group flex w-[260px] flex-shrink-0 snap-center flex-col items-center justify-center gap-3 overflow-hidden rounded-xl bg-gradient-to-br from-primary to-primary-dark p-6 text-center transition-all hover:from-primary/90"
     >
@@ -256,7 +256,7 @@ export function NewsSection() {
             </p>
           </div>
           <Link
-            href="/actualites"
+            href="/valladolid/actualites"
             className="hidden shrink-0 items-center gap-2 rounded-md border border-primary px-4 py-2 text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-white sm:inline-flex"
           >
             Toutes les actualités
@@ -377,7 +377,7 @@ export function NewsSection() {
         {/* Mobile-only bottom button */}
         <div className="mt-5 flex justify-center sm:hidden">
           <Link
-            href="/actualites"
+            href="/valladolid/actualites"
             className="inline-flex items-center gap-2 rounded-md border border-primary px-6 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
           >
             Toutes les actualités
