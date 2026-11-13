@@ -90,7 +90,7 @@ export function OurStadeSection() {
             </div>
 
             <Link
-              href="/valladolid/contact"
+              href="/contact"
               className="mt-8 inline-flex items-center gap-2 rounded bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
             >
               Planifier une visite

@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
       { source: "/:locale/valladolid/tv", destination: "/:locale/tv?team=valladolid", permanent: true },
       { source: "/:locale/valladolid/actualites", destination: "/:locale/actualites?team=valladolid", permanent: true },
       { source: "/:locale/valladolid/actualites/:slug", destination: "/:locale/actualites/:slug", permanent: true },
+      { source: "/:locale/valladolid/contact", destination: "/:locale/contact", permanent: true },
     ];
   },
   async headers() {

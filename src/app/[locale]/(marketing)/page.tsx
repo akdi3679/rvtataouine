@@ -132,7 +132,7 @@ function GroupHero() {
             <ArrowRight className="h-4 w-4" />
           </a>
           <Link
-            href="/valladolid/contact"
+            href="/contact"
             className="inline-flex items-center gap-2 rounded-md border border-white/30 bg-white/10 px-6 py-3 text-sm font-bold text-white backdrop-blur transition-all hover:bg-white/20"
           >
             Nous contacter

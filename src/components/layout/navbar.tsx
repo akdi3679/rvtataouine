@@ -52,7 +52,7 @@ const SECTIONS: Record<TeamId, SectionConfig> = {
       { label: "TV", href: "/tv" },
       { label: "Actualités", href: "/actualites" },
       { label: "Boutique", href: "/boutique" },
-      { label: "Contact", href: "/valladolid/contact" },
+      { label: "Contact", href: "/contact" },
     ],
     mobileGroups: [
       {
@@ -73,7 +73,7 @@ const SECTIONS: Record<TeamId, SectionConfig> = {
       },
       {
         title: "Contact",
-        links: [{ label: "Nous contacter", href: "/valladolid/contact" }],
+        links: [{ label: "Nous contacter", href: "/contact" }],
       },
     ],
   },
@@ -94,7 +94,7 @@ const SECTIONS: Record<TeamId, SectionConfig> = {
       { label: "TV", href: "/tv?team=valladolid" },
       { label: "Actualités", href: "/actualites?team=valladolid" },
       { label: "Boutique", href: "/boutique?team=valladolid" },
-      { label: "Contact", href: "/valladolid/contact" },
+      { label: "Contact", href: "/contact" },
     ],
     mobileGroups: [
       {
@@ -119,7 +119,7 @@ const SECTIONS: Record<TeamId, SectionConfig> = {
       },
       {
         title: "Contact",
-        links: [{ label: "Contact", href: "/valladolid/contact" }],
+        links: [{ label: "Contact", href: "/contact" }],
       },
     ],
   },
@@ -128,7 +128,7 @@ const SECTIONS: Record<TeamId, SectionConfig> = {
     primaryLinks: [
       { label: "Le Groupe", href: "/" },
       { label: "Galerie", href: "/ennour#gallery" },
-      { label: "Contact", href: "/valladolid/contact" },
+      { label: "Contact", href: "/contact" },
     ],
     mobileGroups: [
       {
@@ -150,7 +150,7 @@ const SECTIONS: Record<TeamId, SectionConfig> = {
     primaryLinks: [
       { label: "Le Groupe", href: "/" },
       { label: "Galerie", href: "/avenir#gallery" },
-      { label: "Contact", href: "/valladolid/contact" },
+      { label: "Contact", href: "/contact" },
     ],
     mobileGroups: [
       {

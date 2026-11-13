@@ -24,7 +24,7 @@ export default function NotFound() {
           <Home className="h-4 w-4" />
           Retour à l'accueil
         </Link>
-        <Link href="/valladolid/contact" className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary">
+        <Link href="/contact" className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary">
           Nous contacter
         </Link>
       </div>

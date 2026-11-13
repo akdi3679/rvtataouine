@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 import {
-  Phone,
-  Mail,
-  MapPin,
-  MessageCircle,
-  ArrowRight,
-  Loader2,
-  CheckCircle2,
-  HelpCircle,
+  Phone, Mail, MapPin, MessageCircle, ArrowRight,
+  Loader2, CheckCircle2, HelpCircle, ChevronDown,
 } from "lucide-react";
 import { brand } from "@/data/brand";
+import { TEAM_THEME, type TeamId } from "@/data/team-theme";
+
+const TEAM_OPTIONS: { id: TeamId | "group"; label: string }[] = [
+  { id: "group", label: "Le Groupe (toutes les équipes)" },
+  { id: "valladolid", label: "Real Valladolid — Football masculin" },
+  { id: "ennour", label: "Ennour Sportif — Football féminin" },
+  { id: "avenir", label: "Avenir Sportif — Football & Futsal" },
+];
 
 const SUBJECTS = [
   { value: "general", label: "Question générale" },
@@ -112,6 +114,7 @@ export default function ContactPage() {
   const whatsapp = brand.whatsapp.replace(/\s+/g, "");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [form, setForm] = useState({
+    team: "group" as TeamId | "group",
     name: "",
     email: "",
     phone: "",
@@ -120,7 +123,7 @@ export default function ContactPage() {
   });
 
   const set =
-    (k: keyof typeof form) =>
+    <K extends keyof typeof form>(k: K) =>
     (
       e: React.ChangeEvent<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -136,6 +139,9 @@ export default function ContactPage() {
     setStatus("success");
   };
 
+  const selectedTeamTheme =
+    form.team !== "group" ? TEAM_THEME[form.team] : null;
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-6xl px-6 py-10 lg:px-8 lg:py-16">
@@ -147,6 +153,7 @@ export default function ContactPage() {
           partenaire ? Nous répondons sous 24h.
         </p>
 
+        {/* Contact cards */}
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <ContactCard
             icon={Phone}
@@ -184,16 +191,15 @@ export default function ContactPage() {
               Envoyez-nous un message
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Choisissez le sujet qui correspond à votre demande.
+              Indiquez à quelle équipe votre message est destiné, puis
+              choisissez le sujet.
             </p>
 
             {status === "success" ? (
               <div className="mt-6 flex items-start gap-3 rounded-xl border border-success/20 bg-success/5 p-5">
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-success" />
                 <div>
-                  <p className="font-semibold text-foreground">
-                    Message envoyé
-                  </p>
+                  <p className="font-semibold text-foreground">Message envoyé</p>
                   <p className="mt-1 text-sm text-muted-foreground">
                     Merci, nous vous répondons sous 24h.
                   </p>
@@ -201,6 +207,34 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                {/* "Ce message concerne" — the selector */}
+                <Field label="Ce message concerne" required>
+                  <div className="relative">
+                    <select
+                      required
+                      value={form.team}
+                      onChange={set("team")}
+                      className={`${inputCls} appearance-none pr-10`}
+                    >
+                      {TEAM_OPTIONS.map((t) => (
+                        <option key={t.id} value={t.id}>
+                          {t.label}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  </div>
+                  {selectedTeamTheme && (
+                    <p className="mt-1.5 flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                      <span
+                        className="h-1.5 w-1.5 rounded-full"
+                        style={{ backgroundColor: selectedTeamTheme.hex }}
+                      />
+                      Votre message sera transmis à {selectedTeamTheme.name}
+                    </p>
+                  )}
+                </Field>
+
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field label="Nom" required>
                     <input
@@ -221,6 +255,7 @@ export default function ContactPage() {
                     />
                   </Field>
                 </div>
+
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field label="Téléphone">
                     <input
@@ -246,6 +281,7 @@ export default function ContactPage() {
                     </select>
                   </Field>
                 </div>
+
                 <Field label="Message" required>
                   <textarea
                     required
@@ -256,6 +292,7 @@ export default function ContactPage() {
                     placeholder="Votre message..."
                   />
                 </Field>
+
                 <button
                   type="submit"
                   disabled={status === "loading"}

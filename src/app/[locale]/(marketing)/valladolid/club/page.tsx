@@ -103,7 +103,7 @@ export default function ClubPage() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/valladolid/contact"
+                  href="/contact"
                   className="inline-flex items-center gap-2 rounded-md border border-border bg-white px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/30 hover:bg-secondary/50"
                 >
                   Visiter le club

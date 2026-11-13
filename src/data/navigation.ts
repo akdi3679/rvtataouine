@@ -12,7 +12,7 @@ export const mainNavigation: NavItem[] = [
   { label: "Boutique", href: "/valladolid/boutique" },
   { label: "Alumni", href: "/valladolid/alumni" },
   { label: "Actualités", href: "/valladolid/actualites" },
-  { label: "Contact", href: "/valladolid/contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const footerNavigation = {

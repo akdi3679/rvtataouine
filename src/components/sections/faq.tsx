@@ -47,7 +47,7 @@ export function FAQSection() {
         <div className="mt-12 text-center">
           <p className="text-sm text-muted-foreground">
             Vous avez d'autres questions ?{" "}
-            <Link href="/valladolid/contact" className="font-semibold text-primary hover:text-primary/80">
+            <Link href="/contact" className="font-semibold text-primary hover:text-primary/80">
               Contactez-nous <ArrowRight className="inline h-4 w-4" />
             </Link>
           </p>

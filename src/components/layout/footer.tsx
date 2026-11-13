@@ -11,7 +11,6 @@ import {
   Mail,
   MapPin,
 } from "lucide-react";
-import { TEAM_THEME, FALLBACK_LOGO, type TeamId } from "@/data/team-theme";
 import { usePathname } from "next/navigation";
 import { getSectionFromPath, TEAM_THEME, FALLBACK_LOGO, type TeamId } from "@/data/team-theme";
 
@@ -220,7 +219,7 @@ function getFooterColumns(section: TeamId) {
     {
       title: "Contact",
       links: [
-        { label: "Nous contacter", href: "/valladolid/contact" },
+        { label: "Nous contacter", href: "/contact" },
         { label: "Inscription", href: "/valladolid/inscription" },
       ],
     },

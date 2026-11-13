@@ -38,7 +38,7 @@ export function FinalCTASection() {
             Inscription <ArrowRight className="h-5 w-5" />
           </Link>
           <Link
-            href="/valladolid/contact"
+            href="/contact"
             className="inline-flex items-center gap-2 rounded-full border-2 border-foreground/15 bg-transparent px-8 py-4 text-base font-semibold text-foreground transition-all hover:border-foreground/40 hover:bg-foreground/5"
           >
             Essai gratuit
