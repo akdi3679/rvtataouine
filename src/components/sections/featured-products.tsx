@@ -3,8 +3,35 @@ import { ShoppingBag, ArrowRight } from "lucide-react";
 import { products, formatPrice } from "@/data/products";
 import Image from "next/image";
 export function FeaturedProductsSection({ team }: { team?: string } = {}) {
-  const featured = products.filter((p) => p.featured).slice(0, 3);
-  if (!featured.length) return null;
+  const allFeatured = products.filter((p) => p.featured);
+  const filtered = team ? allFeatured.filter((p) => p.team === team) : allFeatured;
+  const featured = filtered.slice(0, 3);
+
+  if (!featured.length) {
+    if (!team) return null;
+    return (
+      <section className="bg-white py-16 lg:py-20">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <div className="rounded-2xl border border-dashed border-border py-16 text-center">
+            <ShoppingBag className="mx-auto h-12 w-12 text-muted-foreground/30" />
+            <p className="mt-4 text-base font-semibold text-foreground">
+              La boutique arrive bientôt
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Les produits officiels de cette équipe seront disponibles prochainement.
+            </p>
+            <Link
+              href="/boutique"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
+            >
+              Voir toute la boutique
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="bg-white py-16 lg:py-20">

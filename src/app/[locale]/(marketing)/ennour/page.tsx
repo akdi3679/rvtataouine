@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Heart, Users, Trophy } from "lucide-react";
+import { ArrowRight, Heart, Users, Trophy, Sparkles, Shield } from "lucide-react";
+import { PartnersStrip } from "@/components/sections/partners-strip";
+import { FeaturedProductsSection } from "@/components/sections/featured-products";
+import { FeaturedVideosSection } from "@/components/sections/featured-videos";
+import { NewsSection } from "@/components/sections/news-section";
+import { NewsletterSection } from "@/components/sections/newsletter-section";
 
 export const metadata: Metadata = {
   title: "Ennour Sportif Tataouine — Football féminin",
@@ -8,16 +13,38 @@ export const metadata: Metadata = {
     "La section féminine du Groupe Sportif ARV Tataouine. Formation, accompagnement et célébration du football féminin dans le sud tunisien.",
 };
 
-// Thème bordeaux / noir — override les CSS variables du site
-const THEME = {
-  "--color-primary": "345 65% 32%",        // bordeaux #7A1F2B
-  "--color-primary-dark": "345 65% 20%",
-  "--color-primary-light": "345 65% 45%",
-  "--color-accent": "0 0% 10%",            // noir #1A1A1A
-  "--color-accent-dark": "0 0% 0%",
-  "--color-accent-light": "0 0% 25%",
-  "--color-gold": "345 55% 55%",           // bordeaux clair pour badges
-} as React.CSSProperties;
+const STATS = [
+  { icon: Users, value: "40+", label: "Joueuses" },
+  { icon: Trophy, value: "3", label: "Catégories" },
+  { icon: Heart, value: "1", label: "Équipe" },
+];
+
+const VALUES = [
+  {
+    icon: Sparkles,
+    title: "Excellence sportive",
+    description:
+      "Même niveau d'exigence technique et tactique que les équipes masculines.",
+  },
+  {
+    icon: Heart,
+    title: "Épanouissement",
+    description:
+      "Un cadre bienveillant où chaque joueuse peut grandir à son rythme.",
+  },
+  {
+    icon: Users,
+    title: "Solidarité",
+    description:
+      "L'esprit d'équipe et la sororité au cœur de chaque entraînement.",
+  },
+  {
+    icon: Shield,
+    title: "Combativité",
+    description:
+      "Apprendre à se dépasser, sur et en dehors du terrain.",
+  },
+];
 
 const GALLERY = [
   { id: "g1", label: "Entraînement collectif", span: "col-span-2 row-span-2" },
@@ -28,36 +55,12 @@ const GALLERY = [
   { id: "g6", label: "Coulisses", span: "col-span-2" },
 ];
 
-const NEWS = [
-  {
-    id: "n1",
-    title: "Première victoire de la saison pour Ennour",
-    excerpt:
-      "Nos joueuses ont signé une victoire convaincante lors de leur premier match officiel de la saison.",
-    category: "Match",
-  },
-  {
-    id: "n2",
-    title: "Nouvelle recrue au sein de l'équipe",
-    excerpt:
-      "Bienvenue à notre nouvelle joueuse qui rejoint l'effectif pour la saison en cours.",
-    category: "Équipe",
-  },
-  {
-    id: "n3",
-    title: "Journée portes ouvertes pour les jeunes filles",
-    excerpt:
-      "Une journée dédiée à la découverte du football féminin. Toutes les jeunes filles de 8 à 17 ans sont invitées.",
-    category: "Événement",
-  },
-];
-
 export default function EnnourPage() {
   return (
-    <div style={THEME} className="flex flex-col bg-white">
-      {/* HERO */}
-      <section className="relative overflow-hidden bg-primary text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-dark to-accent opacity-95" />
+    <div className="flex flex-col bg-white">
+      {/* 1. HERO */}
+      <section className="relative overflow-hidden text-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#7A1F2B] via-[#5C1620] to-[#141414]" />
         <div className="relative mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
           <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/70">
             Football féminin · Tataouine
@@ -73,10 +76,10 @@ export default function EnnourPage() {
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 rounded-md bg-white px-6 py-3 text-sm font-bold text-primary shadow-lg transition-all hover:scale-[1.02] hover:bg-white/90"
+              href="/inscription"
+              className="inline-flex items-center gap-2 rounded-md bg-white px-6 py-3 text-sm font-bold text-[#7A1F2B] shadow-lg transition-all hover:scale-[1.02] hover:bg-white/90"
             >
-              Rejoindre l&apos;équipe
+              Inscrire ma fille
               <ArrowRight className="h-4 w-4" />
             </Link>
             <a
@@ -89,10 +92,10 @@ export default function EnnourPage() {
         </div>
       </section>
 
-      {/* MISSION */}
+      {/* 2. MISSION */}
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
-          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
+          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#7A1F2B]">
             Notre mission
           </p>
           <h2 className="mt-4 text-3xl font-black leading-tight text-foreground sm:text-4xl lg:text-5xl">
@@ -113,20 +116,15 @@ export default function EnnourPage() {
             </p>
           </div>
 
-          {/* 3 stats */}
           <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {[
-              { icon: Users, value: "40+", label: "Joueuses" },
-              { icon: Trophy, value: "3", label: "Catégories" },
-              { icon: Heart, value: "1", label: "Équipe" },
-            ].map((s) => {
+            {STATS.map((s) => {
               const Icon = s.icon;
               return (
                 <div
                   key={s.label}
                   className="rounded-2xl border border-border bg-white p-6 text-center"
                 >
-                  <Icon className="mx-auto h-6 w-6 text-primary" />
+                  <Icon className="mx-auto h-6 w-6 text-[#7A1F2B]" />
                   <p className="mt-3 text-3xl font-black tabular-nums text-foreground">
                     {s.value}
                   </p>
@@ -140,11 +138,43 @@ export default function EnnourPage() {
         </div>
       </section>
 
-      {/* GALLERY */}
-      <section id="gallery" className="bg-secondary/30 py-16 lg:py-24">
+      {/* 3. VALEURS */}
+      <section className="border-y border-border bg-secondary/30 py-16 lg:py-24">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#7A1F2B]">
+              Nos valeurs
+            </p>
+            <h2 className="mt-4 text-3xl font-black text-foreground sm:text-4xl lg:text-5xl">
+              Les 4 piliers d&apos;Ennour
+            </h2>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {VALUES.map((v) => {
+              const Icon = v.icon;
+              return (
+                <div key={v.title}>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#7A1F2B]/10">
+                    <Icon className="h-6 w-6 text-[#7A1F2B]" />
+                  </div>
+                  <h3 className="mt-4 text-lg font-bold text-foreground">
+                    {v.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {v.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. GALERIE */}
+      <section id="gallery" className="py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mb-10 text-center">
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#7A1F2B]">
               En images
             </p>
             <h2 className="mt-4 text-3xl font-black text-foreground sm:text-4xl">
@@ -154,15 +184,14 @@ export default function EnnourPage() {
               Les moments forts de la saison, en images
             </p>
           </div>
-
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
             {GALLERY.map((item) => (
               <div
                 key={item.id}
-                className={`relative aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-accent ${item.span}`}
+                className={`group relative aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-[#7A1F2B] to-[#141414] ${item.span}`}
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Heart className="h-12 w-12 text-white/30" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                  <Heart className="h-12 w-12 text-white" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-4">
@@ -176,44 +205,29 @@ export default function EnnourPage() {
         </div>
       </section>
 
-      {/* NEWS */}
-      <section className="py-16 lg:py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-10 text-center">
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
-              Actualités
-            </p>
-            <h2 className="mt-4 text-3xl font-black text-foreground sm:text-4xl">
-              Les dernières nouvelles
-            </h2>
-          </div>
+      {/* 5. PARTNERS */}
+      <PartnersStrip />
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {NEWS.map((n) => (
-              <div
-                key={n.id}
-                className="overflow-hidden rounded-2xl border border-border bg-white"
-              >
-                <div className="aspect-video bg-gradient-to-br from-primary to-accent" />
-                <div className="p-6">
-                  <span className="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
-                    {n.category}
-                  </span>
-                  <h3 className="mt-3 text-base font-bold leading-tight text-foreground">
-                    {n.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {n.excerpt}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* 6. BOUTIQUE (filtered — empty state for now) */}
+      <section id="boutique">
+        <FeaturedProductsSection team="ennour" />
       </section>
 
-      {/* CTA */}
-      <section className="bg-primary py-16 text-white lg:py-24">
+      {/* 7. TV (filtered — empty state for now) */}
+      <section id="tv">
+        <FeaturedVideosSection team="ennour" />
+      </section>
+
+      {/* 8. ACTUALITÉS (filtered — empty state for now) */}
+      <section id="news">
+        <NewsSection team="ennour" />
+      </section>
+
+      {/* 9. NEWSLETTER */}
+      <NewsletterSection />
+
+      {/* 10. CTA FINAL */}
+      <section className="bg-gradient-to-br from-[#7A1F2B] via-[#5C1620] to-[#141414] py-16 text-white lg:py-24">
         <div className="mx-auto max-w-4xl px-6 text-center lg:px-8">
           <h2 className="text-3xl font-black sm:text-4xl lg:text-5xl">
             Rejoignez Ennour Sportif
@@ -222,15 +236,24 @@ export default function EnnourPage() {
             Vous êtes une jeune joueuse ou un parent ? Contactez-nous pour
             découvrir nos programmes et venir essayer.
           </p>
-          <Link
-            href="/contact"
-            className="mt-8 inline-flex items-center gap-2 rounded-md bg-white px-6 py-3 text-sm font-bold text-primary shadow-lg transition-all hover:scale-[1.02] hover:bg-white/90"
-          >
-            Nous contacter
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/inscription"
+              className="inline-flex items-center gap-2 rounded-md bg-white px-6 py-3 text-sm font-bold text-[#7A1F2B] shadow-lg transition-all hover:scale-[1.02] hover:bg-white/90"
+            >
+              Inscrire ma fille
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-md border border-white/30 bg-white/10 px-6 py-3 text-sm font-bold text-white backdrop-blur transition-all hover:bg-white/20"
+            >
+              Nous contacter
+            </Link>
+          </div>
         </div>
       </section>
     </div>
   );
 }
+

@@ -158,14 +158,39 @@ function EndCard({ team }: { team?: string }) {
 
 export function NewsSection({ team }: { team?: string } = {}) {
   const [filter, setFilter] = useState<string>("all");
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [canLeft, setCanLeft] = useState(false);
-  const [canRight, setCanRight] = useState(false);
+
+  const teamArticles = team ? articles.filter((a) => a.team === team) : articles;
+
+  if (teamArticles.length === 0) {
+    if (!team) return null;
+    return (
+      <section className="bg-white py-14 lg:py-16">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <div className="rounded-2xl border border-dashed border-border py-16 text-center">
+            <FileText className="mx-auto h-12 w-12 text-muted-foreground/30" />
+            <p className="mt-4 text-base font-semibold text-foreground">
+              Les actualités arrivent bientôt
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Les articles pour cette équipe seront disponibles prochainement.
+            </p>
+            <Link
+              href="/actualites"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
+            >
+              Voir toutes les actualités
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const filtered =
-    filter === "all" ? articles : articles.filter((a) => a.category === filter);
+    filter === "all"
+      ? teamArticles
+      : teamArticles.filter((a) => a.category === filter);
   const featured = filtered[0];
   const rest = filtered.slice(1, 5);
   const totalCards = rest.length + 1;

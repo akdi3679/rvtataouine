@@ -51,9 +51,35 @@ function VideoCard({ video }: { video: Video }) {
 }
 
 export function FeaturedVideosSection({ team }: { team?: string } = {}) {
-  const featuredRaw = getFeaturedVideos(3);
-  const featured = featuredRaw.length >= 3 ? featuredRaw : videos.slice(0, 3);
+  const source = team ? videos.filter((v) => v.team === team) : videos;
+  const featuredRaw = source.filter((v) => v.featured).slice(0, 3);
+  const featured = featuredRaw.length >= 3 ? featuredRaw : source.slice(0, 3);
 
+  if (featured.length === 0) {
+    if (!team) return null;
+    return (
+      <section className="bg-background py-24">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="rounded-2xl border border-dashed border-border py-16 text-center">
+            <Play className="mx-auto h-12 w-12 text-muted-foreground/30" />
+            <p className="mt-4 text-base font-semibold text-foreground">
+              Les vidéos arrivent bientôt
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Les vidéos de cette équipe seront disponibles prochainement.
+            </p>
+            <Link
+              href="/tv"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
+            >
+              Voir toutes les vidéos
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section className="bg-background py-24">
       <div className="mx-auto max-w-7xl px-6">
