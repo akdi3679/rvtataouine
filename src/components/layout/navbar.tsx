@@ -333,16 +333,33 @@ export function Navbar() {
                           onMouseLeave={() => setOpenDropdown(null)}
                           role="menu"
                         >
-                          {dd.links.map((l) => (
-                            <Link
-                              key={l.href}
-                              href={`/${currentLocale}${l.href}`}
-                              className="block px-4 py-2.5 text-sm text-white/90 hover:bg-white/10 hover:text-white transition-colors"
-                              role="menuitem"
-                            >
-                              {l.label}
-                            </Link>
-                          ))}
+                         {dd.links.map((l) => {
+  const lt = l.href.includes("/valladolid") ? TEAM_THEME.valladolid
+    : l.href.includes("/ennour") ? TEAM_THEME.ennour
+    : l.href.includes("/avenir") ? TEAM_THEME.avenir
+    : null;
+  return (
+    <Link
+      key={l.href}
+      href={`/${currentLocale}${l.href}`}
+      className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/90 hover:bg-white/10 hover:text-white transition-colors"
+      role="menuitem"
+    >
+      {lt && (
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white p-0.5">
+          <Image
+            src={lt.logoPath}
+            alt=""
+            width={24}
+            height={24}
+            className="h-full w-full object-contain"
+          />
+        </span>
+      )}
+      <span>{l.label}</span>
+    </Link>
+  );
+})}
                         </div>
                       )}
                     </div>
@@ -401,13 +418,26 @@ export function Navbar() {
                   <div className="hidden md:block"><CartButton /></div>
                 )}
 
-                <Link
-                  href={`/${currentLocale}/login`}
-                  className="hidden md:flex items-center justify-center p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition-colors"
-                  aria-label="Profil"
-                >
-                  <User className="h-5 w-5" />
-                </Link>
+               <Link
+  href={`/${currentLocale}`}
+  className="flex h-10 shrink-0 items-center justify-center transition-opacity hover:opacity-80"
+>
+  {team === "group" ? (
+    <div className="flex h-10 items-center justify-center rounded-md bg-white px-2.5 text-sm font-black tracking-tight text-[#1F5F8B] shadow-sm">
+      ARV
+    </div>
+  ) : (
+    <Image
+      src={logoSrc}
+      onError={() => setLogoSrc(FALLBACK_LOGO)}
+      alt={theme.name}
+      width={40}
+      height={40}
+      priority
+      className="h-10 w-10 object-contain"
+    />
+  )}
+</Link>
 
                 <div className="flex md:hidden items-center gap-1">
                   <button
@@ -417,13 +447,15 @@ export function Navbar() {
                   >
                     <Search className="h-5 w-5" />
                   </button>
-                  <Link
-                    href={`/${currentLocale}/login`}
-                    className="flex items-center justify-center p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition-colors"
-                    aria-label="Profil"
-                  >
-                    <User className="h-5 w-5" />
-                  </Link>
+                 {team === "valladolid" && (
+  <Link
+    href={`/${currentLocale}/login`}
+    className="hidden md:flex items-center justify-center p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+    aria-label="Profil"
+  >
+    <User className="h-5 w-5" />
+  </Link>
+)}
                   {isBoutiquePage && <CartButton />}
                   <button
                     onClick={() => setMobileOpen(true)}

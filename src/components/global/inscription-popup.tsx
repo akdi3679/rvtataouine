@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { X, ArrowRight, Calendar } from "lucide-react";
-
+import { usePathname } from "next/navigation";
+import { getSectionFromPath } from "@/data/team-theme";
 const STORAGE_KEY = "arv-inscription-popup-last-shown";
 const INITIAL_DELAY_MS = 8000; // 8s avant la 1ère apparition (1er visit)
 const REPEAT_AFTER_MS = 20 * 60 * 1000; // 20 minutes
@@ -16,31 +17,17 @@ export function InscriptionPopup() {
 
   // Timer — 8s première fois, puis toutes les 20 min
   useEffect(() => {
-    if (typeof window === "undefined") return;
+  if (typeof window === "undefined") return;
+  if (section === "group") return;   // ← ne pas afficher sur la page groupe
 
-    const check = () => {
-      if (open) return;
-
-      const raw = localStorage.getItem(STORAGE_KEY);
-      const lastShown = raw ? Number(raw) : 0;
-
-      if (lastShown === 0) {
-        // Première visite — affiche après 8s
-        setOpen(true);
-      } else if (Date.now() - lastShown >= REPEAT_AFTER_MS) {
-        // 20 min passées — affiche à nouveau
-        setOpen(true);
-      }
-    };
-
-    const initialTimer = setTimeout(check, INITIAL_DELAY_MS);
-    const interval = setInterval(check, CHECK_INTERVAL_MS);
-
-    return () => {
-      clearTimeout(initialTimer);
-      clearInterval(interval);
-    };
-  }, [open]);
+  const check = () => { /* ... */ };
+  const initialTimer = setTimeout(check, INITIAL_DELAY_MS);
+  const interval = setInterval(check, CHECK_INTERVAL_MS);
+  return () => {
+    clearTimeout(initialTimer);
+    clearInterval(interval);
+  };
+}, [open, section]);
 
   // Lock scroll pendant l'ouverture
   useEffect(() => {
@@ -73,9 +60,10 @@ export function InscriptionPopup() {
     setOpen(false);
     router.push("/valladolid/inscription");
   };
-
+const pathname = usePathname();
+const section = getSectionFromPath(pathname);
   if (!open) return null;
-
+if (section === "group") return null;
   return (
     <div
       className="fixed inset-0 z-[95] flex items-end justify-center p-4 sm:items-center"

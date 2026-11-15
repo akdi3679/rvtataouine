@@ -1,10 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { ArrowUp } from "lucide-react";
+import { getSectionFromPath, TEAM_THEME } from "@/data/team-theme";
 
 export function FloatingButtons() {
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const pathname = usePathname();
+  const section = getSectionFromPath(pathname);
+  const theme = TEAM_THEME[section];
 
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 500);
@@ -19,7 +24,6 @@ export function FloatingButtons() {
 
   return (
     <>
-      {/* WhatsApp — above the safe area, above the mobile menu */}
       <a
         href="https://wa.me/21675854717"
         target="_blank"
@@ -37,11 +41,11 @@ export function FloatingButtons() {
         </svg>
       </a>
 
-      {/* Back to top — same fix */}
       <button
         onClick={scrollToTop}
-        className="fixed right-4 sm:right-6 z-[80] flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-all duration-500 ease-out hover:bg-primary/90 hover:scale-110"
+        className="fixed right-4 sm:right-6 z-[80] flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg transition-all duration-500 ease-out hover:scale-110"
         style={{
+          backgroundColor: theme.hex,
           bottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
           opacity: showBackToTop ? 1 : 0,
           transform: showBackToTop ? "translateY(0)" : "translateY(2.5rem)",

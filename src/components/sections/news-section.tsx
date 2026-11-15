@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   ChevronLeft,
@@ -10,7 +11,7 @@ import {
   FileText,
 } from "lucide-react";
 import { articles, type Article } from "@/data/news";
-import Image from "next/image";
+
 const FILTERS = [
   { id: "all", label: "Tous" },
   { id: "match", label: "Compétition" },
@@ -42,20 +43,26 @@ function FeaturedCard({ article }: { article: Article }) {
       href={`/actualites/${article.slug}`}
       className="group grid overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-shadow hover:shadow-lg md:grid-cols-2"
     >
-     <div className="relative aspect-[16/9] md:aspect-auto md:min-h-[340px]">
-  <Image
-    src={article.image}
-    alt={article.title}
-    fill
-    sizes="(max-width: 768px) 100vw, 50vw"
-    className="object-cover"
-    priority
-  />
-  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-  <span className="absolute left-4 top-4 inline-flex rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary shadow-sm">
-    {article.categoryLabel}
-  </span>
-</div>
+      <div className="relative aspect-[16/9] md:aspect-auto md:min-h-[340px]">
+        {article.image ? (
+          <Image
+            src={article.image}
+            alt={article.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${
+              GRADIENTS[article.category] || GRADIENTS.match
+            }`}
+          />
+        )}
+        <span className="absolute left-4 top-4 inline-flex rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary shadow-sm">
+          {article.categoryLabel}
+        </span>
+      </div>
 
       <div className="flex flex-col justify-center p-6 md:p-8 lg:p-10">
         <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -100,19 +107,26 @@ function SmallCard({ article }: { article: Article }) {
       data-card-index
       className="group flex w-[260px] flex-shrink-0 snap-center flex-col overflow-hidden rounded-xl border border-border bg-white transition-all hover:border-primary/30 hover:shadow-md"
     >
-     <div className="relative aspect-[16/9]">
-  <Image
-    src={article.image}
-    alt={article.title}
-    fill
-    sizes="260px"
-    className="object-cover"
-  />
-  <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />
-  <span className="absolute left-2 top-2 inline-flex rounded-full bg-white/95 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary shadow-sm">
-    {article.categoryLabel}
-  </span>
-</div>
+      <div className="relative aspect-[16/9]">
+        {article.image ? (
+          <Image
+            src={article.image}
+            alt={article.title}
+            fill
+            sizes="260px"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${
+              GRADIENTS[article.category] || GRADIENTS.match
+            }`}
+          />
+        )}
+        <span className="absolute left-2 top-2 inline-flex rounded-full bg-white/95 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary shadow-sm">
+          {article.categoryLabel}
+        </span>
+      </div>
       <div className="flex flex-1 flex-col p-3">
         <h3 className="line-clamp-2 text-sm font-bold leading-tight text-foreground transition-colors group-hover:text-primary">
           {article.title}
@@ -143,10 +157,10 @@ function EndCard({ team }: { team?: string }) {
         <ArrowRight className="h-6 w-6 text-white" />
       </div>
       <h3 className="text-base font-bold leading-tight text-white">
-        Envie d'en voir plus ?
+        Envie d&apos;en voir plus ?
       </h3>
       <p className="text-xs text-white/80">
-        Toutes les actualités de l'académie
+        Toutes les actualités de l&apos;académie
       </p>
       <span className="mt-1 inline-flex items-center gap-1.5 rounded-md bg-white px-4 py-1.5 text-xs font-bold text-primary">
         Voir tout
@@ -156,46 +170,39 @@ function EndCard({ team }: { team?: string }) {
   );
 }
 
-export function NewsSection({ team }: { team?: string } = {}) {
+export function NewsSection({
+  team,
+  hideViewAll = false,
+}: {
+  team?: string;
+  hideViewAll?: boolean;
+} = {}) {
+  // ALL HOOKS (must be called on every render, before any return)
   const [filter, setFilter] = useState<string>("all");
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [canLeft, setCanLeft] = useState(false);
+  const [canRight, setCanRight] = useState(false);
 
+  // Derived data
   const teamArticles = team ? articles.filter((a) => a.team === team) : articles;
-
-  if (teamArticles.length === 0) {
-    if (!team) return null;
-    return (
-      <section className="bg-white py-14 lg:py-16">
-        <div className="mx-auto max-w-5xl px-6 lg:px-8">
-          <div className="rounded-2xl border border-dashed border-border py-16 text-center">
-            <FileText className="mx-auto h-12 w-12 text-muted-foreground/30" />
-            <p className="mt-4 text-base font-semibold text-foreground">
-              Les actualités arrivent bientôt
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Les articles pour cette équipe seront disponibles prochainement.
-            </p>
-            <Link
-              href="/actualites"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
-            >
-              Voir toutes les actualités
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   const filtered =
     filter === "all"
       ? teamArticles
       : teamArticles.filter((a) => a.category === filter);
+
   const featured = filtered[0];
   const rest = filtered.slice(1, 5);
   const totalCards = rest.length + 1;
 
-  const updateIndicators = () => {
+  const countFor = (id: string) =>
+    id === "all"
+      ? teamArticles.length
+      : teamArticles.filter((a) => a.category === id).length;
+
+  // Handlers
+  const updateIndicators = useCallback(() => {
     if (rafRef.current !== null) return;
     rafRef.current = requestAnimationFrame(() => {
       rafRef.current = null;
@@ -233,8 +240,9 @@ export function NewsSection({ team }: { team?: string } = {}) {
       });
       setActiveIndex(closest);
     });
-  };
+  }, []);
 
+  // Effects
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -265,8 +273,36 @@ export function NewsSection({ team }: { team?: string } = {}) {
     });
   };
 
+  // Early returns AFTER all hooks
+  if (teamArticles.length === 0) {
+    if (!team) return null;
+    return (
+      <section className="bg-white py-14 lg:py-16">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <div className="rounded-2xl border border-dashed border-border py-16 text-center">
+            <FileText className="mx-auto h-12 w-12 text-muted-foreground/30" />
+            <p className="mt-4 text-base font-semibold text-foreground">
+              Les actualités arrivent bientôt
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Les articles pour cette équipe seront disponibles prochainement.
+            </p>
+            <Link
+              href="/actualites"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:underline"
+            >
+              Voir toutes les actualités
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (!featured) return null;
 
+  // Main render
   return (
     <section className="bg-white py-14 lg:py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -277,16 +313,18 @@ export function NewsSection({ team }: { team?: string } = {}) {
               Actualités
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Les dernières nouvelles de l'académie
+              Les dernières nouvelles de l&apos;académie
             </p>
           </div>
-          <Link
-            href={team ? `/actualites?team=${team}` : "/actualites"}
-            className="hidden shrink-0 items-center gap-2 rounded-md border border-primary px-4 py-2 text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-white sm:inline-flex"
-          >
-            Toutes les actualités
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+          {!hideViewAll && (
+            <Link
+              href={team ? `/actualites?team=${team}` : "/actualites"}
+              className="hidden shrink-0 items-center gap-2 rounded-md border border-primary px-4 py-2 text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-white sm:inline-flex"
+            >
+              Toutes les actualités
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          )}
         </div>
 
         {/* Filter pills */}
@@ -305,6 +343,9 @@ export function NewsSection({ team }: { team?: string } = {}) {
                     }`}
                   >
                     {f.label}
+                    <span className="ml-1.5 text-[10px] opacity-60">
+                      {countFor(f.id)}
+                    </span>
                   </button>
                 </li>
               );
@@ -315,7 +356,7 @@ export function NewsSection({ team }: { team?: string } = {}) {
         {/* Featured */}
         <FeaturedCard article={featured} />
 
-        {/* Carousel + endcard — full-bleed to container edges */}
+        {/* Carousel */}
         {totalCards > 0 && (
           <div className="relative mt-6 -mx-6 lg:-mx-8">
             <div
@@ -347,9 +388,9 @@ export function NewsSection({ team }: { team?: string } = {}) {
           <button
             onClick={() => scrollBy(-1)}
             disabled={!canLeft}
-            className={`flex h-8 w-8 items-center justify-center rounded-md  bg-white text-primary transition-all ${
+            className={`flex h-8 w-8 items-center justify-center rounded-md border border-primary bg-white text-primary transition-all ${
               canLeft
-                ? "hover:text-gray"
+                ? "hover:bg-primary hover:text-white"
                 : "cursor-not-allowed opacity-30"
             }`}
             aria-label="Actualités précédentes"
@@ -388,9 +429,9 @@ export function NewsSection({ team }: { team?: string } = {}) {
           <button
             onClick={() => scrollBy(1)}
             disabled={!canRight}
-            className={`flex h-8 w-8 items-center justify-center rounded-md  bg-white text-primary transition-all ${
+            className={`flex h-8 w-8 items-center justify-center rounded-md border border-primary bg-white text-primary transition-all ${
               canRight
-                ? " hover:text-gray"
+                ? "hover:bg-primary hover:text-white"
                 : "cursor-not-allowed opacity-30"
             }`}
             aria-label="Actualités suivantes"
@@ -399,16 +440,17 @@ export function NewsSection({ team }: { team?: string } = {}) {
           </button>
         </div>
 
-        {/* Mobile-only bottom button */}
-        <div className="mt-5 flex justify-center sm:hidden">
-          <Link
-            href={team ? `/actualites?team=${team}` : "/actualites"}
-            className="inline-flex items-center gap-2 rounded-md border border-primary px-6 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
-          >
-            Toutes les actualités
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
+        {!hideViewAll && (
+          <div className="mt-5 flex justify-center sm:hidden">
+            <Link
+              href={team ? `/actualites?team=${team}` : "/actualites"}
+              className="inline-flex items-center gap-2 rounded-md border border-primary px-6 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+            >
+              Toutes les actualités
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
