@@ -15,6 +15,8 @@ export function InscriptionPopup() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
+const pathname = usePathname();
+const section = getSectionFromPath(pathname);
   // Timer — 8s première fois, puis toutes les 20 min
   useEffect(() => {
   if (typeof window === "undefined") return;
@@ -60,8 +62,6 @@ export function InscriptionPopup() {
     setOpen(false);
     router.push("/valladolid/inscription");
   };
-const pathname = usePathname();
-const section = getSectionFromPath(pathname);
   if (!open) return null;
 if (section === "group") return null;
   return (

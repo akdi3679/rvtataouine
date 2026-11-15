@@ -77,22 +77,16 @@ const columns = getFooterColumns(section);
   className="inline-flex items-center justify-center transition-opacity hover:opacity-80"
   aria-label={theme.name}
 >
-  {section === "group" ? (
-    <div className="flex h-14 items-center justify-center rounded-xl bg-[#1F5F8B] px-3 text-lg font-black tracking-tight text-white shadow-lg">
-      ARV
-    </div>
-  ) : (
-    <Image
-      src={theme.logoPath}
-      onError={(e) => {
-        (e.target as HTMLImageElement).src = FALLBACK_LOGO;
-      }}
-      alt={theme.name}
-      width={56}
-      height={56}
-      className="h-14 w-14 object-contain"
-    />
-  )}
+ <Image
+  src={theme.logoPath}
+  onError={(e) => {
+    (e.target as HTMLImageElement).src = FALLBACK_LOGO;
+  }}
+  alt={theme.name}
+  width={56}
+  height={56}
+  className="h-14 w-14 object-contain"
+/>
 </Link>
           <div className="mt-3">
             <div className="text-sm font-bold text-background">{brand.name}</div>

@@ -420,23 +420,17 @@ export function Navbar() {
 
                <Link
   href={`/${currentLocale}`}
-  className="flex h-10 shrink-0 items-center justify-center transition-opacity hover:opacity-80"
+  className="flex h-10 w-10 shrink-0 items-center justify-center transition-opacity hover:opacity-80"
 >
-  {team === "group" ? (
-    <div className="flex h-10 items-center justify-center rounded-md bg-white px-2.5 text-sm font-black tracking-tight text-[#1F5F8B] shadow-sm">
-      ARV
-    </div>
-  ) : (
-    <Image
-      src={logoSrc}
-      onError={() => setLogoSrc(FALLBACK_LOGO)}
-      alt={theme.name}
-      width={40}
-      height={40}
-      priority
-      className="h-10 w-10 object-contain"
-    />
-  )}
+  <Image
+    src={logoSrc}
+    onError={() => setLogoSrc(FALLBACK_LOGO)}
+    alt={theme.name}
+    width={40}
+    height={40}
+    priority
+    className="h-10 w-10 object-contain"
+  />
 </Link>
 
                 <div className="flex md:hidden items-center gap-1">

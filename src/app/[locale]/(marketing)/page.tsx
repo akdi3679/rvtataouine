@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Target, Users, Heart, Shield } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { PartnersStrip } from "@/components/sections/partners-strip";
 import { FeaturedProductsSection } from "@/components/sections/featured-products";
@@ -65,10 +65,10 @@ const ENTITIES: Entity[] = [
 ];
 
 const VALUES = [
-  { icon: Target, title: "Excellence", description: "Recherche constante du haut niveau technique et tactique." },
-  { icon: Users, title: "Famille", description: "Un esprit collectif qui unit joueurs, staff et familles." },
-  { icon: Heart, title: "Passion", description: "L'amour du football, le respect de l'adversaire, la joie de jouer." },
-  { icon: Shield, title: "Discipline", description: "Sérieux, ponctualité et respect sur et en dehors du terrain." },
+  { number: "01", title: "Excellence", description: "Recherche constante du haut niveau technique et tactique." },
+  { number: "02", title: "Famille", description: "Un esprit collectif qui unit joueurs, staff et familles." },
+  { number: "03", title: "Passion", description: "L'amour du football, le respect de l'adversaire, la joie de jouer." },
+  { number: "04", title: "Discipline", description: "Sérieux, ponctualité et respect sur et en dehors du terrain." },
 ];
 
 function GroupHero() {
@@ -117,61 +117,6 @@ function GroupHero() {
             >
               Nous contacter
             </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ManifestoSection() {
-  return (
-    <section className="py-20 lg:py-32">
-      <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-end lg:gap-20">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#1F5F8B]">
-              Notre vision
-            </p>
-            <h2 className="mt-5 text-4xl font-black leading-[1.02] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              Former des champions,
-              <span className="block text-[#1F5F8B]">
-                sur et en dehors
-                <br />
-                du terrain.
-              </span>
-            </h2>
-          </div>
-          <div>
-            <p className="text-lg leading-[1.65] text-foreground sm:text-xl">
-              Le Groupe Sportif ARV Tataouine n&apos;est pas qu&apos;un club de
-              football. C&apos;est un projet éducatif, social et sportif qui
-              accompagne les jeunes de Tataouine dans leur développement
-              personnel et sportif. À travers nos trois entités, nous couvrons
-              le football masculin, le football féminin et le futsal — offrant
-              à chaque jeune une place pour grandir.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-20 border-t border-border pt-12">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {VALUES.map((v, i) => (
-              <div key={v.title}>
-                <div className="flex items-baseline gap-3">
-                  <span className="text-xs font-bold tracking-widest text-muted-foreground/60">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="h-px flex-1 bg-border" />
-                </div>
-                <h3 className="mt-6 text-xl font-bold text-foreground">
-                  {v.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {v.description}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </div>
@@ -259,27 +204,73 @@ function EntitiesSection() {
   );
 }
 
+function VisionSection() {
+  return (
+    <section className="py-24 lg:py-40 bg-white">
+      <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
+        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#1F5F8B]">
+          Notre vision
+        </p>
+
+        <h2 className="mt-16 text-3xl font-black leading-[1.05] tracking-tight text-foreground sm:text-4xl lg:text-6xl">
+          Former des champions,
+          <br />
+          <span className="text-[#1F5F8B]">
+            sur et en dehors du terrain.
+          </span>
+        </h2>
+
+        <p className="mt-14 mx-auto max-w-2xl text-base leading-[1.8] text-muted-foreground sm:text-lg lg:text-xl">
+          Le Groupe Sportif ARV Tataouine n&apos;est pas qu&apos;un club de
+          football. C&apos;est un projet éducatif, social et sportif qui
+          accompagne les jeunes de Tataouine dans leur développement personnel
+          et sportif.
+        </p>
+      </div>
+
+      <div className="mx-auto max-w-5xl px-6 lg:px-8 mt-24">
+        <div className="border-t border-border pt-16">
+          <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+            {VALUES.map((v) => (
+              <div key={v.title}>
+                <p className="text-xs font-bold tracking-[0.3em] text-muted-foreground/50">
+                  {v.number}
+                </p>
+                <p className="mt-4 text-lg font-bold text-foreground">
+                  {v.title}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {v.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function GroupHomePage() {
-  // Override CSS variables so shared sections (products, videos, news, newsletter, CTA)
-  // use group colors instead of Valladolid purple/red
+  // Override CSS vars so shared sections use group colors (blue + gold)
   const groupVars = {
-    "--color-primary": "204 63% 33%",        // group blue #1F5F8B
+    "--color-primary": "204 63% 33%",
     "--color-primary-dark": "204 63% 23%",
     "--color-primary-light": "204 63% 43%",
-    "--color-accent": "43 90% 52%",          // gold
-    "--color-accent-dark": "43 90% 40%",
-    "--color-accent-light": "43 90% 68%",
+    "--color-accent": "43 100% 60%",
+    "--color-accent-dark": "43 100% 50%",
+    "--color-accent-light": "43 100% 70%",
   } as React.CSSProperties;
 
   return (
     <div style={groupVars} className="flex flex-col">
       <GroupHero />
-      <ManifestoSection />
       <EntitiesSection />
+      <VisionSection />
+      <NewsSection />
+      <FeaturedVideosSection />
       <PartnersStrip />
       <FeaturedProductsSection />
-      <FeaturedVideosSection />
-      <NewsSection />
       <NewsletterSection />
       <FinalCTASection />
     </div>
