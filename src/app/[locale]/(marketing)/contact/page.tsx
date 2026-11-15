@@ -5,42 +5,8 @@ import {
   Phone, Mail, MapPin, MessageCircle, ArrowRight,
   Loader2, CheckCircle2, HelpCircle, ChevronDown,
 } from "lucide-react";
-import { brand } from "@/data/brand";
-import { TEAM_THEME, type TeamId } from "@/data/team-theme";
-
-const TEAM_OPTIONS: { id: TeamId | "group"; label: string }[] = [
-  { id: "group", label: "Le Groupe (toutes les équipes)" },
-  { id: "valladolid", label: "Real Valladolid — Football masculin" },
-  { id: "ennour", label: "Ennour Sportif — Football féminin" },
-  { id: "avenir", label: "Avenir Sportif — Football & Futsal" },
-];
-
-const SUBJECTS = [
-  { value: "general", label: "Question générale" },
-  { value: "inscription", label: "Inscription" },
-  { value: "partenariat", label: "Partenariat" },
-  { value: "sponsoring", label: "Sponsoring" },
-  { value: "other", label: "Autre" },
-];
-
-const FAQ = [
-  {
-    q: "À partir de quel âge mon enfant peut-il s'inscrire ?",
-    a: "Nous accueillons les jeunes footballeurs à partir de 8 ans (catégorie U8). Des programmes d'initiation existent pour les débutants.",
-  },
-  {
-    q: "Les séances d'essai sont-elles vraiment gratuites ?",
-    a: "Oui, la première séance d'évaluation est entièrement gratuite et sans engagement. Elle nous permet de déterminer la catégorie la plus adaptée.",
-  },
-  {
-    q: "Comment se déroule un partenariat ou sponsoring ?",
-    a: "Nous proposons plusieurs formules adaptées à vos objectifs. Contactez-nous via le formulaire en sélectionnant Partenariat ou Sponsoring, nous vous envoyons notre dossier sous 48h.",
-  },
-  {
-    q: "Que se passe-t-il en cas de mauvais temps ?",
-    a: "Nos terrains synthétiques permettent de maintenir les entraînements dans la plupart des conditions. En cas de force majeure, les séances sont reportées.",
-  },
-];
+import { TEAMS, TEAM_IDS, type TeamId } from "@/data/team-theme";
+import { contactSubjects as SUBJECTS, contactFaq as FAQ } from "@/data/contact";
 
 const inputCls =
   "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none transition-colors";
@@ -110,8 +76,6 @@ function ContactCard({
 }
 
 export default function ContactPage() {
-  const phone = brand.phone.replace(/\s+/g, "");
-  const whatsapp = brand.whatsapp.replace(/\s+/g, "");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [form, setForm] = useState({
     team: "group" as TeamId | "group",
@@ -121,6 +85,12 @@ export default function ContactPage() {
     subject: "general",
     message: "",
   });
+
+  // Contact info reflects the currently selected team
+  const activeContact = TEAMS[form.team].contact;
+  const activeTheme = TEAMS[form.team];
+  const telHref = "tel:" + activeContact.phone.replace(/\s+/g, "");
+  const waHref = "https://wa.me/" + activeContact.phone.replace(/\s+/g, "").replace(/^\+/, "");
 
   const set =
     <K extends keyof typeof form>(k: K) =>
@@ -139,9 +109,6 @@ export default function ContactPage() {
     setStatus("success");
   };
 
-  const selectedTeamTheme =
-    form.team !== "group" ? TEAM_THEME[form.team] : null;
-
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-6xl px-6 py-10 lg:px-8 lg:py-16">
@@ -153,35 +120,35 @@ export default function ContactPage() {
           partenaire ? Nous répondons sous 24h.
         </p>
 
-        {/* Contact cards */}
+        {/* Contact cards — reflect form.team selection */}
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <ContactCard
             icon={Phone}
             label="Téléphone"
-            value={brand.phone}
+            value={activeContact.phone}
             sub="Lun-Sam · 8h-20h"
-            href={"tel:" + phone}
+            href={telHref}
           />
           <ContactCard
             icon={Mail}
             label="Email"
-            value={brand.email}
+            value={activeContact.email}
             sub="Réponse sous 24h"
-            href={"mailto:" + brand.email}
+            href={"mailto:" + activeContact.email}
           />
           <ContactCard
             icon={MessageCircle}
             label="WhatsApp"
             value="Discuter maintenant"
             sub="Réponse rapide"
-            href={"https://wa.me/" + whatsapp}
+            href={waHref}
             target
           />
           <ContactCard
             icon={MapPin}
             label="Adresse"
-            value={brand.address.city}
-            sub={brand.address.country}
+            value={activeContact.address.street}
+            sub={`${activeContact.address.city}, ${activeContact.address.country}`}
           />
         </div>
 
@@ -207,7 +174,6 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-                {/* "Ce message concerne" — the selector */}
                 <Field label="Ce message concerne" required>
                   <div className="relative">
                     <select
@@ -216,23 +182,21 @@ export default function ContactPage() {
                       onChange={set("team")}
                       className={`${inputCls} appearance-none pr-10`}
                     >
-                      {TEAM_OPTIONS.map((t) => (
-                        <option key={t.id} value={t.id}>
-                          {t.label}
+                      {TEAM_IDS.map((id) => (
+                        <option key={id} value={id}>
+                          {TEAMS[id].name} — {TEAMS[id].formTagline}
                         </option>
                       ))}
                     </select>
                     <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   </div>
-                  {selectedTeamTheme && (
-                    <p className="mt-1.5 flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                      <span
-                        className="h-1.5 w-1.5 rounded-full"
-                        style={{ backgroundColor: selectedTeamTheme.hex }}
-                      />
-                      Votre message sera transmis à {selectedTeamTheme.name}
-                    </p>
-                  )}
+                  <p className="mt-1.5 flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{ backgroundColor: activeTheme.hex }}
+                    />
+                    Votre message sera transmis à {activeTheme.name}
+                  </p>
                 </Field>
 
                 <div className="grid gap-4 sm:grid-cols-2">

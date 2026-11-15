@@ -2,12 +2,22 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight, Pause, Play } from "lucide-react";
 import { heroSlides, heroFallbackGradients } from "@/data/hero";
-
+import { getTeamFromPath, TEAMS, type TeamId } from "@/data/team-theme";
 type Direction = "next" | "prev" | null;
 
-export function HeroCarousel() {
+
+interface HeroCarouselProps {
+  team?: TeamId;
+}
+
+export function HeroCarousel({ team }: HeroCarouselProps = {}) {
+  const pathname = usePathname();
+  const activeTeam = team ?? getTeamFromPath(pathname);
+const styles = TEAMS[activeTeam].carousel;
+
   const [current, setCurrent] = useState(0);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState<Direction>(null);
@@ -22,7 +32,6 @@ export function HeroCarousel() {
   const slide = heroSlides[current];
   const duration = slide.duration * 1000;
 
-  // Slide change with direction + exit tracking
   const changeSlide = useCallback(
     (newIndex: number, dir: "next" | "prev") => {
       if (newIndex === current) return;
@@ -57,13 +66,11 @@ export function HeroCarousel() {
     [current, changeSlide],
   );
 
-  // Keep latest goNext in a ref so the interval never fires a stale closure
   const goNextRef = useRef(goNext);
   useEffect(() => {
     goNextRef.current = goNext;
   });
 
-  // Auto-advance timer — resumes from where it paused (no reset on pause)
   useEffect(() => {
     if (isPaused) return;
 
@@ -110,13 +117,12 @@ export function HeroCarousel() {
   return (
     <>
       <section
-        className="relative h-[100svh] w-full overflow-hidden bg-black"
+        className="relative -mt-16 h-[100svh] w-full overflow-hidden bg-black"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         aria-roledescription="carousel"
       >
-        {/* Slides — image-only layers that slide in/out */}
         {heroSlides.map((s, index) => {
           const isActive = index === current;
           const isExiting = index === prevIndex;
@@ -169,7 +175,6 @@ export function HeroCarousel() {
           );
         })}
 
-        {/* Content — fades on every slide change */}
         <div className="relative z-30 flex h-full flex-col justify-end pb-9">
           <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
             <div
@@ -187,7 +192,7 @@ export function HeroCarousel() {
               <div className="flex items-center gap-4 md:gap-6">
                 <Link
                   href={slide.ctaHref}
-                  className="inline-flex items-center gap-2 rounded bg-accent px-5 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:bg-accent-light md:px-8 md:py-4 md:text-base"
+                  className={`inline-flex items-center gap-2 rounded px-5 py-2.5 text-sm font-bold shadow-lg transition-all hover:scale-105 md:px-8 md:py-4 md:text-base ${styles.button}`}
                 >
                   {slide.ctaLabel}
                   <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
@@ -196,7 +201,7 @@ export function HeroCarousel() {
                 <div className="max-w-[130px] flex-1 md:max-w-xs">
                   <div className="h-0.5 w-full overflow-hidden rounded-full bg-white/20">
                     <div
-                      className="h-full bg-gold transition-all duration-75 ease-linear"
+                      className={`h-full transition-all duration-75 ease-linear ${styles.progress}`}
                       style={{ width: `${progress}%` }}
                     />
                   </div>
@@ -206,7 +211,6 @@ export function HeroCarousel() {
           </div>
         </div>
 
-        {/* Pause / Play — top-right, below header */}
         <button
           onClick={() => setIsPaused((p) => !p)}
           className="absolute top-20 right-4 z-40 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-sm hover:bg-black/60 transition-colors"
@@ -216,7 +220,6 @@ export function HeroCarousel() {
         </button>
       </section>
 
-      {/* Thumbnail strip — black base, dark-gray when active/hovered */}
       <section className="relative bg-black pt-0 pb-8">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="scrollbar-hide flex gap-2 overflow-x-auto py-2">

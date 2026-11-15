@@ -14,175 +14,24 @@ import { products } from "@/data/products";
 import { videos } from "@/data/videos";
 import { CartButton } from "@/components/interactive/cart-button";
 import {
-  TEAM_THEME,
-  FALLBACK_LOGO,
-  type TeamId,
+  TEAMS, getTeamFromPath, parseTeamQuery,
+  type TeamId, type TeamConfig,
 } from "@/data/team-theme";
 
 const SCROLL_THRESHOLD = 20;
 const DELTA_THRESHOLD = 8;
 const TOP_THRESHOLD = 80;
 
-interface DropdownConfig {
-  label: string;
-  links: { label: string; href: string }[];
-}
-
-interface SectionConfig {
-  bgClass: string;
-  dropdowns?: DropdownConfig[];
-  primaryLinks: { label: string; href: string }[];
-  mobileGroups: { title: string; links: { label: string; href: string }[] }[];
-}
-
-const SECTIONS: Record<TeamId, SectionConfig> = {
-  group: {
-    bgClass: TEAM_THEME.group.bgClass,
-    dropdowns: [
-      {
-        label: "Nos équipes",
-        links: [
-          { label: "Real Valladolid", href: "/valladolid" },
-          { label: "Ennour Sportif", href: "/ennour" },
-          { label: "Avenir Sportif", href: "/avenir" },
-        ],
-      },
-    ],
-    primaryLinks: [
-      { label: "TV", href: "/tv" },
-      { label: "Actualités", href: "/actualites" },
-      { label: "Boutique", href: "/boutique" },
-      { label: "Contact", href: "/contact" },
-    ],
-    mobileGroups: [
-      {
-        title: "Nos équipes",
-        links: [
-          { label: "Real Valladolid", href: "/valladolid" },
-          { label: "Ennour Sportif", href: "/ennour" },
-          { label: "Avenir Sportif", href: "/avenir" },
-        ],
-      },
-      {
-        title: "Le groupe",
-        links: [
-          { label: "TV", href: "/tv" },
-          { label: "Actualités", href: "/actualites" },
-          { label: "Boutique", href: "/boutique" },
-        ],
-      },
-      {
-        title: "Contact",
-        links: [{ label: "Nous contacter", href: "/contact" }],
-      },
-    ],
-  },
-  valladolid: {
-    bgClass: TEAM_THEME.valladolid.bgClass,
-    dropdowns: [
-      {
-        label: "Club",
-        links: [
-          { label: "Club", href: "/valladolid/club" },
-          { label: "Palmarès", href: "/valladolid/palmares" },
-          { label: "Alumni", href: "/valladolid/alumni" },
-        ],
-      },
-    ],
-    primaryLinks: [
-      { label: "Matchs", href: "/valladolid/matchs" },
-      { label: "TV", href: "/tv?team=valladolid" },
-      { label: "Actualités", href: "/actualites?team=valladolid" },
-      { label: "Boutique", href: "/boutique?team=valladolid" },
-      { label: "Contact", href: "/contact" },
-    ],
-    mobileGroups: [
-      {
-        title: "Club",
-        links: [
-          { label: "Notre Club", href: "/valladolid/club" },
-          { label: "Palmarès", href: "/valladolid/palmares" },
-          { label: "Alumni", href: "/valladolid/alumni" },
-        ],
-      },
-      {
-        title: "Compétition",
-        links: [
-          { label: "Matchs", href: "/valladolid/matchs" },
-          { label: "TV", href: "/tv?team=valladolid" },
-          { label: "Actualités", href: "/actualites?team=valladolid" },
-        ],
-      },
-      {
-        title: "Boutique",
-        links: [{ label: "Boutique", href: "/boutique?team=valladolid" }],
-      },
-      {
-        title: "Contact",
-        links: [{ label: "Contact", href: "/contact" }],
-      },
-    ],
-  },
-  ennour: {
-    bgClass: TEAM_THEME.ennour.bgClass,
-    primaryLinks: [
-      { label: "Le Groupe", href: "/" },
-      { label: "Galerie", href: "/ennour#gallery" },
-      { label: "Contact", href: "/contact" },
-    ],
-    mobileGroups: [
-      {
-        title: "Ennour Sportif",
-        links: [
-          { label: "Présentation", href: "/ennour" },
-          { label: "Galerie", href: "/ennour#gallery" },
-          { label: "Actualités", href: "/ennour#news" },
-        ],
-      },
-      {
-        title: "Le Groupe",
-        links: [{ label: "Retour au groupe", href: "/" }],
-      },
-    ],
-  },
-  avenir: {
-    bgClass: TEAM_THEME.avenir.bgClass,
-    primaryLinks: [
-      { label: "Le Groupe", href: "/" },
-      { label: "Galerie", href: "/avenir#gallery" },
-      { label: "Contact", href: "/contact" },
-    ],
-    mobileGroups: [
-      {
-        title: "Avenir Sportif",
-        links: [
-          { label: "Présentation", href: "/avenir" },
-          { label: "Galerie", href: "/avenir#gallery" },
-          { label: "Actualités", href: "/avenir#news" },
-        ],
-      },
-      {
-        title: "Le Groupe",
-        links: [{ label: "Retour au groupe", href: "/" }],
-      },
-    ],
-  },
-};
-
 function useActiveTeam(): TeamId {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  if (pathname.includes("/valladolid")) return "valladolid";
-  if (pathname.includes("/ennour")) return "ennour";
-  if (pathname.includes("/avenir")) return "avenir";
+  // Explicit ?team= wins (user is actively filtering)
+  const fromQuery = parseTeamQuery(searchParams.get("team"));
+  if (fromQuery !== "all") return fromQuery;
 
-  const queryTeam = searchParams.get("team");
-  if (queryTeam === "valladolid" || queryTeam === "ennour" || queryTeam === "avenir") {
-    return queryTeam;
-  }
-
-  return "group";
+  // Fall back to pathname
+  return getTeamFromPath(pathname);
 }
 
 type SearchItem = {
@@ -218,20 +67,25 @@ export function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [logoSrc, setLogoSrc] = useState(FALLBACK_LOGO);
+  const [logoError, setLogoError] = useState(false);
   const lastScrollY = useRef(0);
   const pathname = usePathname();
   const currentLocale = pathname.split("/")[1] || "fr";
   const team = useActiveTeam();
-  const section = SECTIONS[team];
-  const theme = TEAM_THEME[team];
+  const theme = TEAMS[team];
+  const section = theme.nav;
   const isBoutiquePage = pathname.includes("/boutique");
   const closeMobile = useCallback(() => setMobileOpen(false), []);
   const closeSearch = useCallback(() => setSearchOpen(false), []);
 
+  // Reset logo error on team change
   useEffect(() => {
-    setLogoSrc(theme.logoPath);
+    setLogoError(false);
   }, [theme.logoPath]);
+
+  const navBgClass = theme.bgClass;
+  const logoHref =
+    team === "group" ? `/${currentLocale}` : `/${currentLocale}/${team}`;
 
   useEffect(() => {
     const onScroll = () => {
@@ -259,16 +113,40 @@ export function Navbar() {
 
   const headerHidden = hidden && !searchOpen && !mobileOpen && !searchFocused;
 
+  const LogoMark = ({ size = 40 }: { size?: number }) => {
+    if (logoError) {
+      return (
+        <div
+          className="flex h-10 items-center justify-center rounded-md bg-white px-2 text-sm font-black shadow-sm"
+          style={{ color: theme.hex }}
+        >
+          {theme.initials}
+        </div>
+      );
+    }
+    return (
+      <Image
+        src={theme.logoPath}
+        alt={theme.name}
+        width={size}
+        height={size}
+        priority
+        className="h-10 w-10 object-contain"
+        onError={() => setLogoError(true)}
+      />
+    );
+  };
+
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-out will-change-transform ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out will-change-transform ${
           headerHidden ? "-translate-y-full" : "translate-y-0"
         }`}
         onFocus={() => setHidden(false)}
       >
         <nav
-          className={`mx-auto flex h-16 max-w-7xl items-center px-3 md:px-4 lg:px-8 transition-all duration-300 ${section.bgClass} ${
+          className={`mx-auto flex h-16 max-w-7xl items-center px-3 md:px-4 lg:px-8 transition-all duration-300 ${navBgClass} ${
             scrolled ? "shadow-lg shadow-black/25" : ""
           }`}
         >
@@ -291,30 +169,27 @@ export function Navbar() {
           ) : (
             <>
               <Link
-                href={`/${currentLocale}`}
-                className="flex h-10 w-10 shrink-0 items-center justify-center transition-opacity hover:opacity-80"
+                href={logoHref}
+                className="flex shrink-0 items-center justify-center transition-opacity hover:opacity-80"
               >
-                <Image
-                  src={logoSrc}
-                  onError={() => setLogoSrc(FALLBACK_LOGO)}
-                  alt={theme.name}
-                  width={40}
-                  height={40}
-                  priority
-                  className="h-full w-full object-contain"
-                />
+                <LogoMark />
               </Link>
 
               <div className="flex-1 flex justify-center min-w-0 px-2">
                 <div className="hidden md:flex items-center gap-0.5 lg:gap-1">
                   {section.dropdowns?.map((dd) => (
-                    <div key={dd.label} className="relative">
+                    <div
+                      key={dd.label}
+                      className="relative"
+                      onMouseEnter={() => setOpenDropdown(dd.label)}
+                      onMouseLeave={() => setOpenDropdown(null)}
+                    >
                       <button
                         onClick={() =>
-                          setOpenDropdown(openDropdown === dd.label ? null : dd.label)
+                          setOpenDropdown(
+                            openDropdown === dd.label ? null : dd.label,
+                          )
                         }
-                        onMouseEnter={() => setOpenDropdown(dd.label)}
-                        onMouseLeave={() => setOpenDropdown(null)}
                         className="flex items-center gap-1 px-2 lg:px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors"
                         aria-haspopup="true"
                         aria-expanded={openDropdown === dd.label}
@@ -327,46 +202,52 @@ export function Navbar() {
                         />
                       </button>
                       {openDropdown === dd.label && (
-                        <div
-                          className={`absolute top-full left-0 mt-1 w-52 rounded-md border border-white/10 ${section.bgClass} shadow-lg overflow-hidden z-[60]`}
-                          onMouseEnter={() => setOpenDropdown(dd.label)}
-                          onMouseLeave={() => setOpenDropdown(null)}
-                          role="menu"
-                        >
-                         {dd.links.map((l) => {
-  const lt = l.href.includes("/valladolid") ? TEAM_THEME.valladolid
-    : l.href.includes("/ennour") ? TEAM_THEME.ennour
-    : l.href.includes("/avenir") ? TEAM_THEME.avenir
-    : null;
-  return (
-    <Link
-      key={l.href}
-      href={`/${currentLocale}${l.href}`}
-      className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/90 hover:bg-white/10 hover:text-white transition-colors"
-      role="menuitem"
-    >
-      {lt && (
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white p-0.5">
-          <Image
-            src={lt.logoPath}
-            alt=""
-            width={24}
-            height={24}
-            className="h-full w-full object-contain"
-          />
-        </span>
-      )}
-      <span>{l.label}</span>
-    </Link>
-  );
-})}
+                        <div className="absolute top-full left-0 pt-1">
+                          <div
+                            className={`w-52 rounded-md border border-white/10 ${theme.bgClass} shadow-lg overflow-hidden`}
+                            role="menu"
+                          >
+                            {dd.links.map((l) => {
+                              // Show a team logo next to a team link (group home dropdown only)
+                              const logoTeam: TeamConfig | null =
+                                team === "group" ? (() => {
+                                  const lid = getTeamFromPath(l.href);
+                                  return lid === "group" ? null : TEAMS[lid];
+                                })() : null;
+                              return (
+                                <Link
+                                  key={l.href}
+                                  href={`/${currentLocale}${l.href}`}
+                                  className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/90 hover:bg-white/10 hover:text-white transition-colors"
+                                  role="menuitem"
+                                >
+                                  {logoTeam && (
+                                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white p-0.5">
+                                      <Image
+                                        src={logoTeam.logoPath}
+                                        alt=""
+                                        width={24}
+                                        height={24}
+                                        className="h-full w-full object-contain"
+                                      />
+                                    </span>
+                                  )}
+                                  <span>{l.label}</span>
+                                </Link>
+                              );
+                            })}
+                          </div>
                         </div>
                       )}
                     </div>
                   ))}
+
                   {section.primaryLinks.map((l) => {
                     const href = `/${currentLocale}${l.href}`;
-                    const active = pathname === href;
+                    const basePath = l.href.split("?")[0];
+                    const activePath = `/${currentLocale}${basePath}`;
+                    const active =
+                      pathname === href || pathname === activePath;
                     return (
                       <Link
                         key={l.href}
@@ -418,20 +299,22 @@ export function Navbar() {
                   <div className="hidden md:block"><CartButton /></div>
                 )}
 
-               <Link
-  href={`/${currentLocale}`}
-  className="flex h-10 w-10 shrink-0 items-center justify-center transition-opacity hover:opacity-80"
->
-  <Image
-    src={logoSrc}
-    onError={() => setLogoSrc(FALLBACK_LOGO)}
-    alt={theme.name}
-    width={40}
-    height={40}
-    priority
-    className="h-10 w-10 object-contain"
-  />
-</Link>
+                {theme.hasLogin && (
+                  <Link
+                    href={`/${currentLocale}/login`}
+                    className="hidden md:flex items-center justify-center p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                    aria-label="Profil"
+                  >
+                    <User className="h-5 w-5" />
+                  </Link>
+                )}
+
+                <Link
+                  href={`/${currentLocale}/inscription`}
+                  className="hidden md:inline-flex items-center rounded-md bg-accent px-3 py-2 text-xs font-bold text-white hover:bg-accent-light transition-colors whitespace-nowrap"
+                >
+                  Inscription
+                </Link>
 
                 <div className="flex md:hidden items-center gap-1">
                   <button
@@ -441,16 +324,26 @@ export function Navbar() {
                   >
                     <Search className="h-5 w-5" />
                   </button>
-                 {team === "valladolid" && (
-  <Link
-    href={`/${currentLocale}/login`}
-    className="hidden md:flex items-center justify-center p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition-colors"
-    aria-label="Profil"
-  >
-    <User className="h-5 w-5" />
-  </Link>
-)}
+
+                  {theme.hasLogin && (
+                    <Link
+                      href={`/${currentLocale}/login`}
+                      className="flex items-center justify-center p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                      aria-label="Profil"
+                    >
+                      <User className="h-5 w-5" />
+                    </Link>
+                  )}
+
                   {isBoutiquePage && <CartButton />}
+
+                  <Link
+                    href={`/${currentLocale}/inscription`}
+                    className="flex items-center justify-center rounded-md bg-accent px-2.5 py-1.5 text-[11px] font-bold text-white hover:bg-accent-light transition-colors whitespace-nowrap"
+                  >
+                    Inscription
+                  </Link>
+
                   <button
                     onClick={() => setMobileOpen(true)}
                     className="flex items-center justify-center p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-full transition-colors"
@@ -469,11 +362,11 @@ export function Navbar() {
         open={mobileOpen}
         onClose={closeMobile}
         currentLang={currentLocale}
-        bgClass={section.bgClass}
+        bgClass={theme.bgClass}
         groups={section.mobileGroups}
-        logoSrc={logoSrc}
-        onLogoError={() => setLogoSrc(FALLBACK_LOGO)}
-        teamName={theme.name}
+        theme={theme}
+        logoError={logoError}
+        onLogoError={() => setLogoError(true)}
       />
     </>
   );
@@ -485,18 +378,18 @@ function MobileMenu({
   currentLang,
   bgClass,
   groups,
-  logoSrc,
+  theme,
+  logoError,
   onLogoError,
-  teamName,
 }: {
   open: boolean;
   onClose: () => void;
   currentLang: string;
   bgClass: string;
   groups: { title: string; links: { label: string; href: string }[] }[];
-  logoSrc: string;
+  theme: TeamConfig;
+  logoError: boolean;
   onLogoError: () => void;
-  teamName: string;
 }) {
   const pathname = usePathname();
 
@@ -533,14 +426,23 @@ function MobileMenu({
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
             <div className="flex items-center gap-3">
-              <Image
-                src={logoSrc}
-                onError={onLogoError}
-                alt={teamName}
-                width={36}
-                height={36}
-                className="h-9 w-9 object-contain"
-              />
+              {logoError ? (
+                <div
+                  className="flex h-9 items-center justify-center rounded-md bg-white px-2 text-xs font-black"
+                  style={{ color: theme.hex }}
+                >
+                  {theme.initials}
+                </div>
+              ) : (
+                <Image
+                  src={theme.logoPath}
+                  alt={theme.name}
+                  width={36}
+                  height={36}
+                  className="h-9 w-9 object-contain"
+                  onError={onLogoError}
+                />
+              )}
               <span className="font-bold text-white">Menu</span>
             </div>
             <button
@@ -582,6 +484,16 @@ function MobileMenu({
             </ul>
 
             <div className="mt-8 pt-6 border-t border-white/10">
+              <Link
+                href={`/${currentLang}/inscription`}
+                onClick={onClose}
+                className="mx-4 flex items-center justify-center rounded-md bg-accent px-4 py-3 text-sm font-bold text-white hover:bg-accent-light transition-colors"
+              >
+                Inscription
+              </Link>
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-white/10">
               <div className="px-4 text-xs font-semibold text-white/60 uppercase tracking-wider mb-3">
                 Langue
               </div>

@@ -11,7 +11,7 @@ import {
 import { wallpaperTemplates } from "@/data/wallpapers";
 import { WallpaperGenerator } from "@/components/interactive/wallpaper-generator";
 import { TeamFilter } from "@/components/global/team-filter";
-import type { TeamId } from "@/data/team-theme";
+import { parseTeamQuery } from "@/data/team-theme";
 
 export const metadata: Metadata = {
   title: "Boutique | ARV Tataouine",
@@ -20,18 +20,13 @@ export const metadata: Metadata = {
 
 type SearchParams = Promise<{ team?: string }>;
 
-function parseTeam(value: string | undefined): TeamId | "all" {
-  if (value === "valladolid" || value === "ennour" || value === "avenir") return value;
-  return "all";
-}
-
 export default async function BoutiquePage({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
   const params = await searchParams;
-  const team = parseTeam(params.team);
+  const team = parseTeamQuery(params.team);
 
   const filtered: Product[] =
     team === "all" ? products : products.filter((p) => p.team === team);
@@ -135,7 +130,7 @@ export default async function BoutiquePage({
         </div>
       </section>
 
-      <section className="bg-secondary/30 py-16 lg:py-20">
+    <section id="wallpaper" className="bg-secondary/30 py-16 lg:py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl font-black text-foreground sm:text-3xl">

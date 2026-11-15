@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, Loader2, User, Users, FileCheck2 } from "lucide-react";
+
+import { TEAMS, ENTITY_LIST, type TeamId } from "@/data/team-theme";
+import { CheckCircle2, Loader2, User, Users, FileCheck2, Shield } from "lucide-react";
+import { TeamIcon } from "@/components/global/icon";
 
 const inputCls =
   "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none transition-colors";
@@ -31,6 +34,7 @@ function Field({
 export default function InscriptionPage() {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [form, setForm] = useState({
+    team: "" as TeamId | "",
     childFirst: "",
     childLast: "",
     childDob: "",
@@ -44,7 +48,7 @@ export default function InscriptionPage() {
     message: "",
     consent: false,
   });
-
+const FORM_ICONS = { shield: Shield, heart: Heart, zap: Zap, star: Shield };
   const set =
     (key: keyof typeof form) =>
     (
@@ -61,12 +65,14 @@ export default function InscriptionPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.team) return;
     setStatus("loading");
     await new Promise((r) => setTimeout(r, 1200));
     setStatus("success");
   };
 
   if (status === "success") {
+const selectedTheme = form.team ? TEAMS[form.team as TeamId] : null;
     return (
       <div className="flex min-h-[60vh] items-center justify-center bg-white px-6 py-20">
         <div className="max-w-md text-center">
@@ -77,15 +83,17 @@ export default function InscriptionPage() {
             Demande envoyée
           </h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            Merci ! Nous avons bien reçu votre demande d&apos;inscription. Notre
-            équipe vous contactera sous 48h pour planifier la séance
-            d&apos;évaluation gratuite.
+            Merci ! Nous avons bien reçu votre demande d&apos;inscription
+            {selectedTheme && ` pour ${selectedTheme.name}`}. Notre équipe vous
+            contactera sous 48h pour planifier la séance d&apos;évaluation
+            gratuite.
           </p>
         </div>
       </div>
     );
   }
 
+const selectedTheme = form.team ? TEAMS[form.team as TeamId] : null;
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-3xl px-6 py-10 lg:px-8 lg:py-16">
@@ -93,12 +101,57 @@ export default function InscriptionPage() {
           Inscription
         </h1>
         <p className="mt-3 max-w-xl text-base text-muted-foreground">
-          Rejoignez l&apos;académie en 4 étapes simples. Remplissez le
-          formulaire, nous vous contacterons pour organiser une séance
-          d&apos;évaluation gratuite.
+          Rejoignez l&apos;une de nos trois équipes. Remplissez le formulaire,
+          nous vous contacterons pour organiser une séance d&apos;évaluation
+          gratuite.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-10 space-y-8">
+          {/* 1. Team selection */}
+          <fieldset className="rounded-2xl border border-border bg-white p-6">
+            <legend className="flex items-center gap-2 px-2 text-sm font-bold text-foreground">
+              <Shield className="h-4 w-4 text-accent" />
+              Quelle équipe vous intéresse ?
+            </legend>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              {ENTITY_LIST.map((team) => {
+  const active = form.team === team.id;
+  return (
+    <button
+      key={team.id}
+      type="button"
+      onClick={() => setForm((prev) => ({ ...prev, team: team.id }))}
+      className={`group relative flex flex-col items-center gap-2 rounded-xl border-2 p-4 text-center transition-all ${
+        active
+          ? `${team.borderClass} bg-white shadow-md`
+          : "border-border hover:border-foreground/30 hover:bg-secondary/30"
+      }`}
+    >
+      <div
+        className="flex h-10 w-10 items-center justify-center rounded-lg"
+        style={{ backgroundColor: `${team.hex}15` }}
+      >
+         <TeamIcon name={team.formIcon} className="h-5 w-5" style={{ color: team.hex }} />
+      </div>
+      <p className="text-sm font-bold leading-tight text-foreground">{team.name}</p>
+      <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+        {team.formTagline}
+      </p>
+      {active && (
+        <span
+          className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full text-white"
+          style={{ backgroundColor: team.hex }}
+        >
+          <CheckCircle2 className="h-3 w-3" />
+        </span>
+      )}
+    </button>
+  );
+})}
+            </div>
+          </fieldset>
+
+          {/* 2. Child */}
           <fieldset className="rounded-2xl border border-border bg-white p-6">
             <legend className="flex items-center gap-2 px-2 text-sm font-bold text-foreground">
               <User className="h-4 w-4 text-accent" />
@@ -165,6 +218,7 @@ export default function InscriptionPage() {
             </div>
           </fieldset>
 
+          {/* 3. Parent */}
           <fieldset className="rounded-2xl border border-border bg-white p-6">
             <legend className="flex items-center gap-2 px-2 text-sm font-bold text-foreground">
               <Users className="h-4 w-4 text-accent" />
@@ -231,6 +285,7 @@ export default function InscriptionPage() {
             </div>
           </fieldset>
 
+          {/* 4. Complementary */}
           <fieldset className="rounded-2xl border border-border bg-white p-6">
             <legend className="flex items-center gap-2 px-2 text-sm font-bold text-foreground">
               <FileCheck2 className="h-4 w-4 text-accent" />
@@ -266,10 +321,20 @@ export default function InscriptionPage() {
           <div className="flex items-center justify-between gap-4">
             <p className="text-xs text-muted-foreground">
               * Champs obligatoires
+              {selectedTheme && (
+                <span className="ml-2 inline-flex items-center gap-1">
+                  · Équipe :{" "}
+                  <span
+                    className="inline-block h-2 w-2 rounded-full"
+                    style={{ backgroundColor: selectedTheme.hex }}
+                  />
+                  <strong>{selectedTheme.name}</strong>
+                </span>
+              )}
             </p>
             <button
               type="submit"
-              disabled={status === "loading"}
+              disabled={status === "loading" || !form.team}
               className="inline-flex items-center gap-2 rounded-xl bg-accent px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {status === "loading" ? (

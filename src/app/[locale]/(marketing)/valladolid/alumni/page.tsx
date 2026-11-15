@@ -9,20 +9,16 @@ import {
   Quote,
 } from "lucide-react";
 import { alumni, testimonials } from "@/data/alumni";
-
+import { TEAMS } from "@/data/team-theme";
+import { TeamIcon } from "@/components/global/icon";
 export const metadata: Metadata = {
   title: "Alumni | ARV Tataouine",
   description: "Nos anciens joueurs et les témoignages des familles.",
 };
 
-const stats = [
-  { icon: Users, value: "150+", label: "Joueurs formés" },
-  { icon: Trophy, value: "23", label: "Devenus pros" },
-  { icon: GraduationCap, value: "5", label: "Bourses NCAA" },
-  { icon: Plane, value: "30+", label: "Stages en Espagne" },
-];
 
 export default function AlumniPage() {
+  const stats = TEAMS.valladolid.content.alumniStats ?? [];
   return (
     <div className="flex flex-col bg-white">
       <section className="pt-16 lg:pt-20">
@@ -36,13 +32,13 @@ export default function AlumniPage() {
           </p>
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {stats.map((s) => {
-              const Icon = s.icon;
+           
               return (
                 <div
                   key={s.label}
                   className="rounded-xl border border-border bg-white p-5"
                 >
-                  <Icon className="h-5 w-5 text-accent" />
+                 <TeamIcon name={s.icon} className="h-5 w-5 text-accent" />
                   <p className="mt-3 text-3xl font-black tabular-nums text-foreground">
                     {s.value}
                   </p>

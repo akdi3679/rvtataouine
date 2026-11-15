@@ -10,17 +10,23 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "i.ytimg.com" },
     ],
   },
-  async redirects() {
+    async redirects() {
     return [
       { source: "/:locale/valladolid/boutique", destination: "/:locale/boutique?team=valladolid", permanent: true },
-      { source: "/:locale/valladolid/boutique/:slug", destination: "/:locale/boutique/:slug", permanent: true },
+      { source: "/:locale/valladolid/boutique/:slug", destination: "/:locale/boutique/:slug?team=valladolid", permanent: true },
       { source: "/:locale/valladolid/tv", destination: "/:locale/tv?team=valladolid", permanent: true },
       { source: "/:locale/valladolid/actualites", destination: "/:locale/actualites?team=valladolid", permanent: true },
-      { source: "/:locale/valladolid/actualites/:slug", destination: "/:locale/actualites/:slug", permanent: true },
+      { source: "/:locale/valladolid/actualites/:slug", destination: "/:locale/actualites/:slug?team=valladolid", permanent: true },
       { source: "/:locale/valladolid/contact", destination: "/:locale/contact", permanent: true },
+      { source: "/:locale/valladolid/inscription", destination: "/:locale/inscription", permanent: true },
+
+      // Legal pages moved from /valladolid/* to root
+      { source: "/:locale/valladolid/mentions-legales",          destination: "/:locale/mentions-legales",          permanent: true },
+      { source: "/:locale/valladolid/politique-confidentialite", destination: "/:locale/politique-confidentialite", permanent: true },
+      { source: "/:locale/valladolid/cookies",                   destination: "/:locale/cookies",                   permanent: true },
+      { source: "/:locale/valladolid/cgv",                       destination: "/:locale/cgv",                       permanent: true },
     ];
-  },
-  async headers() {
+  },  async headers() {
     return [
       {
         source: "/:path*",

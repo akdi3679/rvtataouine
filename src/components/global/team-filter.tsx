@@ -1,16 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { ChevronDown, Check } from "lucide-react";
-import { TEAM_THEME, type TeamId } from "@/data/team-theme";
-
-const OPTIONS: { id: TeamId | "all"; label: string }[] = [
-  { id: "all", label: "Toutes les équipes" },
-  { id: "valladolid", label: "Real Valladolid" },
-  { id: "ennour", label: "Ennour Sportif" },
-  { id: "avenir", label: "Avenir Sportif" },
-];
+import { useState, useEffect, useRef } from "react";
+import { TEAMS, ENTITY_LIST, type TeamId } from "@/data/team-theme";
 
 export function TeamFilter({ currentTeam }: { currentTeam: TeamId | "all" }) {
   const [open, setOpen] = useState(false);
@@ -18,8 +11,9 @@ export function TeamFilter({ currentTeam }: { currentTeam: TeamId | "all" }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const current = OPTIONS.find((o) => o.id === currentTeam) ?? OPTIONS[0];
-  const currentTheme = currentTeam !== "all" ? TEAM_THEME[currentTeam] : null;
+  const allLabel = "Toutes les équipes";
+  const current =
+    currentTeam === "all" ? null : TEAMS[currentTeam];
 
   useEffect(() => {
     if (!open) return;
@@ -44,13 +38,15 @@ export function TeamFilter({ currentTeam }: { currentTeam: TeamId | "all" }) {
         aria-haspopup="listbox"
         aria-expanded={open}
       >
-        {currentTheme && (
+        {current && (
           <span
             className="h-2 w-2 rounded-full shrink-0"
-            style={{ backgroundColor: currentTheme.hex }}
+            style={{ backgroundColor: current.hex }}
           />
         )}
-        <span className="whitespace-nowrap">{current.label}</span>
+        <span className="whitespace-nowrap">
+          {current ? current.name : allLabel}
+        </span>
         <ChevronDown
           className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${
             open ? "rotate-180" : ""
@@ -63,13 +59,26 @@ export function TeamFilter({ currentTeam }: { currentTeam: TeamId | "all" }) {
           className="absolute right-0 top-full z-50 mt-2 w-60 overflow-hidden rounded-lg border border-border bg-white shadow-xl"
           role="listbox"
         >
-          {OPTIONS.map((opt) => {
-            const active = currentTeam === opt.id;
-            const theme = opt.id !== "all" ? TEAM_THEME[opt.id] : null;
+          <button
+            onClick={() => handleSelect("all")}
+            className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-sm transition-colors ${
+              currentTeam === "all"
+                ? "bg-secondary font-semibold text-foreground"
+                : "text-foreground hover:bg-secondary/50"
+            }`}
+            role="option"
+            aria-selected={currentTeam === "all"}
+          >
+            <span className="flex-1">{allLabel}</span>
+            {currentTeam === "all" && <Check className="h-4 w-4" />}
+          </button>
+
+          {ENTITY_LIST.map((team) => {
+            const active = currentTeam === team.id;
             return (
               <button
-                key={opt.id}
-                onClick={() => handleSelect(opt.id)}
+                key={team.id}
+                onClick={() => handleSelect(team.id)}
                 className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-sm transition-colors ${
                   active
                     ? "bg-secondary font-semibold text-foreground"
@@ -78,14 +87,12 @@ export function TeamFilter({ currentTeam }: { currentTeam: TeamId | "all" }) {
                 role="option"
                 aria-selected={active}
               >
-                {theme && (
-                  <span
-                    className="h-2 w-2 rounded-full shrink-0"
-                    style={{ backgroundColor: theme.hex }}
-                  />
-                )}
-                <span className="flex-1">{opt.label}</span>
-                {active && <Check className="h-4 w-4 text-foreground" />}
+                <span
+                  className="h-2 w-2 rounded-full shrink-0"
+                  style={{ backgroundColor: team.hex }}
+                />
+                <span className="flex-1">{team.name}</span>
+                {active && <Check className="h-4 w-4" />}
               </button>
             );
           })}

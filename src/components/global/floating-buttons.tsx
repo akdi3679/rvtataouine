@@ -3,14 +3,12 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowUp } from "lucide-react";
-import { getSectionFromPath, TEAM_THEME } from "@/data/team-theme";
-
+import { getTeamFromPath, TEAMS } from "@/data/team-theme";
 export function FloatingButtons() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const pathname = usePathname();
-  const section = getSectionFromPath(pathname);
-  const theme = TEAM_THEME[section];
-
+  const team = getTeamFromPath(pathname);
+  const theme = TEAMS[team];
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 500);
     onScroll();

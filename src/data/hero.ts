@@ -1,3 +1,4 @@
+import { TEAMS } from "./team-theme";
 export interface HeroSlide {
   id: string;
   image: string;
@@ -53,8 +54,8 @@ export const heroSlides: HeroSlide[] = [
 ];
 
 export const heroFallbackGradients = [
-  "linear-gradient(135deg, #5E2D91 0%, #E7001C 100%)",
-  "linear-gradient(135deg, #E7001C 0%, #5E2D91 100%)",
-  "linear-gradient(135deg, #5E2D91 0%, #EDBB4A 100%)",
-  "linear-gradient(135deg, #1A1F3A 0%, #5E2D91 100%)",
+ `linear-gradient(135deg, ${TEAMS.valladolid.hex} 0%, #E7001C 100%)`,
+   `linear-gradient(135deg, #E7001C 0%, ${TEAMS.valladolid.hex} 100%)`,
+   `linear-gradient(135deg, ${TEAMS.valladolid.hex} 0%, #EDBB4A 100%)`,
+   `linear-gradient(135deg, #1A1F3A 0%, ${TEAMS.valladolid.hex} 100%)`,
 ];

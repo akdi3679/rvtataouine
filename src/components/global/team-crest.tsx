@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getTeamLogo, getTeamInitials } from "@/data/teams";
+import { TEAMS } from "@/data/team-theme";
 
 interface TeamCrestProps {
   teamName: string;
@@ -9,6 +9,20 @@ interface TeamCrestProps {
   variant?: "light" | "dark";
 }
 
+function findTeamByName(name: string) {
+  return Object.values(TEAMS).find((t) => t.name === name) ?? null;
+}
+
+function initialsFromName(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+}
+
 export function TeamCrest({
   teamName,
   sizeClass = "h-10 w-10",
@@ -16,10 +30,11 @@ export function TeamCrest({
   className = "",
   variant = "light",
 }: TeamCrestProps) {
-  const logo = getTeamLogo(teamName);
-  const initials = getTeamInitials(teamName);
+  const team = findTeamByName(teamName);
+  const logo = team?.logoPath ?? null;
+  const initials = team?.initials ?? initialsFromName(teamName);
 
-  // ── Has a logo → white circle with image
+  // Has a logo → white circle with image
   if (logo) {
     return (
       <div
@@ -38,7 +53,7 @@ export function TeamCrest({
     );
   }
 
-  // ── No logo, dark variant → glass circle with white initials
+  // No logo, dark variant → glass circle with white initials
   if (variant === "dark") {
     return (
       <div
@@ -49,7 +64,7 @@ export function TeamCrest({
     );
   }
 
-  // ── No logo, light variant → gray circle with dark initials
+  // No logo, light variant → gray circle with dark initials
   return (
     <div
       className={`flex shrink-0 items-center justify-center rounded-full bg-secondary font-bold text-foreground ${textSizeClass} ${sizeClass} ${className}`}

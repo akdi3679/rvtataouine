@@ -9,7 +9,7 @@ import {
   resolutions,
   type WallpaperTemplate,
 } from "@/data/wallpapers";
-
+import { TEAMS } from "@/data/team-theme";
 interface WallpaperGeneratorProps {
   template: WallpaperTemplate;
 }
@@ -87,7 +87,7 @@ export function WallpaperGenerator({ template }: WallpaperGeneratorProps) {
       ctx.drawImage(bgImg, 0, 0, previewW, previewH);
     } else {
       const grad = ctx.createLinearGradient(0, 0, previewW, previewH);
-      grad.addColorStop(0, "#5E2D91");
+        grad.addColorStop(0, TEAMS.valladolid.hex);
       grad.addColorStop(1, "#E7001C");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, previewW, previewH);
@@ -118,7 +118,7 @@ export function WallpaperGenerator({ template }: WallpaperGeneratorProps) {
         ctx.drawImage(bgImg, 0, 0, res.width, res.height);
       } else {
         const grad = ctx.createLinearGradient(0, 0, res.width, res.height);
-        grad.addColorStop(0, "#5E2D91");
+         grad.addColorStop(0, TEAMS.valladolid.hex);
         grad.addColorStop(1, "#E7001C");
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, res.width, res.height);
@@ -169,7 +169,7 @@ export function WallpaperGenerator({ template }: WallpaperGeneratorProps) {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
+    <div className="overflow-hidden rounded-2xl  border border-border bg-white shadow-sm">
       {/* Preview */}
       <div className="flex items-center justify-center bg-secondary/40 p-6">
         <canvas
