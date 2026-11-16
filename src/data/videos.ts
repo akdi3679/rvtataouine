@@ -6,7 +6,7 @@ export interface Video {
   category: "match" | "training" | "interview" | "behind-scenes" | "tutorial";
   categoryLabel: string;
   duration: string;
-  team: string;
+  team?: string;
   publishedAt: string;
   featured: boolean;
   thumbnail: string;

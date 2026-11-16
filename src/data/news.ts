@@ -10,7 +10,7 @@ export interface Article {
     role: string;
     initials: string;
   };
-  team: string;
+  team?: string;
   publishedAt: string;
   readTime: number;
   featured: boolean;

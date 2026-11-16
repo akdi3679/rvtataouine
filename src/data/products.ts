@@ -21,7 +21,7 @@ export interface Product {
   isNew?: boolean;
   details: string[];
   care?: string[];
-  team: string;    // ← AJOUTER
+  team?: string;    // ← AJOUTER
 }
 
 export const products: Product[] = [
