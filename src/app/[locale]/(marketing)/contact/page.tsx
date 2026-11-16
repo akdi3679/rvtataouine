@@ -5,9 +5,10 @@ import {
   Phone, Mail, MapPin, MessageCircle, ArrowRight,
   Loader2, CheckCircle2, HelpCircle, ChevronDown,
 } from "lucide-react";
-import { TEAMS, TEAM_IDS, type TeamId } from "@/data/team-theme";
-import { contactSubjects as SUBJECTS, contactFaq as FAQ } from "@/data/contact";
+import { TEAMS, TEAM_IDS, parseTeamQuery, type TeamId } from "@/data/team-theme";
 
+import { contactSubjects as SUBJECTS, contactFaq as FAQ } from "@/data/contact";
+import { useSearchParams } from "next/navigation";
 const inputCls =
   "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none transition-colors";
 
@@ -76,9 +77,12 @@ function ContactCard({
 }
 
 export default function ContactPage() {
+  const searchParams = useSearchParams();
+  const teamParam = parseTeamQuery(searchParams.get("team"));
+  const initialTeam = teamParam === "all" ? "group" : teamParam;
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [form, setForm] = useState({
-    team: "group" as TeamId | "group",
+   team: initialTeam as TeamId | "group",
     name: "",
     email: "",
     phone: "",

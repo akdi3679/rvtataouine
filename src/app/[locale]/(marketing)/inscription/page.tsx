@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 
-import { TEAMS, ENTITY_LIST, type TeamId } from "@/data/team-theme";
+import { TEAMS, ENTITY_LIST, parseTeamQuery, type TeamId } from "@/data/team-theme";
 import { CheckCircle2, Loader2, User, Users, FileCheck2, Shield } from "lucide-react";
 import { TeamIcon } from "@/components/global/icon";
-
+import { useSearchParams } from "next/navigation";
 const inputCls =
   "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none transition-colors";
 
@@ -32,9 +32,11 @@ function Field({
 }
 
 export default function InscriptionPage() {
+  const searchParams = useSearchParams();
+ const teamParam = parseTeamQuery(searchParams.get("team"));
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [form, setForm] = useState({
-    team: "" as TeamId | "",
+     team: (teamParam === "all" ? "" : teamParam) as TeamId | "",
     childFirst: "",
     childLast: "",
     childDob: "",

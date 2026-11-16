@@ -5,21 +5,21 @@ import Image from "next/image";
 import { ArrowRight, Target, Users, MapPin, Trophy, Sparkles } from "lucide-react";
 
 const VALUE_PROPS = [
-  { icon: Target, title: "Méthode espagnole", desc: "Philosophie Real Valladolid" },
-  { icon: Users, title: "Encadrement pro", desc: "Entraîneurs diplômés UEFA" },
-  { icon: MapPin, title: "Infrastructures", desc: "Terrains, salle, analyse vidéo" },
-  { icon: Trophy, title: "Opportunités", desc: "Détection, stages en Espagne" },
+  { icon: Target, title: "MÃ©thode espagnole", desc: "Philosophie Real Valladolid" },
+  { icon: Users, title: "Encadrement pro", desc: "EntraÃ®neurs diplÃ´mÃ©s UEFA" },
+  { icon: MapPin, title: "Infrastructures", desc: "Terrains, salle, analyse vidÃ©o" },
+  { icon: Trophy, title: "OpportunitÃ©s", desc: "DÃ©tection, stages en Espagne" },
 ];
 
 export function AcademyStorySection() {
   return (
     <section className="relative overflow-hidden bg-white">
-      {/* Desktop image — full visible, faded into content on left */}
+      {/* Desktop image â€” full visible, faded into content on left */}
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[55%] lg:flex lg:items-center lg:justify-end lg:py-10 lg:pr-6">
         <div className="relative h-full w-full">
           <Image
             src="/images/academy/kids-trophy.jpg"
-            alt="Enfants de l'académie avec le trophée"
+            alt="Enfants de l'acadÃ©mie avec le trophÃ©e"
             fill
             sizes="55vw"
             className="object-contain object-right"
@@ -51,11 +51,11 @@ export function AcademyStorySection() {
             </span>
           </h2>
 
-          {/* Mobile image — edge-to-edge, overlaps title, no frame */}
+          {/* Mobile image â€” edge-to-edge, overlaps title, no frame */}
           <div className="relative z-10 -mx-6 -mt-8 lg:hidden">
             <Image
               src="/images/academy/kids-trophy.jpg"
-              alt="Enfants de l'académie avec le trophée"
+              alt="Enfants de l'acadÃ©mie avec le trophÃ©e"
               width={1400}
               height={1000}
               sizes="100vw"
@@ -66,7 +66,7 @@ export function AcademyStorySection() {
           {/* Description */}
           <p className="mt-6 text-base leading-relaxed text-muted-foreground lg:mt-5">
             Depuis 2016, nous accompagnons les jeunes talents du sud tunisien
-            avec une méthodologie espagnole éprouvée, un encadrement
+            avec une mÃ©thodologie espagnole Ã©prouvÃ©e, un encadrement
             professionnel et des infrastructures modernes.
           </p>
 
@@ -93,10 +93,10 @@ export function AcademyStorySection() {
             })}
           </div>
 
-          {/* CTA — centered in the left half */}
+          {/* CTA â€” centered in the left half */}
           <div className="mt-8 flex justify-center">
             <Link
-              href="/valladolid/inscription"
+              href="/inscription?team=valladolid"
               className="inline-flex items-center gap-3 rounded-md bg-accent px-10 py-4 text-base font-bold text-white shadow-xl shadow-accent/25 transition-all hover:bg-accent/90 hover:shadow-2xl hover:shadow-accent/30 hover:-translate-y-0.5"
             >
               Inscrire mon enfant

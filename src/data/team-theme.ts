@@ -28,7 +28,7 @@ export interface TeamContact {
 export interface TeamStat { icon: IconName; value: string; label: string; }
 export interface TeamValue { number?: string; icon?: IconName; title: string; description: string; }
 export interface TeamGalleryItem { id: string; label: string; span: string; }
-export interface TeamMission { kicker: string; title: string; titleLine2?: string; paragraphs: string[]; }
+export interface TeamMission { kicker: string; title: string; titleLine2?: string;  paragraphs: string[]; }
 export interface TeamVision { kicker: string; titleLine1: string; titleLine2: string; paragraph: string; }
 export interface TeamCTA { title: string; paragraph: string; buttonLabel: string; }
 export interface ClubFeature { icon: IconName; title: string; description: string; features: string[]; }
@@ -72,6 +72,8 @@ export interface TeamContent {
   alumniStats?: TeamStat[];
   club?: ClubContent;
   missionImage?: string;
+  history?: { milestones: { year: string; title: string; description?: string }[] };
+ process?: { steps: { title: string; description: string }[] };
   finalCta?: FinalCtaContent;
 }
 
@@ -257,6 +259,21 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
       ],
       entitiesKicker: "Nos entités",
       entitiesTitle: "Trois équipes, une famille",
+            history: {
+        milestones: [
+          { year: "2016", title: "Fondation", description: "Naissance du groupe à Tataouine" },
+          { year: "2020", title: "Partenariat RV", description: "Méthodologie espagnole officielle" },
+          { year: "2024", title: "Nouveau campus", description: "Installations modernes" },
+          { year: "2026", title: "Aujourd'hui", description: "150+ jeunes formés" },
+        ],
+      },
+      process: {
+        steps: [
+          { title: "Séance d'essai", description: "Une séance gratuite pour découvrir l'académie" },
+          { title: "Évaluation", description: "Nos coachs déterminent la catégorie adaptée" },
+          { title: "Inscription", description: "Formalités et début de l'aventure" },
+        ],
+      },
             finalCta: {
         title: "Prêt à rejoindre l'aventure ?",
         subtitle: "Inscrivez votre enfant dès aujourd'hui",
@@ -315,7 +332,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         { label: "TV", href: "/tv?team=valladolid" },
         { label: "Actualités", href: "/actualites?team=valladolid" },
         { label: "Boutique", href: "/boutique?team=valladolid" },
-        { label: "Contact", href: "/contact" },
+        { label: "Contact", href: "/contact?team=valladolid" },
       ],
       mobileGroups: [
         {
@@ -372,7 +389,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         title: "Contact",
         links: [
           { label: "Contact", href: "/contact" },
-          { label: "Inscription", href: "/inscription" },
+         { label: "Inscription", href: "/inscription?team=valladolid" },
         ],
       },
     ],
@@ -489,7 +506,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         { label: "TV", href: "/tv?team=ennour" },
         { label: "Actualités", href: "/actualites?team=ennour" },
         { label: "Boutique", href: "/boutique?team=ennour" },
-        { label: "Contact", href: "/contact" },
+        { label: "Contact", href: "/contact?team=ennour" },
       ],
       mobileGroups: [
         {
@@ -538,7 +555,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         title: "Contact",
         links: [
           { label: "Contact", href: "/contact" },
-          { label: "Inscription", href: "/inscription" },
+         { label: "Inscription", href: "/inscription?team=ennour" },
         ],
       },
     ],
@@ -604,6 +621,21 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
           "Vous êtes une jeune joueuse ou un parent ? Contactez-nous pour découvrir nos programmes et venir essayer.",
         buttonLabel: "Inscrire ma fille",
       },
+            history: {
+        milestones: [
+          { year: "2019", title: "Création", description: "Première équipe féminine" },
+          { year: "2022", title: "Finale régionale", description: "Nos U15 atteignent la finale" },
+          { year: "2025", title: "Première pro", description: "Une joueuse signe en Ligue 1" },
+          { year: "2026", title: "Aujourd'hui", description: "40+ joueuses formées" },
+        ],
+      },
+      process: {
+        steps: [
+          { title: "Séance d'essai", description: "Encadrée par nos entraîneuses" },
+          { title: "Évaluation", description: "Positionnement dans la catégorie adaptée" },
+          { title: "Inscription", description: "Rejoindre la famille Ennour" },
+        ],
+      },
                  finalCta: {
         title: "Rejoignez Ennour Sportif",
         subtitle: "Vous êtes une jeune joueuse ou un parent ?",
@@ -641,7 +673,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         { label: "TV", href: "/tv?team=avenir" },
         { label: "Actualités", href: "/actualites?team=avenir" },
         { label: "Boutique", href: "/boutique?team=avenir" },
-        { label: "Contact", href: "/contact" },
+        { label: "Contact", href: "/contact?team=avenir" },
       ],
       mobileGroups: [
         {
@@ -690,7 +722,8 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         title: "Contact",
         links: [
           { label: "Contact", href: "/contact" },
-          { label: "Inscription", href: "/inscription" },
+          { label: "Inscription", href: "/inscription?team=avenir" },
+
         ],
       },
     ],
@@ -760,6 +793,21 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         paragraph:
           "Football à 11 ou futsal — nos portes sont ouvertes à tous les joueurs motivés, quel que soit leur niveau de départ.",
         buttonLabel: "Inscrire mon enfant",
+      },
+            history: {
+        milestones: [
+          { year: "2020", title: "Création", description: "Section football & futsal" },
+          { year: "2023", title: "Lancement futsal", description: "Nouvelle discipline structurée" },
+          { year: "2025", title: "Premier titre", description: "Champion régional futsal U15" },
+          { year: "2026", title: "Aujourd'hui", description: "80+ joueurs formés" },
+        ],
+      },
+      process: {
+        steps: [
+          { title: "Séance d'essai", description: "Football à 11 ou futsal, au choix" },
+          { title: "Évaluation", description: "Test technique et placement" },
+          { title: "Inscription", description: "Début de la formation" },
+        ],
       },
                      finalCta: {
         title: "Rejoignez Avenir Sportif",

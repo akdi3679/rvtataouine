@@ -3,10 +3,10 @@ import { FileText, Users, Calendar, CheckCircle2, ArrowRight } from "lucide-reac
 
 export function HowItWorksSection() {
   const steps = [
-    { step: "1", title: "Pré-inscription", desc: "Remplissez le formulaire ou contactez-nous pour réserver une place à un essai.", icon: FileText },
-    { step: "2", title: "Séance d'Évaluation", desc: "Votre enfant participe à une séance d'essai gratuite pour évaluer son niveau.", icon: Users },
-    { step: "3", title: "Entretien", desc: "Échange avec les entraîneurs et parents pour valider les objectifs.", icon: Calendar },
-    { step: "4", title: "Inscription Finale", desc: "Validation administrative et remise du kit de démarrage.", icon: CheckCircle2 },
+    { step: "1", title: "PrÃ©-inscription", desc: "Remplissez le formulaire ou contactez-nous pour rÃ©server une place Ã  un essai.", icon: FileText },
+    { step: "2", title: "SÃ©ance d'Ã‰valuation", desc: "Votre enfant participe Ã  une sÃ©ance d'essai gratuite pour Ã©valuer son niveau.", icon: Users },
+    { step: "3", title: "Entretien", desc: "Ã‰change avec les entraÃ®neurs et parents pour valider les objectifs.", icon: Calendar },
+    { step: "4", title: "Inscription Finale", desc: "Validation administrative et remise du kit de dÃ©marrage.", icon: CheckCircle2 },
   ];
 
   return (
@@ -18,10 +18,10 @@ export function HowItWorksSection() {
             Processus simple
           </div>
           <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Comment ça marche ?
+            Comment Ã§a marche ?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            4 étapes pour rejoindre l'académie
+            4 Ã©tapes pour rejoindre l'acadÃ©mie
           </p>
         </div>
 
@@ -40,7 +40,7 @@ export function HowItWorksSection() {
 
         <div className="mt-12 text-center">
           <Link
-            href="/valladolid/inscription"
+            href="/inscription?team=valladolid"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-base font-semibold text-white transition-all hover:bg-primary/90 hover:scale-105"
           >
             Commencer l'inscription

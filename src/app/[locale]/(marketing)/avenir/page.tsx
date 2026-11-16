@@ -13,9 +13,9 @@ import { TeamPresentationSection } from "@/components/sections/team-presentation
 import { TEAMS } from "@/data/team-theme";
 import { FinalCTASection } from "@/components/sections/final-cta";
 export const metadata: Metadata = {
-  title: "Avenir Sportif Tataouine — Football & Futsal",
+  title: "Avenir Sportif Tataouine â€” Football & Futsal",
   description:
-    "La section football à 11 et futsal du Groupe Sportif ARV Tataouine. Formation polyvalente pour les joueurs du sud tunisien.",
+    "La section football Ã  11 et futsal du Groupe Sportif ARV Tataouine. Formation polyvalente pour les joueurs du sud tunisien.",
 };
 
 export default function AvenirPage() {
@@ -24,8 +24,18 @@ export default function AvenirPage() {
   const values = t.content.values!;
   
 
+  const teamVars = {
+    "--color-primary-light": "211 65% 27%",
+    "--color-accent": "43 100% 60%",
+    "--color-primary": "211 65% 17%",
+    "--color-accent-dark": "43 100% 50%",
+    "--color-primary-dark": "211 65% 12%",
+    "--color-accent-light": "43 100% 70%",
+  } as React.CSSProperties;
+
+  
   return (
-    <div className="flex flex-col bg-white">
+    <div style={teamVars} className="flex flex-col bg-white">
       <HeroCarousel team="avenir" />
       <PartnersStrip />
 

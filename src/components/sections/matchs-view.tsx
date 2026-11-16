@@ -94,7 +94,7 @@ function NextMatchHero({ match }: { match: Match }) {
           </span>
         </div>
 
-                       {/* Match — la star */}
+                       {/* Match â€” la star */}
         <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3 sm:gap-8">
           {/* Home */}
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-end sm:gap-4">
@@ -109,7 +109,7 @@ function NextMatchHero({ match }: { match: Match }) {
             </p>
           </div>
 
-          {/* Time — pt pour aligner visuellement avec le centre des crests */}
+          {/* Time â€” pt pour aligner visuellement avec le centre des crests */}
           <div className="flex flex-col items-center gap-1 pt-4 sm:pt-6">
             <span className="text-3xl font-black tabular-nums text-white sm:text-5xl">
               {match.time}
@@ -134,13 +134,13 @@ function NextMatchHero({ match }: { match: Match }) {
         </div>
 
         <p className="mt-4 text-center text-xs font-medium text-white/70 sm:text-sm">
-          {match.competition} · {match.location}
+          {match.competition} Â· {match.location}
         </p>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/15 pt-5 sm:flex-row">
           <Countdown date={match.date} time={match.time} />
           <a
-            href="/valladolid/inscription"
+            href="/inscription?team=valladolid"
             className="inline-flex items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-accent/25 transition-all hover:bg-accent/90 hover:scale-[1.02]"
           >
             Inscrire mon enfant
@@ -212,7 +212,7 @@ function UpcomingRow({ match }: { match: Match }) {
         </p>
       </div>
 
-      {/* Desktop — Home (right aligned, logo right) */}
+      {/* Desktop â€” Home (right aligned, logo right) */}
       <div className="hidden min-w-0 items-center justify-end gap-2 sm:flex">
         <div className="min-w-0 text-right">
           <p className="truncate text-sm font-bold text-foreground">
@@ -236,7 +236,7 @@ function UpcomingRow({ match }: { match: Match }) {
         </span>
       </div>
 
-      {/* Desktop — Away (left aligned, logo left) */}
+      {/* Desktop â€” Away (left aligned, logo left) */}
       <div className="hidden min-w-0 items-center justify-start gap-2 sm:flex">
         <TeamCrest
           teamName={match.awayTeam.name}
@@ -266,7 +266,7 @@ function UpcomingList({ matches }: { matches: Match[] }) {
   if (matches.length === 0) {
     return (
       <p className="py-6 text-sm text-muted-foreground">
-        Aucun autre match programmé.
+        Aucun autre match programmÃ©.
       </p>
     );
   }
@@ -284,7 +284,7 @@ function HistoryList({ matches }: { matches: Match[] }) {
   if (matches.length === 0) {
     return (
       <p className="py-6 text-sm text-muted-foreground">
-        Aucun match joué pour le moment.
+        Aucun match jouÃ© pour le moment.
       </p>
     );
   }
@@ -308,7 +308,7 @@ function HistoryList({ matches }: { matches: Match[] }) {
           loss: {
             dot: "bg-muted-foreground/50",
             text: "text-muted-foreground",
-            label: "Défaite",
+            label: "DÃ©faite",
           },
         } as const;
         const result = resultMap[match.result ?? "draw"];
@@ -329,14 +329,14 @@ function HistoryList({ matches }: { matches: Match[] }) {
                 {opponent}
               </p>
               <p className="mt-0.5 truncate text-[11px] text-muted-foreground">
-                {isHome ? "Domicile" : "Extérieur"} · {match.category}
+                {isHome ? "Domicile" : "ExtÃ©rieur"} Â· {match.category}
               </p>
             </div>
 
             <div className="text-center">
               <span className="text-xl font-black tabular-nums text-foreground">
                 {ourScore}
-                <span className="mx-0.5 text-muted-foreground/40">–</span>
+                <span className="mx-0.5 text-muted-foreground/40">â€“</span>
                 {theirScore}
               </span>
             </div>
@@ -533,7 +533,7 @@ function Bilan({ matches }: { matches: Match[] }) {
     { label: "Victoires", value: winPct },
     { label: "Nuls", value: drawPct },
     { label: "Attaque", value: attackPct },
-    { label: "Défense", value: defensePct },
+    { label: "DÃ©fense", value: defensePct },
     { label: "Forme", value: formPct },
   ];
 
@@ -553,7 +553,7 @@ function Bilan({ matches }: { matches: Match[] }) {
 
       <div className="rounded-2xl border border-border bg-white p-6">
         <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-          Forme récente
+          Forme rÃ©cente
         </p>
         <div className="mt-4 flex items-center gap-2">
           {last5.length > 0 ? (
@@ -561,11 +561,11 @@ function Bilan({ matches }: { matches: Match[] }) {
               <FormBadge key={i} result={m.result ?? "draw"} />
             ))
           ) : (
-            <p className="text-xs text-muted-foreground">Aucun match joué.</p>
+            <p className="text-xs text-muted-foreground">Aucun match jouÃ©.</p>
           )}
         </div>
         <p className="mt-2 text-[10px] text-muted-foreground">
-          Plus ancien → plus récent
+          Plus ancien â†’ plus rÃ©cent
         </p>
 
         <div className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-5">
@@ -586,7 +586,7 @@ function Bilan({ matches }: { matches: Match[] }) {
               {losses}
             </p>
             <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-              Défaites
+              DÃ©faites
             </p>
           </div>
         </div>
@@ -597,7 +597,7 @@ function Bilan({ matches }: { matches: Match[] }) {
             <div>
               <p className="text-lg font-black text-foreground">{goalsFor}</p>
               <p className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">
-                Buts marqués
+                Buts marquÃ©s
               </p>
             </div>
           </div>
@@ -608,7 +608,7 @@ function Bilan({ matches }: { matches: Match[] }) {
                 {goalsAgainst}
               </p>
               <p className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">
-                Encaissés
+                EncaissÃ©s
               </p>
             </div>
           </div>
@@ -636,13 +636,13 @@ export function MatchsView() {
       <section className="border-b border-border/60">
         <div className="mx-auto max-w-4xl px-6 py-10 lg:px-8 lg:py-14">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
-            Calendrier & Résultats
+            Calendrier & RÃ©sultats
           </p>
           <h1 className="mt-3 text-4xl font-black tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             Matchs
           </h1>
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Tous les matchs de l&apos;académie, toutes catégories confondues.
+            Tous les matchs de l&apos;acadÃ©mie, toutes catÃ©gories confondues.
           </p>
         </div>
       </section>
@@ -656,7 +656,7 @@ export function MatchsView() {
               </h2>
               <p className="mt-1 text-xs text-muted-foreground">
                 {restUpcoming.length} match
-                {restUpcoming.length > 1 ? "s" : ""} à venir
+                {restUpcoming.length > 1 ? "s" : ""} Ã  venir
               </p>
             </div>
             <UpcomingList matches={restUpcoming} />
@@ -670,7 +670,7 @@ export function MatchsView() {
             </h2>
             <p className="mt-1 text-xs text-muted-foreground">
               {sortedRecent.length} match{sortedRecent.length > 1 ? "s" : ""}{" "}
-              joué{sortedRecent.length > 1 ? "s" : ""}
+              jouÃ©{sortedRecent.length > 1 ? "s" : ""}
             </p>
           </div>
           <HistoryList matches={sortedRecent} />

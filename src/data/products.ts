@@ -21,7 +21,7 @@ export interface Product {
   isNew?: boolean;
   details: string[];
   care?: string[];
-  team?: string;    // ← AJOUTER
+  team?: string;    // Ã¢â€ Â AJOUTER
 }
 
 export const products: Product[] = [
@@ -29,7 +29,7 @@ export const products: Product[] = [
     slug: "maillot-domicile-2026",
     name: "Maillot Domicile 2026/27",
     description:
-      "Le maillot officiel de l'Académie pour la saison 2026/27. Tissu respirant, coupe athlétique et écusson brodé.",
+      "Le maillot officiel de l'AcadÃƒÂ©mie pour la saison 2026/27. Tissu respirant, coupe athlÃƒÂ©tique et ÃƒÂ©cusson brodÃƒÂ©.",
     category: "maillot",
     categoryLabel: "Maillots",
      team: "valladolid",    
@@ -44,20 +44,21 @@ export const products: Product[] = [
       { id: "md-xl", name: "Taille XL", price: 85, stock: 10, attributes: { size: "XL" } },
     ],
     details: [
-      "100% polyester recyclé",
+      "100% polyester recyclÃƒÂ©",
       "Technologie Dri-FIT",
-      "Écusson officiel brodé",
-      "Coupe athlétique ajustée",
+      "Ãƒâ€°cusson officiel brodÃƒÂ©",
+      "Coupe athlÃƒÂ©tique ajustÃƒÂ©e",
     ],
-    care: ["Lavage machine 30°C", "Ne pas javelliser", "Repassage faible température"],
+    care: ["Lavage machine 30Ã‚Â°C", "Ne pas javelliser", "Repassage faible tempÃƒÂ©rature"],
   },
   {
     slug: "maillot-exterieur-2026",
-    name: "Maillot Extérieur 2026/27",
+    name: "Maillot ExtÃƒÂ©rieur 2026/27",
     description:
-      "Le maillot extérieur de la saison. Design moderne avec des détails dorés. Confort optimal pour les matchs et l'entraînement.",
+      "Le maillot extÃƒÂ©rieur de la saison. Design moderne avec des dÃƒÂ©tails dorÃƒÂ©s. Confort optimal pour les matchs et l'entraÃƒÂ®nement.",
     category: "maillot",
     categoryLabel: "Maillots",
+    team: "valladolid",
     price: 85,
     images: ["/images/boutique/wear2.png"],
     featured: true,
@@ -69,20 +70,21 @@ export const products: Product[] = [
       { id: "me-xl", name: "Taille XL", price: 85, stock: 8, attributes: { size: "XL" } },
     ],
     details: [
-      "100% polyester recyclé",
-      "Design exclusif avec détails dorés",
-      "Écusson officiel brodé",
+      "100% polyester recyclÃƒÂ©",
+      "Design exclusif avec dÃƒÂ©tails dorÃƒÂ©s",
+      "Ãƒâ€°cusson officiel brodÃƒÂ©",
       "Coupe regular confortable",
     ],
-    care: ["Lavage machine 30°C", "Ne pas javelliser", "Séchage à l'air libre"],
+    care: ["Lavage machine 30Ã‚Â°C", "Ne pas javelliser", "SÃƒÂ©chage ÃƒÂ  l'air libre"],
   },
   {
     slug: "maillot-third-2026",
     name: "Maillot Third 2026/27",
     description:
-      "Le maillot third de la saison, édition limitée. Design audacieux aux couleurs de l'académie pour les supporters.",
+      "Le maillot third de la saison, ÃƒÂ©dition limitÃƒÂ©e. Design audacieux aux couleurs de l'acadÃƒÂ©mie pour les supporters.",
     category: "maillot",
     categoryLabel: "Maillots",
+    team: "valladolid",
     price: 85,
     images: ["/images/boutique/wear3.png"],
     featured: true,
@@ -94,12 +96,46 @@ export const products: Product[] = [
       { id: "mt-xl", name: "Taille XL", price: 85, stock: 6, attributes: { size: "XL" } },
     ],
     details: [
-      "100% polyester recyclé",
-      "Édition limitée",
-      "Écusson officiel brodé",
-      "Coupe athlétique",
+      "100% polyester recyclÃƒÂ©",
+      "Ãƒâ€°dition limitÃƒÂ©e",
+      "Ãƒâ€°cusson officiel brodÃƒÂ©",
+      "Coupe athlÃƒÂ©tique",
     ],
-    care: ["Lavage machine 30°C", "Ne pas javelliser", "Repassage faible température"],
+    care: ["Lavage machine 30Ã‚Â°C", "Ne pas javelliser", "Repassage faible tempÃƒÂ©rature"],
+  },
+    {
+    slug: "maillot-ennour-2026",
+    name: "Maillot Ennour 2026/27",
+    description: "Le maillot officiel de la section féminine, aux couleurs Ennour.",
+    category: "maillot",
+    categoryLabel: "Maillots",
+    team: "ennour",
+    price: 75,
+    images: ["/images/boutique/wear1.png"],
+    featured: true,
+    variants: [
+      { id: "en-s", name: "Taille S", price: 75, stock: 10, attributes: { size: "S" } },
+      { id: "en-m", name: "Taille M", price: 75, stock: 15, attributes: { size: "M" } },
+    ],
+    details: ["Écusson Ennour brodé", "Coupe féminine ajustée"],
+    care: ["Lavage 30°C"],
+  },
+  {
+    slug: "maillot-avenir-2026",
+    name: "Maillot Avenir 2026/27",
+    description: "Le maillot officiel de la section football & futsal.",
+    category: "maillot",
+    categoryLabel: "Maillots",
+    team: "avenir",
+    price: 75,
+    images: ["/images/boutique/wear2.png"],
+    featured: true,
+    variants: [
+      { id: "av-s", name: "Taille S", price: 75, stock: 12, attributes: { size: "S" } },
+      { id: "av-m", name: "Taille M", price: 75, stock: 18, attributes: { size: "M" } },
+    ],
+    details: ["Écusson Avenir brodé", "Coupe athlétique"],
+    care: ["Lavage 30°C"],
   },
 ];
 

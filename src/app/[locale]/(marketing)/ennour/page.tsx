@@ -13,9 +13,9 @@ import { TeamPresentationSection } from "@/components/sections/team-presentation
 import { Gallery } from "@/components/sections/gallery";
 import { FinalCTASection } from "@/components/sections/final-cta";
 export const metadata: Metadata = {
-  title: "Ennour Sportif Tataouine — Football féminin",
+  title: "Ennour Sportif Tataouine â€” Football fÃ©minin",
   description:
-    "La section féminine du Groupe Sportif ARV Tataouine. Formation, accompagnement et célébration du football féminin dans le sud tunisien.",
+    "La section fÃ©minine du Groupe Sportif ARV Tataouine. Formation, accompagnement et cÃ©lÃ©bration du football fÃ©minin dans le sud tunisien.",
 };
 
 export default function EnnourPage() {
@@ -24,8 +24,18 @@ export default function EnnourPage() {
   const values = t.content.values!;
   
 
+  const teamVars = {
+    "--color-primary-light": "352 59% 45%",
+    "--color-accent": "43 100% 60%",
+    "--color-primary": "352 59% 30%",
+    "--color-accent-dark": "43 100% 50%",
+    "--color-primary-dark": "352 59% 20%",
+    "--color-accent-light": "43 100% 70%",
+  } as React.CSSProperties;
+
+  
   return (
-    <div className="flex flex-col bg-white">
+    <div style={teamVars} className="flex flex-col bg-white">
       <HeroCarousel team="ennour" />
       <PartnersStrip />
 
