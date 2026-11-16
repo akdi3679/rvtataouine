@@ -393,10 +393,10 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     formTagline: "Football masculin · académie historique",
     formIcon: "shield",
     hasLogin: true,
-        hasLogin: true,
+       
     selectionBg: "#E7001C",    // red — matches Valladolid CTA
     selectionText: "#FFFFFF",  // white — matches Valladolid CTA text
-    selectionColor: "#E7001C", 
+  
     content: {
       subtitle: "Football masculin",
       shortDescription:

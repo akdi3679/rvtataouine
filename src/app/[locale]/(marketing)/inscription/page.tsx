@@ -48,7 +48,6 @@ export default function InscriptionPage() {
     message: "",
     consent: false,
   });
-const FORM_ICONS = { shield: Shield, heart: Heart, zap: Zap, star: Shield };
   const set =
     (key: keyof typeof form) =>
     (
