@@ -12,7 +12,7 @@ import { CookieBanner } from "@/components/global/cookie-banner";
 import { FloatingButtons } from "@/components/global/floating-buttons";
 import { SearchCommand } from "@/components/global/search-command";
 import { InscriptionPopup } from "@/components/global/inscription-popup";
-
+import { SelectionTheme } from "@/components/global/selection-theme";
 import "@/styles/globals.css";
 
 const inter = Inter({
@@ -47,6 +47,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <ToastProvider>
             <CartProvider>
+               <SelectionTheme />
               {children}
               <CartPanel />
               <CookieBanner />

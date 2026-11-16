@@ -51,7 +51,10 @@ function VideoCard({ video }: { video: Video }) {
 }
 
 export function FeaturedVideosSection({ team }: { team?: string } = {}) {
-  const source = team ? videos.filter((v) => v.team === team) : videos;
+  const source = team
+    ? videos.filter((v) => !v.team || v.team === team)
+    : videos;
+
   const featuredRaw = source.filter((v) => v.featured).slice(0, 3);
   const featured = featuredRaw.length >= 3 ? featuredRaw : source.slice(0, 3);
 

@@ -311,7 +311,7 @@ export function Navbar() {
 
                 <Link
                   href={`/${currentLocale}/inscription`}
-                  className="hidden md:inline-flex items-center rounded-md bg-accent px-3 py-2 text-xs font-bold text-white hover:bg-accent-light transition-colors whitespace-nowrap"
+                 className={`hidden md:inline-flex items-center rounded-md px-3 py-2 text-xs font-bold transition-colors whitespace-nowrap ${theme.carousel.button}`}
                 >
                   Inscription
                 </Link>
@@ -339,7 +339,7 @@ export function Navbar() {
 
                   <Link
                     href={`/${currentLocale}/inscription`}
-                    className="flex items-center justify-center rounded-md bg-accent px-2.5 py-1.5 text-[11px] font-bold text-white hover:bg-accent-light transition-colors whitespace-nowrap"
+                   className={`flex items-center justify-center rounded-md px-2.5 py-1.5 text-[11px] font-bold transition-colors whitespace-nowrap ${theme.carousel.button}`}
                   >
                     Inscription
                   </Link>
@@ -487,7 +487,7 @@ function MobileMenu({
               <Link
                 href={`/${currentLang}/inscription`}
                 onClick={onClose}
-                className="mx-4 flex items-center justify-center rounded-md bg-accent px-4 py-3 text-sm font-bold text-white hover:bg-accent-light transition-colors"
+                 className={`mx-4 flex items-center justify-center rounded-md px-4 py-3 text-sm font-bold transition-colors ${theme.carousel.button}`}
               >
                 Inscription
               </Link>

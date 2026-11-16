@@ -4,7 +4,10 @@ import { products, formatPrice } from "@/data/products";
 import Image from "next/image";
 export function FeaturedProductsSection({ team }: { team?: string } = {}) {
   const allFeatured = products.filter((p) => p.featured);
-  const filtered = team ? allFeatured.filter((p) => p.team === team) : allFeatured;
+ const filtered = team
+    ? allFeatured.filter((p) => !p.team || p.team === team)
+    : allFeatured;
+
   const featured = filtered.slice(0, 3);
 
   if (!featured.length) {

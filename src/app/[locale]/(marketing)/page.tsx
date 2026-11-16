@@ -10,7 +10,7 @@ import { NewsletterSection } from "@/components/sections/newsletter-section";
 import { FinalCTASection } from "@/components/sections/final-cta";
 import { HeroCarousel } from "@/components/sections/hero-carousel";
 import { TEAMS, ENTITY_LIST } from "@/data/team-theme";
-
+import { TeamPresentationSection } from "@/components/sections/team-presentation";
 export const metadata: Metadata = {
   title: "Groupe Sportif ARV Tataouine",
   description:
@@ -104,49 +104,7 @@ function EntitiesSection() {
   );
 }
 
-function VisionSection() {
-  const group = TEAMS.group;
-  const v = group.content.vision!;
-  const values = group.content.values ?? [];
 
-  return (
-    <section className="py-24 lg:py-40 bg-white">
-      <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
-        <p className={`text-[10px] font-bold uppercase tracking-[0.4em] ${group.textClass}`}>
-          {v.kicker}
-        </p>
-
-        <h2 className="mt-16 text-3xl font-black leading-[1.05] tracking-tight text-foreground sm:text-4xl lg:text-6xl">
-          {v.titleLine1}
-          <br />
-          <span className={group.textClass}>{v.titleLine2}</span>
-        </h2>
-
-        <p className="mt-14 mx-auto max-w-2xl text-base leading-[1.8] text-muted-foreground sm:text-lg lg:text-xl">
-          {v.paragraph}
-        </p>
-      </div>
-
-      <div className="mx-auto max-w-5xl px-6 lg:px-8 mt-24">
-        <div className="border-t border-border pt-16">
-          <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((val) => (
-              <div key={val.title}>
-                <p className="text-xs font-bold tracking-[0.3em] text-muted-foreground/50">
-                  {val.number}
-                </p>
-                <p className="mt-4 text-lg font-bold text-foreground">{val.title}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {val.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export default function GroupHomePage() {
   // Override CSS vars so shared sections use group colors (blue + gold).
@@ -165,8 +123,8 @@ export default function GroupHomePage() {
       <HeroCarousel team="group" />
 
       <PartnersStrip />
-      <VisionSection />
-
+      
+<TeamPresentationSection team="group" />
       <EntitiesSection />
       <NewsSection />
       <FeaturedVideosSection />

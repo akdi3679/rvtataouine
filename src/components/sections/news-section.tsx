@@ -186,7 +186,9 @@ export function NewsSection({
   const [canRight, setCanRight] = useState(false);
 
   // Derived data
-  const teamArticles = team ? articles.filter((a) => a.team === team) : articles;
+  const teamArticles = team
+    ? articles.filter((a) => !a.team || a.team === team)
+   : articles;
   const filtered =
     filter === "all"
       ? teamArticles
@@ -388,7 +390,7 @@ export function NewsSection({
           <button
             onClick={() => scrollBy(-1)}
             disabled={!canLeft}
-            className={`flex h-8 w-8 items-center justify-center rounded-md border border-primary bg-white text-primary transition-all ${
+            className={`flex h-8 w-8 items-center justify-center rounded-md  bg-white text-primary transition-all ${
               canLeft
                 ? "hover:bg-primary hover:text-white"
                 : "cursor-not-allowed opacity-30"
@@ -429,7 +431,7 @@ export function NewsSection({
           <button
             onClick={() => scrollBy(1)}
             disabled={!canRight}
-            className={`flex h-8 w-8 items-center justify-center rounded-md border border-primary bg-white text-primary transition-all ${
+            className={`flex h-8 w-8 items-center justify-center rounded-md bg-white text-primary transition-all ${
               canRight
                 ? "hover:bg-primary hover:text-white"
                 : "cursor-not-allowed opacity-30"

@@ -118,15 +118,15 @@
   }
 }
 
-/* Red text selection */
+/* Text selection — team-aware (--selection-color set per team at runtime) */
 ::selection {
-  background: hsl(var(--color-accent));
-  color: white;
+  background: var(--selection-bg, hsl(var(--color-accent)));
+  color: var(--selection-text, white);
 }
 
 ::-moz-selection {
-  background: hsl(var(--color-accent));
-  color: white;
+  background: var(--selection-bg, hsl(var(--color-accent)));
+  color: var(--selection-text, white);
 }
 
 /* Partners carousel animation */

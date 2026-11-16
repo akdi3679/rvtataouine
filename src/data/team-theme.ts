@@ -28,7 +28,7 @@ export interface TeamContact {
 export interface TeamStat { icon: IconName; value: string; label: string; }
 export interface TeamValue { number?: string; icon?: IconName; title: string; description: string; }
 export interface TeamGalleryItem { id: string; label: string; span: string; }
-export interface TeamMission { kicker: string; title: string; paragraphs: string[]; }
+export interface TeamMission { kicker: string; title: string; titleLine2?: string; paragraphs: string[]; }
 export interface TeamVision { kicker: string; titleLine1: string; titleLine2: string; paragraph: string; }
 export interface TeamCTA { title: string; paragraph: string; buttonLabel: string; }
 export interface ClubFeature { icon: IconName; title: string; description: string; features: string[]; }
@@ -43,7 +43,15 @@ export interface ClubContent {
   stadeParagraph: string; stadeStats: ClubStat[];
   installationsKicker: string; installationsTitle: string; installations: ClubFeature[];
 }
-
+export interface FinalCtaContent {
+  title: string;
+  subtitle: string;
+  ctaLabel: string;
+  secondaryLabel: string;
+  secondaryHref: string;
+  // Optional: override the section background (default: bg-white)
+  sectionBgClass?: string;
+}
 export interface TeamContent {
   subtitle?: string;
   shortDescription: string;
@@ -63,6 +71,8 @@ export interface TeamContent {
   entitiesTitle?: string;
   alumniStats?: TeamStat[];
   club?: ClubContent;
+  missionImage?: string;
+  finalCta?: FinalCtaContent;
 }
 
 export interface NavLink { label: string; href: string; }
@@ -106,7 +116,13 @@ export interface TeamConfig {
   formTagline: string;
   formIcon: "shield" | "heart" | "zap" | "star";
   hasLogin?: boolean;
-
+selectionBg: string;
+ selectionText: string;
+ newsletterAccent?: {
+    bg: string;           // hex — polygon shape
+    text: string;         // hex — polygon text
+    buttonClass: string;  // full tailwind classes for the CTA button
+ };
   content: TeamContent;
 }
 
@@ -131,7 +147,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     heroOverlayR: "from-[#0B3E5C]/70 via-transparent to-[#0F2A47]/60",
     logoPath: "/images/logo/logo.png",
     carousel: {
-      button: "bg-[#F0C419] text-[#0B3E5C] hover:bg-[#F0C419]/90",
+      button: "bg-[#F97316] text-[#082B42] hover:bg-[#F97316]/90",
       progress: "bg-[#F0C419]",
     },
     nav: {
@@ -221,6 +237,8 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     ],
     formTagline: "Toutes les équipes du groupe",
     formIcon: "shield",
+        selectionBg: "#F97316",    // orange — matches group CTA
+    selectionText: "#082B42",  // navy — matches group CTA text
     content: {
       shortDescription:
         "Un projet éducatif, social et sportif qui accompagne les jeunes de Tataouine dans leur développement personnel et sportif.",
@@ -239,6 +257,24 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
       ],
       entitiesKicker: "Nos entités",
       entitiesTitle: "Trois équipes, une famille",
+            finalCta: {
+        title: "Prêt à rejoindre l'aventure ?",
+        subtitle: "Inscrivez votre enfant dès aujourd'hui",
+        ctaLabel: "Inscription",
+        secondaryLabel: "Essai gratuit",
+        secondaryHref: "/contact",
+      },
+            mission: {
+        kicker: "Notre vision",
+        title: "Former des champions,",
+        titleLine2: "sur et en dehors du terrain.",
+        paragraphs: [
+          "Le Groupe Sportif ARV Tataouine n'est pas qu'un club de football. C'est un projet éducatif, social et sportif qui accompagne les jeunes de Tataouine dans leur développement personnel et sportif.",
+          "Trois équipes, un seul esprit : offrir à chaque jeune du sud tunisien un cadre d'excellence pour grandir, sur et en dehors du terrain.",
+        ],
+      },
+      missionImage: "/images/academy/club.jpg",
+
     },
   },
 
@@ -353,10 +389,14 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
        { name: "TikTok",    href: "https://tiktok.com/@arvtataouine",           icon: "tiktok"    },
        { name: "LinkedIn",  href: "https://linkedin.com/company/arvtataouine",  icon: "linkedin"  },
        { name: "Pinterest", href: "https://pinterest.com/arvtataouine",         icon: "pinterest" },
-     ]
+     ],
     formTagline: "Football masculin · académie historique",
     formIcon: "shield",
     hasLogin: true,
+        hasLogin: true,
+    selectionBg: "#E7001C",    // red — matches Valladolid CTA
+    selectionText: "#FFFFFF",  // white — matches Valladolid CTA text
+    selectionColor: "#E7001C", 
     content: {
       subtitle: "Football masculin",
       shortDescription:
@@ -412,6 +452,13 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         { icon: "star",   value: "5",    label: "Bourses NCAA" },
         { icon: "zap",    value: "30+",  label: "Stages en Espagne" },
       ],
+            finalCta: {
+        title: "Rejoignez Real Valladolid",
+        subtitle: "Formez votre enfant à l'excellence espagnole",
+        ctaLabel: "Inscrire mon enfant",
+        secondaryLabel: "Visiter le club",
+        secondaryHref: "/valladolid/club",
+      },
     },
   },
 
@@ -433,7 +480,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     heroGradient: "from-[#7A1F2B] via-[#5C1620] to-[#141414]",
     logoPath: "/images/logo/ennour.png",
     carousel: {
-      button: "bg-[#F0C419] text-[#7A1F2B] hover:bg-[#F0C419]/90",
+      button: "bg-white text-[#7A1F2B] hover:bg-white/90",
       progress: "bg-[#F0C419]",
     },
     nav: {
@@ -511,18 +558,21 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
      ],
     formTagline: "Football féminin",
     formIcon: "heart",
+        selectionBg: "#FFFFFF",    // white — matches Ennour CTA
+    selectionText: "#7A1F2B",  // burgundy — matches Ennour CTA text
     content: {
       subtitle: "Football féminin",
       shortDescription:
         "La section féminine dédiée à la formation et à l'épanouissement des jeunes filles dans le football.",
       mission: {
         kicker: "Notre mission",
-        title: "Faire grandir le football féminin à Tataouine",
+        title: "Faire grandir le football féminin",
         paragraphs: [
           "Ennour Sportif Tataouine est la section féminine du groupe. Fondée pour offrir aux jeunes filles de la région un cadre structuré pour pratiquer le football, elle incarne notre engagement pour l'égalité des chances dans le sport.",
           "Nos joueuses bénéficient du même encadrement professionnel, des mêmes installations et de la même exigence que les équipes masculines. Un projet ambitieux, porté par des entraîneuses passionnées et des familles engagées.",
         ],
       },
+       missionImage: "/images/academy/kids-trophy.jpg",
       valuesKicker: "Nos valeurs",
       valuesTitle: "Les 4 piliers d'Ennour",
       values: [
@@ -554,6 +604,13 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
           "Vous êtes une jeune joueuse ou un parent ? Contactez-nous pour découvrir nos programmes et venir essayer.",
         buttonLabel: "Inscrire ma fille",
       },
+                 finalCta: {
+        title: "Rejoignez Ennour Sportif",
+        subtitle: "Vous êtes une jeune joueuse ou un parent ?",
+        ctaLabel: "Inscrire ma fille",
+        secondaryLabel: "Nous contacter",
+        secondaryHref: "/contact",
+      },
     },
   },
 
@@ -575,7 +632,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     heroGradient: "from-[#0F2A47] via-[#1E3B66] to-[#0F2A47]",
     logoPath: "/images/logo/avenir.png",
     carousel: {
-      button: "bg-[#F0C419] text-[#0F2A47] hover:bg-[#F0C419]/90",
+      button: "bg-[#F0C419] text-[#081A2E] hover:bg-[#F0C419]/90",
       progress: "bg-[#F0C419]",
     },
     nav: {
@@ -653,6 +710,13 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
      ],
     formTagline: "Football & Futsal",
     formIcon: "zap",
+        selectionBg: "#F0C419",    // gold — matches Avenir CTA
+    selectionText: "#0F2A47",  // navy — matches Avenir CTA text
+     newsletterAccent: {
+      bg: "#38BDF8",                                    // light blue
+      text: "#081A2E",                                  // Avenir dark navy
+      buttonClass: "bg-[#38BDF8] text-[#081A2E] hover:bg-[#38BDF8]/90",
+    },
     content: {
       subtitle: "Football & Futsal",
       shortDescription:
@@ -665,6 +729,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
           "Le futsal apporte une technique individuelle affinée, une lecture de jeu rapide et une intelligence tactique que le football à 11 valorise. Nos joueurs bénéficient du meilleur des deux mondes.",
         ],
       },
+      missionImage: "/images/academy/kids-trophy.jpg",
       valuesKicker: "Nos valeurs",
       valuesTitle: "Les 4 piliers d'Avenir",
       values: [
@@ -695,6 +760,13 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         paragraph:
           "Football à 11 ou futsal — nos portes sont ouvertes à tous les joueurs motivés, quel que soit leur niveau de départ.",
         buttonLabel: "Inscrire mon enfant",
+      },
+                     finalCta: {
+        title: "Rejoignez Avenir Sportif",
+        subtitle: "Football à 11 ou futsal — nos portes sont ouvertes",
+        ctaLabel: "Inscrire mon enfant",
+        secondaryLabel: "Nous contacter",
+        secondaryHref: "/contact",
       },
     },
   },

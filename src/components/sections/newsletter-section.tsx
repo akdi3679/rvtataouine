@@ -2,9 +2,30 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mail, CheckCircle2, Loader2, ArrowRight } from "lucide-react";
+import { getTeamFromPath, TEAMS, type TeamId } from "@/data/team-theme";
 
-export function NewsletterSection() {
+interface NewsletterSectionProps {
+  team?: TeamId;
+}
+
+export function NewsletterSection({ team }: NewsletterSectionProps = {}) {
+  const pathname = usePathname();
+  const currentLocale = pathname.split("/")[1] || "fr";
+  const activeTeam = team ?? getTeamFromPath(pathname);
+  const theme = TEAMS[activeTeam];
+
+  // Accent: use the CTA bg. If it's white (Ennour), fall back to hex so the
+  // decorative shape stays visible on the white section background.
+  const useFallback = theme.selectionBg === "#FFFFFF";
+  const accentBg = useFallback ? theme.hex : theme.selectionBg;
+  const accentText = useFallback ? "#FFFFFF" : theme.selectionText;
+
+const nlAccent = theme.newsletterAccent;
+  const newsletterBg = nlAccent?.bg ?? accentBg;
+  const newsletterText = nlAccent?.text ?? accentText;
+  const newsletterButtonClass = nlAccent?.buttonClass ?? theme.carousel.button;
   const [email, setEmail] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
@@ -26,9 +47,8 @@ export function NewsletterSection() {
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
           {/* Left: content + form */}
           <div>
-            {/* Title wrapper — padding reserves space for the shape on mobile */}
             <div className="relative pb-4 lg:pb-0">
-              <h2 className="text-3xl  font-bold tracking-tight text-foreground sm:text-4xl">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 Newsletter
               </h2>
 
@@ -39,25 +59,27 @@ export function NewsletterSection() {
               >
                 <div
                   className="absolute inset-0 bg-foreground"
-                  style={{
-                    clipPath: "polygon(0 15%, 100% 0, 100% 100%, 0 100%)",
-                  }}
+                  style={{ clipPath: "polygon(0 15%, 100% 0, 100% 100%, 0 100%)" }}
                 />
                 <div
-                  className="absolute inset-0 bg-accent"
+                  className="absolute inset-0"
                   style={{
+                     backgroundColor: newsletterBg,
                     clipPath: "polygon(0 55%, 100% 25%, 100% 100%, 0 100%)",
                   }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                  style={{ color: newsletterText }}
+                >
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 backdrop-blur">
-                    <Mail className="h-4 w-4 text-white" />
+                    <Mail className="h-4 w-4" />
                   </div>
                 </div>
               </div>
             </div>
 
-            <p className="mt- max-w-md text-base leading-relaxed text-muted-foreground">
+            <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground">
               Recevez les actualités, résultats et événements de l'académie une
               fois par semaine. Sans spam, désabonnement en un clic.
             </p>
@@ -113,7 +135,7 @@ export function NewsletterSection() {
                     J'accepte de recevoir la newsletter de l'académie et de
                     pouvoir me désabonner à tout moment. Consultez notre{" "}
                     <Link
-                      href="/valladolid/politique-confidentialite"
+                      href={`/${currentLocale}/politique-confidentialite`}
                       className="font-semibold text-foreground underline underline-offset-2 hover:opacity-70"
                     >
                       politique de confidentialité
@@ -125,7 +147,7 @@ export function NewsletterSection() {
                 <button
                   type="submit"
                   disabled={status === "loading" || !agreed}
-                  className="group inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-50"
+                 className={`group inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-bold transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 ${newsletterButtonClass}`}
                 >
                   {status === "loading" ? (
                     <>
@@ -152,25 +174,25 @@ export function NewsletterSection() {
             <div className="relative aspect-[4/5]">
               <div
                 className="absolute inset-0 bg-foreground"
-                style={{
-                  clipPath: "polygon(0 15%, 100% 0, 100% 100%, 0 100%)",
-                }}
+                style={{ clipPath: "polygon(0 15%, 100% 0, 100% 100%, 0 100%)" }}
               />
               <div
-                className="absolute inset-0 bg-accent"
+                className="absolute inset-0"
                 style={{
+               backgroundColor: newsletterBg,
                   clipPath: "polygon(0 55%, 100% 25%, 100% 100%, 0 100%)",
                 }}
               />
               <div className="absolute inset-0 flex items-center justify-center p-10">
-                <div className="text-center text-white">
+               
+                   <div className="text-center" style={{ color: newsletterText }}>
                   <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15 backdrop-blur">
                     <Mail className="h-8 w-8" />
                   </div>
                   <p className="mt-6 text-2xl font-black leading-tight">
                     Restez connectés
                   </p>
-                  <p className="mt-2 text-sm text-white/85">
+                  <p className="mt-2 text-sm opacity-85">
                     Une fois par semaine, l'essentiel de l'académie dans votre
                     boîte mail.
                   </p>
