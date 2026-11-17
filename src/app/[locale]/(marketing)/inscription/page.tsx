@@ -114,42 +114,45 @@ const selectedTheme = form.team ? TEAMS[form.team as TeamId] : null;
               <Shield className="h-4 w-4 text-accent" />
               Quelle équipe vous intéresse ?
             </legend>
-            <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              {ENTITY_LIST.map((team) => {
-  const active = form.team === team.id;
-  return (
-    <button
-      key={team.id}
-      type="button"
-      onClick={() => setForm((prev) => ({ ...prev, team: team.id }))}
-      className={`group relative flex flex-col items-center gap-2 rounded-xl border-2 p-4 text-center transition-all ${
-        active
-          ? `${team.borderClass} bg-white shadow-md`
-          : "border-border hover:border-foreground/30 hover:bg-secondary/30"
-      }`}
-    >
-      <div
-        className="flex h-10 w-10 items-center justify-center rounded-lg"
-        style={{ backgroundColor: `${team.hex}15` }}
-      >
-         <TeamIcon name={team.formIcon} className="h-5 w-5" style={{ color: team.hex }} />
-      </div>
-      <p className="text-sm font-bold leading-tight text-foreground">{team.name}</p>
-      <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-        {team.formTagline}
-      </p>
-      {active && (
-        <span
-          className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full text-white"
-          style={{ backgroundColor: team.hex }}
-        >
-          <CheckCircle2 className="h-3 w-3" />
-        </span>
-      )}
-    </button>
-  );
-})}
+                     {/* 1. Team selection */}
+          <div className="relative -mt-12 mb-8 z-10">
+            <div className="grid gap-4 sm:grid-cols-3">
+              {ENTITY_LIST.map((t) => {
+                const active = form.team === t.id;
+                return (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setForm((prev) => ({ ...prev, team: t.id }))}
+                    className={`group relative flex flex-col items-center rounded-2xl border-2 bg-white p-6 pt-10 text-center transition-all ${
+                      active ? `${t.borderClass} shadow-xl` : "border-border hover:border-foreground/20 hover:shadow-md"
+                    }`}
+                  >
+                    {/* Logo popping out */}
+                    <div className="absolute -top-8 flex h-16 w-16 items-center justify-center rounded-full bg-white p-2 shadow-lg ring-4 ring-white">
+                      <div className="relative h-full w-full">
+                        <Image src={t.logoPath} alt={t.name} fill className="object-contain" />
+                      </div>
+                    </div>
+                    
+                    <p className="mt-2 text-sm font-bold leading-tight text-foreground">{t.name}</p>
+                    <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                      {t.formTagline}
+                    </p>
+                    
+                    {active && (
+                      <span
+                        className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full text-white"
+                        style={{ backgroundColor: t.hex }}
+                      >
+                        <CheckCircle2 className="h-3.5 w-3.5" />
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
+          </div>
           </fieldset>
 
           {/* 2. Child */}
@@ -319,16 +322,13 @@ const selectedTheme = form.team ? TEAMS[form.team as TeamId] : null;
             </div>
           </fieldset>
 
-          <div className="flex items-center justify-between gap-4">
+                    <div className="flex flex-col items-center justify-between gap-4 rounded-2xl bg-secondary/30 p-6 sm:flex-row">
             <p className="text-xs text-muted-foreground">
               * Champs obligatoires
               {selectedTheme && (
                 <span className="ml-2 inline-flex items-center gap-1">
                   · Équipe :{" "}
-                  <span
-                    className="inline-block h-2 w-2 rounded-full"
-                    style={{ backgroundColor: selectedTheme.hex }}
-                  />
+                  <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: selectedTheme.hex }} />
                   <strong>{selectedTheme.name}</strong>
                 </span>
               )}
@@ -336,13 +336,11 @@ const selectedTheme = form.team ? TEAMS[form.team as TeamId] : null;
             <button
               type="submit"
               disabled={status === "loading" || !form.team}
-              className="inline-flex items-center gap-2 rounded-xl bg-accent px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-sm font-bold text-white shadow-lg transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+              style={{ backgroundColor: selectedTheme ? selectedTheme.hex : TEAMS.group.hex }}
             >
               {status === "loading" ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Envoi...
-                </>
+                <><Loader2 className="h-4 w-4 animate-spin" /> Envoi...</>
               ) : (
                 "Envoyer la demande"
               )}

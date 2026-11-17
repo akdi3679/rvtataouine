@@ -54,7 +54,7 @@ function FeaturedHero({ article }: { article: Article }) {
   const c = CATEGORY[article.category] ?? CATEGORY.match;
 
   return (
-    <Link href={`/valladolid/actualites/${article.slug}`} className="group block">
+    <Link href={`/actualites/${article.slug}`} className="group block">
       <div className="relative aspect-[16/10] overflow-hidden rounded-2xl md:aspect-[21/9]">
         {/* Gradient background */}
        <Image
@@ -123,7 +123,7 @@ function ArticleCard({ article }: { article: Article }) {
 
   return (
     <Link
-      href={`/valladolid/actualites/${article.slug}`}
+      href={`/actualites/${article.slug}`}
       className="group flex flex-col"
     >
       {/* Thumbnail */}
@@ -200,6 +200,16 @@ export function ActualitesView({ articles, team }: { articles: Article[]; team: 
         <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8 lg:py-14">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex-1">
+              {team !== "all" && (
+  <div className="mb-4 flex items-center gap-3">
+    <div className="relative h-8 w-8 overflow-hidden rounded-full bg-white shadow-sm">
+      <Image src={TEAMS[team].logoPath} alt={TEAMS[team].name} fill className="object-contain p-1" />
+    </div>
+    <span className={`text-sm font-bold uppercase tracking-widest ${TEAMS[team].textClass}`}>
+      {TEAMS[team].shortName}
+    </span>
+  </div>
+)}
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
                 Le journal de l&apos;académie
               </p>

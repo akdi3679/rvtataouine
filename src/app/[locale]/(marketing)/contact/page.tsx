@@ -6,7 +6,7 @@ import {
   Loader2, CheckCircle2, HelpCircle, ChevronDown,
 } from "lucide-react";
 import { TEAMS, TEAM_IDS, parseTeamQuery, type TeamId } from "@/data/team-theme";
-
+import { TeamFilter } from "@/components/global/team-filter";
 import { contactSubjects as SUBJECTS, contactFaq as FAQ } from "@/data/contact";
 import { useSearchParams } from "next/navigation";
 const inputCls =
@@ -178,31 +178,15 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-                <Field label="Ce message concerne" required>
-                  <div className="relative">
-                    <select
-                      required
-                      value={form.team}
-                      onChange={set("team")}
-                      className={`${inputCls} appearance-none pr-10`}
-                    >
-                      {TEAM_IDS.map((id) => (
-                        <option key={id} value={id}>
-                          {TEAMS[id].name} — {TEAMS[id].formTagline}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                              <Field label="Ce message concerne" required>
+                  <div className="flex items-center gap-3">
+                    <TeamFilter currentTeam={form.team === "group" ? "all" : form.team} />
+                    <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                      <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: activeTheme.hex }} />
+                      Votre message sera transmis à {activeTheme.name}
+                    </p>
                   </div>
-                  <p className="mt-1.5 flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                    <span
-                      className="h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: activeTheme.hex }}
-                    />
-                    Votre message sera transmis à {activeTheme.name}
-                  </p>
                 </Field>
-
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field label="Nom" required>
                     <input
