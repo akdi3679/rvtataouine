@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
+import Image from "next/image";
 import { TEAMS, ENTITY_LIST, parseTeamQuery, type TeamId } from "@/data/team-theme";
 import { CheckCircle2, Loader2, User, Users, FileCheck2, Shield } from "lucide-react";
 import { TeamIcon } from "@/components/global/icon";

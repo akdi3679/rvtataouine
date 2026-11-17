@@ -6,7 +6,7 @@ import { Play, X, Camera } from "lucide-react";
 import { videoCategories, type Video } from "@/data/videos";
 import { GALLERY } from "@/data/gallery";
 import { TeamFilter } from "@/components/global/team-filter";
-import type { TeamId } from "@/data/team-theme";
+import { TEAMS, type TeamId } from "@/data/team-theme";
 const CATEGORY_GRADIENT: Record<string, string> = {
   match: "from-accent via-accent/80 to-accent-dark",
   training: "from-primary via-primary/80 to-primary-dark",

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Clock, FileText, Newspaper, ArrowUpRight } from "lucide-react";
 import type { Article } from "@/data/news";
 import { TeamFilter } from "@/components/global/team-filter";
-import type { TeamId } from "@/data/team-theme";
+import { TEAMS, type TeamId } from "@/data/team-theme";
 import Image from "next/image";
 const FILTERS = [
   { id: "all", label: "Tout" },
