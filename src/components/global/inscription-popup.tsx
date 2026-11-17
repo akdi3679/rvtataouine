@@ -2,36 +2,49 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { X, ArrowRight, Calendar } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { getSectionFromPath } from "@/data/team-theme";
+import { getTeamFromPath, TEAMS } from "@/data/team-theme";
+
 const STORAGE_KEY = "arv-inscription-popup-last-shown";
-const INITIAL_DELAY_MS = 8000; // 8s avant la 1ère apparition (1er visit)
+const INITIAL_DELAY_MS = 8000; // 8s before first appearance
 const REPEAT_AFTER_MS = 20 * 60 * 1000; // 20 minutes
-const CHECK_INTERVAL_MS = 30 * 1000; // vérifie toutes les 30s
+const CHECK_INTERVAL_MS = 30 * 1000; // check every 30s
 
 export function InscriptionPopup() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  
+  // Dynamically get the current team based on the URL
+  const team = getTeamFromPath(pathname);
+  const theme = TEAMS[team];
 
-const pathname = usePathname();
-const section = getSectionFromPath(pathname);
-  // Timer — 8s première fois, puis toutes les 20 min
   useEffect(() => {
-  if (typeof window === "undefined") return;
-  if (section === "group") return;   // ← ne pas afficher sur la page groupe
+    if (typeof window === "undefined") return;
 
-  const check = () => { /* ... */ };
-  const initialTimer = setTimeout(check, INITIAL_DELAY_MS);
-  const interval = setInterval(check, CHECK_INTERVAL_MS);
-  return () => {
-    clearTimeout(initialTimer);
-    clearInterval(interval);
-  };
-}, [open, section]);
+    const check = () => {
+      const lastShown = localStorage.getItem(STORAGE_KEY);
+      if (!lastShown) {
+        setOpen(true);
+        return;
+      }
+      const now = Date.now();
+      if (now - Number(lastShown) >= REPEAT_AFTER_MS) {
+        setOpen(true);
+      }
+    };
 
-  // Lock scroll pendant l'ouverture
+    const initialTimer = setTimeout(check, INITIAL_DELAY_MS);
+    const interval = setInterval(check, CHECK_INTERVAL_MS);
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(interval);
+    };
+  }, []);
+
+  // Lock scroll while open
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -41,7 +54,7 @@ const section = getSectionFromPath(pathname);
     };
   }, [open]);
 
-  // ESC pour fermer
+  // Close on ESC
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -49,7 +62,6 @@ const section = getSectionFromPath(pathname);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const dismiss = () => {
@@ -60,10 +72,15 @@ const section = getSectionFromPath(pathname);
   const goToInscription = () => {
     localStorage.setItem(STORAGE_KEY, String(Date.now()));
     setOpen(false);
-    router.push("/valladolid/inscription");
+    // Route to the correct team's inscription page
+    const href = team === "group" ? "/inscription" : `/inscription?team=${team}`;
+    router.push(href);
   };
+
   if (!open) return null;
-if (section === "group") return null;
+
+  const teamName = team === "group" ? "l'académie" : theme.name;
+
   return (
     <div
       className="fixed inset-0 z-[95] flex items-end justify-center p-4 sm:items-center"
@@ -80,7 +97,7 @@ if (section === "group") return null;
 
       {/* Card */}
       <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl animate-in slide-in-from-bottom-4 fade-in duration-300">
-        {/* Close — sobre sur fond blanc */}
+        {/* Close button */}
         <button
           onClick={dismiss}
           className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
@@ -89,11 +106,11 @@ if (section === "group") return null;
           <X className="h-4 w-4" />
         </button>
 
-        {/* Image — sans fond, sans gradient, taille naturelle */}
+        {/* Image */}
         <div className="flex justify-center px-8 pt-8">
           <Image
             src="/images/academy/popup.jpg"
-            alt="Enfants de l'académie"
+            alt={`Enfants de ${teamName}`}
             width={400}
             height={400}
             priority
@@ -103,7 +120,7 @@ if (section === "group") return null;
 
         {/* Body */}
         <div className="px-6 pb-6 pt-4 text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-accent">
+          <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${theme.bgSoftClass} ${theme.textClass}`}>
             Inscriptions 2026/27
           </span>
 
@@ -111,7 +128,7 @@ if (section === "group") return null;
             id="inscription-popup-title"
             className="mt-3 text-2xl font-black leading-tight text-foreground"
           >
-            Rejoignez l&apos;académie
+            Rejoignez {teamName}
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             Inscrivez votre enfant dès aujourd&apos;hui. Première séance
@@ -126,7 +143,7 @@ if (section === "group") return null;
           <div className="mt-6 flex flex-col gap-2">
             <button
               onClick={goToInscription}
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/20 transition-all hover:bg-accent/90 hover:shadow-xl"
+              className={`group inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-white shadow-lg transition-all hover:opacity-90 hover:shadow-xl ${theme.bgClass}`}
             >
               S&apos;inscrire maintenant
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
