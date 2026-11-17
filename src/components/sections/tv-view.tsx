@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { Play, X } from "lucide-react";
 import { videoCategories, type Video } from "@/data/videos";

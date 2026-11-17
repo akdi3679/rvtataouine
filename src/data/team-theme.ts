@@ -632,10 +632,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
             { label: "Boutique", href: "/boutique?team=ennour" },
           ],
         },
-        {
-          title: "Le Groupe",
-          links: [{ label: "Retour au groupe", href: "/" }],
-        },
+        
         {
           title: "Contact",
           links: [{ label: "Nous contacter", href: "/contact" }],
@@ -832,10 +829,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
             { label: "Boutique", href: "/boutique?team=avenir" },
           ],
         },
-        {
-          title: "Le Groupe",
-          links: [{ label: "Retour au groupe", href: "/" }],
-        },
+        
         {
           title: "Contact",
           links: [{ label: "Nous contacter", href: "/contact" }],
