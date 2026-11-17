@@ -273,12 +273,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         paragraph:
           "Le Groupe Sportif ARV Tataouine n'est pas qu'un club de football. C'est un projet éducatif, social et sportif qui accompagne les jeunes de Tataouine dans leur développement personnel et sportif.",
       },
-      values: [
-        { number: "01", title: "Excellence", description: "Recherche constante du haut niveau technique et tactique." },
-        { number: "02", title: "Famille",    description: "Un esprit collectif qui unit joueurs, staff et familles." },
-        { number: "03", title: "Passion",    description: "L'amour du football, le respect de l'adversaire, la joie de jouer." },
-        { number: "04", title: "Discipline", description: "Sérieux, ponctualité et respect sur et en dehors du terrain." },
-      ],
+      
       entitiesKicker: "Nos entités",
       entitiesTitle: "Trois équipes, une famille",
             values: [
