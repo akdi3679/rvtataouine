@@ -19,10 +19,9 @@ export default function ValladolidHomePage() {
       <NextMatchSection />
       <PartnersStrip />
       <NewsSection team="valladolid" />
-      <AcademyStorySection />
             <RecentResultsSection />
-
-      <ClubPreviewSection />
+<AcademyStorySection team="valladolid" />
+      <ClubPreviewSection team="valladolid" />
       <PalmaresPreviewSection />
       <FeaturedVideosSection team="valladolid" />
       <FeaturedProductsSection team="valladolid" />
