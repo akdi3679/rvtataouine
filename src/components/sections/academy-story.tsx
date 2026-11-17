@@ -120,7 +120,7 @@ export function AcademyStorySection({ team }: AcademyStorySectionProps = {}) {
           <div className="mt-8 flex justify-center">
             <Link
               href={ctaHref}
-              className={`inline-flex items-center gap-3 rounded-md px-10 py-4 text-base font-bold shadow-xl transition-all hover:-translate-y-0.5 hover:opacity-90 ${theme.carousel.button}`}
+              className={`inline-flex items-center gap-3 rounded-md px-10 py-4 text-base font-bold shadow-xl transition-all hover:-translate-y-0.5 hover:opacity-90 ${theme.promiseButton ?? theme.carousel.button}`}
             >
               {promise.ctaLabel}
               <ArrowRight className="h-5 w-5" />
