@@ -25,6 +25,7 @@ export function Footer() {
   const currentLocale = pathname.split("/")[1] || "fr";
   const team = getTeamFromPath(pathname);
   const theme = TEAMS[team];
+  const logoHref = team === "group" ? `/${currentLocale}` : `/${currentLocale}/${team}`;
   const [logoError, setLogoError] = useState(false);
 
   useEffect(() => {
@@ -70,7 +71,7 @@ export function Footer() {
         {/* 3 — Logo + tagline */}
         <section className="text-center">
           <Link
-            href={withLocale(currentLocale, "/")}
+            href={logoHref}
             className="inline-flex items-center justify-center transition-opacity hover:opacity-80"
             aria-label={theme.name}
           >
