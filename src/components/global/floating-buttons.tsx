@@ -26,7 +26,7 @@ export function FloatingButtons() {
         href="https://wa.me/21675854717"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed right-4 sm:right-6 z-[80] flex h-14 w-14 items-center justify-center rounded-full bg-[color:var(--color-primary)] text-white shadow-lg transition-all duration-500 ease-out hover:bg-[color:var(--color-primary-dark)] hover:scale-110"
+        className="fixed right-4 sm:right-6 z-[80] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-500 ease-out hover:bg-[#20BD5A] hover:scale-110"
         style={{
           bottom: showBackToTop
             ? "calc(6rem + env(safe-area-inset-bottom, 0px))"

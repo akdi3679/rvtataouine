@@ -184,7 +184,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     heroOverlayR: "from-[#00cd23]/70 via-transparent to-[#00cd23]/60",
     logoPath: "/images/logo/logo.png",
     carousel: {
-      button: "bg-white text-[#00cd23] hover:bg-white/90",
+      button: "bg-[#00cd23] text-white hover:bg-[#00cd23]/90",
       progress: "bg-[#F0C419]",
     },
     promiseButton: "bg-[#00cd23] text-white hover:bg-[#00cd23]/90",
