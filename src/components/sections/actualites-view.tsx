@@ -50,7 +50,8 @@ function shortDate(iso: string) {
   });
 }
 
-function FeaturedHero({ article }: { article: Article }) {
+function FeaturedHero({ article, teamTheme }: { article: Article; teamTheme: any }) {
+
   const c = CATEGORY[article.category] ?? CATEGORY.match;
 
   return (
@@ -73,9 +74,9 @@ function FeaturedHero({ article }: { article: Article }) {
         <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10 lg:p-12">
           <div className="max-w-2xl">
             <div className="mb-4 flex flex-wrap items-center gap-2">
-              <span className="inline-flex rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-foreground">
-                {article.categoryLabel}
-              </span>
+               <span className="absolute left-3 top-3 inline-flex rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white" style={{ backgroundColor: teamTheme.hex }}>
+    {article.categoryLabel}
+  </span>
               <span className="text-[11px] font-medium text-white/85">
                 {shortDate(article.publishedAt)}
               </span>
@@ -117,8 +118,8 @@ function FeaturedHero({ article }: { article: Article }) {
     </Link>
   );
 }
+function ArticleCard({ article, teamTheme }: { article: Article; teamTheme: any }) {
 
-function ArticleCard({ article }: { article: Article }) {
   const c = CATEGORY[article.category] ?? CATEGORY.match;
 
   return (
@@ -137,11 +138,9 @@ function ArticleCard({ article }: { article: Article }) {
 />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 
-        <span
-          className={`absolute left-3 top-3 inline-flex rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${c.badge}`}
-        >
-          {article.categoryLabel}
-        </span>
+        <span className="absolute left-3 top-3 inline-flex rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white" style={{ backgroundColor: teamTheme.hex }}>
+    {article.categoryLabel}
+  </span>
       </div>
 
       {/* Content */}
@@ -176,7 +175,7 @@ function ArticleCard({ article }: { article: Article }) {
 
 export function ActualitesView({ articles, team }: { articles: Article[]; team: TeamId | "all" }) {
   const [filter, setFilter] = useState<string>("all");
-
+const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
   const filtered = useMemo(
     () =>
       filter === "all"
@@ -282,7 +281,8 @@ export function ActualitesView({ articles, team }: { articles: Article[]; team: 
               {/* Featured */}
               {featured && (
                 <div className="mb-14">
-                  <FeaturedHero article={featured} />
+                  <FeaturedHero article={featured} teamTheme={teamTheme} />
+
                 </div>
               )}
 
@@ -298,7 +298,7 @@ export function ActualitesView({ articles, team }: { articles: Article[]; team: 
 
                   <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
                     {rest.map((a) => (
-                      <ArticleCard key={a.slug} article={a} />
+                      <ArticleCard key={a.slug} article={a} teamTheme={teamTheme} />
                     ))}
                   </div>
                 </>

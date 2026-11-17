@@ -160,7 +160,7 @@ function VideoGrid({
             <span className="inline-flex rounded-full bg-secondary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-foreground">
               {v.categoryLabel}
             </span>
-            <h3 className="mt-2 line-clamp-2 text-sm font-bold leading-snug text-foreground transition-colors group-hover:text-accent">
+<h3 className="mt-2 line-clamp-2 text-sm font-bold leading-snug text-foreground transition-colors group-hover:text-foreground">
               {v.title}
             </h3>
             <p className="mt-1 text-[11px] text-muted-foreground">

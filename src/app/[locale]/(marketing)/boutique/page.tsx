@@ -8,6 +8,7 @@ import {
   productCategories,
   type Product,
 } from "@/data/products";
+
 import { wallpaperTemplates } from "@/data/wallpapers";
 import { WallpaperGenerator } from "@/components/interactive/wallpaper-generator";
 import { TeamFilter } from "@/components/global/team-filter";
@@ -27,7 +28,7 @@ export default async function BoutiquePage({
 }) {
   const params = await searchParams;
   const team = parseTeamQuery(params.team);
-
+const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
   const filtered: Product[] =
     team === "all" ? products : products.filter((p) => p.team === team);
 
@@ -100,11 +101,11 @@ export default async function BoutiquePage({
                                   <ShoppingBag className="h-16 w-16 text-foreground/15" />
                                 </div>
                               )}
-                              {p.isNew && (
-                                <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
-                                  Nouveau
-                                </span>
-                              )}
+                             {p.isNew && (
+  <span className="absolute left-3 top-3 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white" style={{ backgroundColor: teamTheme.hex }}>
+    Nouveau
+  </span>
+)}
                             </div>
                             <div className="mt-3 flex items-start justify-between gap-3 px-1">
                               <div className="min-w-0">

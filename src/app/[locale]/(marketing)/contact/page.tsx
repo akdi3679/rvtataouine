@@ -39,6 +39,7 @@ function ContactCard({
   sub,
   href,
   target,
+  theme, // <-- ADD THIS
 }: {
   icon: typeof Phone;
   label: string;
@@ -46,10 +47,12 @@ function ContactCard({
   sub: string;
   href?: string;
   target?: boolean;
+  theme: any; // <-- ADD THIS
 }) {
   const inner = (
     <div className="flex items-start gap-3 rounded-xl border border-border bg-white p-4 transition-colors hover:border-foreground/30">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+      {/* REPLACE bg-accent/10 text-accent WITH THEME CLASSES */}
+      <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${theme.bgSoftClass} ${theme.textClass}`}>
         <Icon className="h-4 w-4" />
       </div>
       <div className="min-w-0">
@@ -126,34 +129,11 @@ export default function ContactPage() {
 
         {/* Contact cards — reflect form.team selection */}
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <ContactCard
-            icon={Phone}
-            label="Téléphone"
-            value={activeContact.phone}
-            sub="Lun-Sam · 8h-20h"
-            href={telHref}
-          />
-          <ContactCard
-            icon={Mail}
-            label="Email"
-            value={activeContact.email}
-            sub="Réponse sous 24h"
-            href={"mailto:" + activeContact.email}
-          />
-          <ContactCard
-            icon={MessageCircle}
-            label="WhatsApp"
-            value="Discuter maintenant"
-            sub="Réponse rapide"
-            href={waHref}
-            target
-          />
-          <ContactCard
-            icon={MapPin}
-            label="Adresse"
-            value={activeContact.address.street}
-            sub={`${activeContact.address.city}, ${activeContact.address.country}`}
-          />
+         <ContactCard icon={Phone} label="Téléphone" value={activeContact.phone} sub="Lun-Sam · 8h-20h" href={telHref} theme={activeTheme} />
+<ContactCard icon={Mail} label="Email" value={activeContact.email} sub="Réponse sous 24h" href={"mailto:" + activeContact.email} theme={activeTheme} />
+<ContactCard icon={MessageCircle} label="WhatsApp" value="Discuter maintenant" sub="Réponse rapide" href={waHref} target theme={activeTheme} />
+<ContactCard icon={MapPin} label="Adresse" value={activeContact.address.street} sub={`${activeContact.address.city}, ${activeContact.address.country}`} theme={activeTheme} />
+
         </div>
 
         <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:gap-16">
@@ -245,11 +225,12 @@ export default function ContactPage() {
                   />
                 </Field>
 
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="inline-flex items-center gap-2 rounded-xl bg-accent px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all hover:bg-accent/90 disabled:opacity-50"
-                >
+               <button
+  type="submit"
+  disabled={status === "loading"}
+  className="inline-flex items-center gap-2 rounded-xl px-8 py-3.5 text-sm font-bold text-white shadow-lg transition-all hover:opacity-90 disabled:opacity-50"
+  style={{ backgroundColor: activeTheme.hex }} // <-- DYNAMIC COLOR
+>
                   {status === "loading" ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" />

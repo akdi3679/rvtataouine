@@ -24,7 +24,7 @@ function Field({
     <div className={className}>
       <label className="mb-1.5 block text-xs font-semibold text-foreground">
         {label}
-        {required && <span className="text-accent"> *</span>}
+     {required && <span className="text-red-500"> *</span>}
       </label>
       {children}
     </div>
@@ -111,7 +111,7 @@ const selectedTheme = form.team ? TEAMS[form.team as TeamId] : null;
           {/* 1. Team selection */}
           <fieldset className="rounded-2xl border border-border bg-white p-6">
             <legend className="flex items-center gap-2 px-2 text-sm font-bold text-foreground">
-              <Shield className="h-4 w-4 text-accent" />
+            <Shield className="h-4 w-4 text-foreground" />
               Quelle équipe vous intéresse ?
             </legend>
                      {/* 1. Team selection */}
@@ -129,7 +129,7 @@ const selectedTheme = form.team ? TEAMS[form.team as TeamId] : null;
                     }`}
                   >
                     {/* Logo popping out */}
-                    <div className="absolute -top-8 flex h-16 w-16 items-center justify-center rounded-full bg-white p-2 shadow-lg ring-4 ring-white">
+<div className="absolute -top-8 flex h-16 w-16 items-center justify-center rounded-full p-2">
                       <div className="relative h-full w-full">
                         <Image src={t.logoPath} alt={t.name} fill className="object-contain" />
                       </div>
@@ -158,7 +158,7 @@ const selectedTheme = form.team ? TEAMS[form.team as TeamId] : null;
           {/* 2. Child */}
           <fieldset className="rounded-2xl border border-border bg-white p-6">
             <legend className="flex items-center gap-2 px-2 text-sm font-bold text-foreground">
-              <User className="h-4 w-4 text-accent" />
+             <User className="h-4 w-4 text-foreground" />
               Informations de l&apos;enfant
             </legend>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -225,7 +225,7 @@ const selectedTheme = form.team ? TEAMS[form.team as TeamId] : null;
           {/* 3. Parent */}
           <fieldset className="rounded-2xl border border-border bg-white p-6">
             <legend className="flex items-center gap-2 px-2 text-sm font-bold text-foreground">
-              <Users className="h-4 w-4 text-accent" />
+             <Users className="h-4 w-4 text-foreground" />
               Informations du parent / tuteur
             </legend>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -292,7 +292,7 @@ const selectedTheme = form.team ? TEAMS[form.team as TeamId] : null;
           {/* 4. Complementary */}
           <fieldset className="rounded-2xl border border-border bg-white p-6">
             <legend className="flex items-center gap-2 px-2 text-sm font-bold text-foreground">
-              <FileCheck2 className="h-4 w-4 text-accent" />
+            <FileCheck2 className="h-4 w-4 text-foreground" />
               Informations complémentaires
             </legend>
             <div className="mt-4">

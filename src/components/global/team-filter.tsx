@@ -56,7 +56,7 @@ export function TeamFilter({ currentTeam }: { currentTeam: TeamId | "all" }) {
 
       {open && (
         <div
-          className="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-lg border border-border bg-white shadow-xl"
+          className="absolute left-0 sm:left-auto sm:right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-lg border border-border bg-white shadow-xl"
           role="listbox"
         >
           <button
