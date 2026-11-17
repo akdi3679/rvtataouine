@@ -304,8 +304,8 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
       ],
       promise: {
         badge: "Notre promesse",
-        ctaLabel: "Découvrir nos équipes",
-        ctaHref: "/#entities",
+        ctaLabel: "Inscrire mon enfant",  // <-- CHANGE THIS (was "Découvrir nos équipes")
+        ctaHref: "/inscription",  
       },
       story: {
         kicker: "Notre histoire",
@@ -694,6 +694,12 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
       subtitle: "Football féminin",
       shortDescription:
         "La section féminine dédiée à la formation et à l'épanouissement des jeunes filles dans le football.",
+      values: [
+        { icon: "heart", title: "Formation", description: "Entraînements adaptés et encadrement de qualité" },
+        { icon: "users", title: "Accompagnement", description: "Suivi scolaire et développement personnel" },
+        { icon: "trophy", title: "Compétition", description: "Participation aux tournois et championnats" },
+        { icon: "sparkles", title: "Communauté", description: "Esprit d'équipe et valeurs partagées" },
+      ],
       mission: {
         kicker: "Notre mission",
         title: "Faire grandir le football féminin",
@@ -748,9 +754,9 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
           { icon: "heart",    label: "Bienveillance", value: "Un cadre qui fait grandir" },
           { icon: "users",    label: "Sororité",      value: "Une famille soudée" },
         ],
-        ctaLabel: "Découvrir Ennour",
-        ctaHref: "/ennour#mission",
-        yearFrom: "2019",
+         ctaLabel: "Inscrire ma fille",         // <-- CHANGE THIS
+        ctaHref: "/inscription?team=ennour", 
+                yearFrom: "2019",
         yearTo: "2026",
         yearParagraph:
           "Sept ans d'engagement pour le football féminin dans le sud tunisien.",
@@ -894,6 +900,12 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
       subtitle: "Football & Futsal",
       shortDescription:
         "Football à 11 et futsal, avec un programme complet pour former des joueurs polyvalents.",
+     values: [
+        { icon: "target", title: "Football à 11", description: "Formation complète sur grand terrain" },
+        { icon: "zap", title: "Futsal", description: "Technique et rapidité en salle" },
+        { icon: "star", title: "Polyvalence", description: "Joueurs adaptables à tous les postes" },
+        { icon: "trophy", title: "Progression", description: "Parcours structuré de développement" },
+      
       mission: {
         kicker: "Notre mission",
         title: "Former des joueurs complets",
@@ -948,8 +960,8 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
           { icon: "target", label: "Polyvalence",      value: "Formation complète" },
           { icon: "trophy", label: "Compétition",      value: "Championnats régionaux" },
         ],
-        ctaLabel: "Découvrir Avenir",
-        ctaHref: "/avenir#mission",
+          ctaLabel: "Inscrire mon enfant",       // <-- CHANGE THIS
+        ctaHref: "/inscription?team=avenir",
         yearFrom: "2020",
         yearTo: "2026",
         yearParagraph:
