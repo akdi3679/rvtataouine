@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 export type TeamId = "group" | "valladolid" | "ennour" | "avenir";
 
 // ─── Icons ───
@@ -71,6 +73,8 @@ export interface FinalCtaContent {
   secondaryHref: string;
   // Optional: override the section background (default: bg-white)
   sectionBgClass?: string;
+  titleShiftClass?: string;
+  ctaButtonClass?: string;
 }
 export interface TeamContent {
   subtitle?: string;
@@ -104,6 +108,11 @@ export interface NavDropdown { label: string; links: NavLink[]; }
 export interface MobileNavGroup { title: string; links: NavLink[]; }
 export interface FooterColumn { title: string; links: NavLink[]; }
 
+export interface TeamVars {
+  primary: string; primaryDark: string; primaryLight: string;
+  accent: string; accentDark: string; accentLight: string;
+}
+
 export interface TeamConfig {
   id: TeamId;
   name: string;
@@ -124,6 +133,8 @@ export interface TeamConfig {
   logoPath: string;
 
   carousel: { button: string; progress: string };
+  vars: TeamVars;
+  promiseButton?: string;
 
   nav: {
     dropdowns?: NavDropdown[];
@@ -173,6 +184,10 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     carousel: {
       button: "bg-[#F97316] text-[#082B42] hover:bg-[#F97316]/90",
       progress: "bg-[#F0C419]",
+    },
+    vars: {
+      primary: "202 79% 20%", primaryDark: "202 79% 14%", primaryLight: "202 79% 30%",
+      accent: "204 74% 31%", accentDark: "202 79% 20%", accentLight: "204 74% 42%",
     },
     nav: {
       dropdowns: [
@@ -363,6 +378,10 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     carousel: {
       button: "bg-accent text-white hover:bg-accent-light",
       progress: "bg-gold",
+    },
+    vars: {
+      primary: "271 55% 37%", primaryDark: "271 55% 25%", primaryLight: "271 55% 50%",
+      accent: "355 100% 45%", accentDark: "355 100% 35%", accentLight: "355 100% 55%",
     },
     nav: {
       dropdowns: [
@@ -579,6 +598,11 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
       button: "bg-white text-[#7A1F2B] hover:bg-white/90",
       progress: "bg-[#F0C419]",
     },
+    vars: {
+      primary: "352 59% 30%", primaryDark: "352 59% 20%", primaryLight: "352 59% 45%",
+      accent: "353 58% 40%", accentDark: "352 59% 30%", accentLight: "353 58% 51%",
+    },
+    promiseButton: "bg-[#7A1F2B] text-white hover:bg-[#5C1620]",
     nav: {
       primaryLinks: [
         { label: "À propos", href: "/ennour#mission" },
@@ -770,6 +794,10 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     carousel: {
       button: "bg-[#F0C419] text-[#081A2E] hover:bg-[#F0C419]/90",
       progress: "bg-[#F0C419]",
+    },
+    vars: {
+      primary: "211 65% 17%", primaryDark: "211 65% 12%", primaryLight: "211 65% 27%",
+      accent: "216 55% 26%", accentDark: "211 65% 17%", accentLight: "216 55% 37%",
     },
     nav: {
       primaryLinks: [
@@ -987,4 +1015,16 @@ export function parseTeamQuery(value: string | undefined | null): TeamId | "all"
   return (ENTITY_IDS as readonly string[]).includes(value)
     ? (value as TeamId)
     : "all";
+}
+
+export function getTeamVars(team: TeamId): CSSProperties {
+  const v = TEAMS[team].vars;
+  return {
+    "--color-primary": v.primary,
+    "--color-primary-dark": v.primaryDark,
+    "--color-primary-light": v.primaryLight,
+    "--color-accent": v.accent,
+    "--color-accent-dark": v.accentDark,
+    "--color-accent-light": v.accentLight,
+  } as CSSProperties;
 }
