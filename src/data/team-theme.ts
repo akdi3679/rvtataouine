@@ -991,7 +991,7 @@ _rv.content.mission = {
   kicker: "Notre mission",
   title: _rvClub.heroTitle1,
   titleLine2: _rvClub.heroTitle2,
-  paragraphs: _rvClub.historyParagraphs,
+  paragraphs: _rvClub.historyparagraphs,
 };
 _rv.content.missionImage = _rvClub.heroImage;
 _rv.content.valuesKicker = _rvClub.philosophyKicker;
