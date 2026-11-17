@@ -38,9 +38,8 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex-1">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
-                Boutique
-              </p>
+<p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${teamTheme.textClass}`}>Boutique</p>
+              
               <h1 className="mt-3 text-4xl font-black tracking-tight text-foreground sm:text-5xl">
                 Boutique officielle
               </h1>

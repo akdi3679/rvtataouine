@@ -8,6 +8,7 @@ import {
   FileText,
   Quote,
 } from "lucide-react";
+import { TEAMS, type TeamId } from "@/data/team-theme";
 import { getArticleBySlug, getRelatedArticles } from "@/data/news";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
@@ -17,7 +18,7 @@ const CATEGORY: Record<
 > = {
   match: {
     gradient: "from-accent via-accent/85 to-accent-dark",
-    badge: "bg-accent text-white",
+    badge: "theme.hex text-white",
     bullet: "bg-accent",
   },
   stage: {
@@ -71,7 +72,8 @@ export default async function ArticlePage({
   const { slug } = await params;
   const article = getArticleBySlug(slug);
   if (!article) notFound();
-
+   const teamId = (article.team as TeamId) || "group";
+   const theme = TEAMS[teamId];
   const related = getRelatedArticles(slug, 3);
   const c = CATEGORY[article.category] ?? CATEGORY.match;
 
@@ -168,7 +170,7 @@ export default async function ArticlePage({
               return (
                 <blockquote
                   key={i}
-                  className="my-8 border-l-4 border-accent pl-6"
+                  className="my-8 border-l-4 theme.hex pl-6"
                 >
                   <Quote className="h-6 w-6 text-accent/30" />
                   <p className="mt-2 text-lg font-medium italic leading-relaxed text-foreground sm:text-xl">

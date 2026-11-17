@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   RotateCcw,
 } from "lucide-react";
+import { TEAMS, type TeamId } from "@/data/team-theme";
 import { getProductBySlug, formatPrice } from "@/data/products";
 import { AddToCartButton } from "@/components/interactive/add-to-cart-button";
 import Image from "next/image";
@@ -30,6 +31,8 @@ export default async function ProductPage({
 }) {
   const { slug } = await params;
   const product = getProductBySlug(slug);
+     const teamId = (product.team as TeamId) || "group";
+   const theme = TEAMS[teamId];
   if (!product) notFound();
 
   const firstVariant = product.variants[0];
@@ -61,11 +64,11 @@ export default async function ProductPage({
       <ShoppingBag className="h-24 w-24 text-foreground/15" />
     </div>
   )}
-  {product.isNew && (
-    <span className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-      Nouveau
-    </span>
-  )}
+     {product.isNew && (
+     <span className="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white" style={{ backgroundColor: theme.hex }}>
+       Nouveau
+     </span>
+   )}
 </div>
 
           <div>

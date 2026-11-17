@@ -209,9 +209,7 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
     </span>
   </div>
 )}
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
-                Le journal de l&apos;académie
-              </p>
+             <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${teamTheme.textClass}`}>Le journal de l'académie</p>
               <h1 className="mt-3 text-4xl font-black tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                 Actualités
               </h1>

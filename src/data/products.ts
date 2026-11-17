@@ -21,18 +21,17 @@ export interface Product {
   isNew?: boolean;
   details: string[];
   care?: string[];
-  team?: string;    // Ã¢â€ Â AJOUTER
+  team?: string;  
 }
 
 export const products: Product[] = [
   {
     slug: "maillot-domicile-2026",
     name: "Maillot Domicile 2026/27",
-    description:
-      "Le maillot officiel de l'AcadÃƒÂ©mie pour la saison 2026/27. Tissu respirant, coupe athlÃƒÂ©tique et ÃƒÂ©cusson brodÃƒÂ©.",
+    description: "Le maillot officiel de l'Académie pour la saison 2026/27. Tissu respirant, coupe athlétique et écusson brodé.",
     category: "maillot",
     categoryLabel: "Maillots",
-     team: "valladolid",    
+    team: "valladolid",
     price: 85,
     images: ["/images/boutique/wear1.png"],
     featured: true,
@@ -43,19 +42,13 @@ export const products: Product[] = [
       { id: "md-l", name: "Taille L", price: 85, stock: 20, attributes: { size: "L" } },
       { id: "md-xl", name: "Taille XL", price: 85, stock: 10, attributes: { size: "XL" } },
     ],
-    details: [
-      "100% polyester recyclÃƒÂ©",
-      "Technologie Dri-FIT",
-      "Ãƒâ€°cusson officiel brodÃƒÂ©",
-      "Coupe athlÃƒÂ©tique ajustÃƒÂ©e",
-    ],
-    care: ["Lavage machine 30Ã‚Â°C", "Ne pas javelliser", "Repassage faible tempÃƒÂ©rature"],
+    details: ["100% polyester recyclé", "Technologie Dri-FIT", "Écusson officiel brodé", "Coupe athlétique ajustée"],
+    care: ["Lavage machine 30°C", "Ne pas javelliser", "Repassage faible température"],
   },
   {
     slug: "maillot-exterieur-2026",
-    name: "Maillot ExtÃƒÂ©rieur 2026/27",
-    description:
-      "Le maillot extÃƒÂ©rieur de la saison. Design moderne avec des dÃƒÂ©tails dorÃƒÂ©s. Confort optimal pour les matchs et l'entraÃƒÂ®nement.",
+    name: "Maillot Extérieur 2026/27",
+    description: "Le maillot extérieur de la saison. Design moderne avec des détails dorés. Confort optimal pour les matchs et l'entraînement.",
     category: "maillot",
     categoryLabel: "Maillots",
     team: "valladolid",
@@ -69,19 +62,13 @@ export const products: Product[] = [
       { id: "me-l", name: "Taille L", price: 85, stock: 15, attributes: { size: "L" } },
       { id: "me-xl", name: "Taille XL", price: 85, stock: 8, attributes: { size: "XL" } },
     ],
-    details: [
-      "100% polyester recyclÃƒÂ©",
-      "Design exclusif avec dÃƒÂ©tails dorÃƒÂ©s",
-      "Ãƒâ€°cusson officiel brodÃƒÂ©",
-      "Coupe regular confortable",
-    ],
-    care: ["Lavage machine 30Ã‚Â°C", "Ne pas javelliser", "SÃƒÂ©chage ÃƒÂ  l'air libre"],
+    details: ["100% polyester recyclé", "Design exclusif avec détails dorés", "Écusson officiel brodé", "Coupe regular confortable"],
+    care: ["Lavage machine 30°C", "Ne pas javelliser", "Séchage à l'air libre"],
   },
   {
     slug: "maillot-third-2026",
     name: "Maillot Third 2026/27",
-    description:
-      "Le maillot third de la saison, ÃƒÂ©dition limitÃƒÂ©e. Design audacieux aux couleurs de l'acadÃƒÂ©mie pour les supporters.",
+    description: "Le maillot third de la saison, édition limitée. Design audacieux aux couleurs de l'académie pour les supporters.",
     category: "maillot",
     categoryLabel: "Maillots",
     team: "valladolid",
@@ -95,15 +82,10 @@ export const products: Product[] = [
       { id: "mt-l", name: "Taille L", price: 85, stock: 12, attributes: { size: "L" } },
       { id: "mt-xl", name: "Taille XL", price: 85, stock: 6, attributes: { size: "XL" } },
     ],
-    details: [
-      "100% polyester recyclÃƒÂ©",
-      "Ãƒâ€°dition limitÃƒÂ©e",
-      "Ãƒâ€°cusson officiel brodÃƒÂ©",
-      "Coupe athlÃƒÂ©tique",
-    ],
-    care: ["Lavage machine 30Ã‚Â°C", "Ne pas javelliser", "Repassage faible tempÃƒÂ©rature"],
+    details: ["100% polyester recyclé", "Édition limitée", "Écusson officiel brodé", "Coupe athlétique"],
+    care: ["Lavage machine 30°C", "Ne pas javelliser", "Repassage faible température"],
   },
-    {
+  {
     slug: "maillot-ennour-2026",
     name: "Maillot Ennour 2026/27",
     description: "Le maillot officiel de la section féminine, aux couleurs Ennour.",
