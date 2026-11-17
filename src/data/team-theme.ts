@@ -173,7 +173,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     name: "Groupe ARV",
     shortName: "Groupe",
     initials: "ARV",
-    hex: "#1E3A8A",
+    hex: "#00cd23",
     hexDark: "#00cd23",
     hexLight: "#00cd23",
     bgClass: "bg-[#00cd23]",
@@ -187,6 +187,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
       button: "bg-white text-[#00cd23] hover:bg-white/90",
       progress: "bg-[#F0C419]",
     },
+    promiseButton: "bg-[#00cd23] text-white hover:bg-[#00cd23]/90",
     vars: {
       primary: "130 100% 40%", primaryDark: "130 100% 40%", primaryLight: "130 100% 40%",
       accent: "130 100% 40%", accentDark: "130 100% 40%", accentLight: "130 100% 40%",
