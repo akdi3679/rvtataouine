@@ -2,8 +2,9 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AlertTriangle, Home, RefreshCw } from "lucide-react";
-import { getTeamVars, TEAMS } from "@/data/team-theme";
+import { getTeamFromPath, getTeamVars, TEAMS } from "@/data/team-theme";
 
 export default function GlobalError({
   error,
@@ -12,16 +13,18 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const pathname = usePathname();
+  const team = getTeamFromPath(pathname);
+  const theme = TEAMS[team];
+
   useEffect(() => {
     console.error("Global error:", error);
   }, [error]);
 
-  const theme = TEAMS.group;
-
   return (
     <html>
       <body>
-        <div style={getTeamVars("group")} className="flex min-h-screen items-center justify-center bg-white px-6">
+        <div style={getTeamVars(team)} className="flex min-h-screen items-center justify-center bg-white px-6">
           <div className="mx-auto max-w-md text-center">
             <div
               className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl"

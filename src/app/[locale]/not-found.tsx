@@ -1,14 +1,17 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Home, Search } from "lucide-react";
 import { getTeamFromPath, getTeamVars, TEAMS } from "@/data/team-theme";
 
 export default function NotFound() {
-  // Note: not-found is a Server Component, so we can't use usePathname here.
-  // We use the group theme as default; client-side navigation will still work.
-  const theme = TEAMS.group;
+  const pathname = usePathname();
+  const team = getTeamFromPath(pathname);
+  const theme = TEAMS[team];
 
   return (
-    <div style={getTeamVars("group")} className="flex min-h-[80vh] items-center justify-center bg-white px-6">
+    <div style={getTeamVars(team)} className="flex min-h-[80vh] items-center justify-center bg-white px-6">
       <div className="mx-auto max-w-md text-center">
         <div
           className="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl"
