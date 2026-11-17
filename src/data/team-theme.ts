@@ -707,12 +707,6 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         { title: "Compétition", description: "Participation aux tournois et championnats" },
         { title: "Communauté", description: "Esprit d'équipe et valeurs partagées" }
       ],
-      cards: [
-        { title: "Formation", description: "Entraînements adaptés au football féminin" },
-        { title: "Accompagnement", description: "Suivi scolaire et développement personnel" },
-        { title: "Compétition", description: "Participation aux tournois régionaux" },
-        { title: "Communauté", description: "Esprit d'équipe et valeurs partagées" },
-      ],
       },
        missionImage: "/images/academy/kids-trophy.jpg",
       galleryKicker: "En images",
