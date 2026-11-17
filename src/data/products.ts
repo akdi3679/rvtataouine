@@ -113,6 +113,7 @@ export const products: Product[] = [
     price: 75,
     images: ["/images/boutique/wear1.png"],
     featured: true,
+    isNew: true,
     variants: [
       { id: "en-s", name: "Taille S", price: 75, stock: 10, attributes: { size: "S" } },
       { id: "en-m", name: "Taille M", price: 75, stock: 15, attributes: { size: "M" } },
@@ -130,6 +131,7 @@ export const products: Product[] = [
     price: 75,
     images: ["/images/boutique/wear2.png"],
     featured: true,
+    isNew: true,
     variants: [
       { id: "av-s", name: "Taille S", price: 75, stock: 12, attributes: { size: "S" } },
       { id: "av-m", name: "Taille M", price: 75, stock: 18, attributes: { size: "M" } },

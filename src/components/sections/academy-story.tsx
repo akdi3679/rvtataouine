@@ -89,6 +89,7 @@ export function AcademyStorySection({ team }: AcademyStorySectionProps = {}) {
           </p>
 
           {/* 4 value cards */}
+                    {/* 4 value cards */}
           {values.length > 0 && (
             <div className="mt-8 grid grid-cols-2 gap-3">
               {values.slice(0, 4).map((v) => (
@@ -105,10 +106,22 @@ export function AcademyStorySection({ team }: AcademyStorySectionProps = {}) {
                       style={{ color: theme.hex }}
                     />
                   </div>
+                  <h3 className="mt-3 text-sm font-bold leading-tight text-foreground">
+                    {v.title}
+                  </h3>
+                  <p className="mt-1 text-xs leading-snug text-muted-foreground">
+                    {v.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Mission cards */}
           {mission.cards && mission.cards.length > 0 && (
-            <div className="mt-8 grid grid-cols-2 gap-3">
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {mission.cards.map((card, i) => (
-                <div key={i} className="rounded-lg border border-border bg-secondary/30 p-4">
+                <div key={i} className="rounded-xl border border-border bg-secondary/30 p-4 transition-shadow hover:shadow-md">
                   <h4 className="text-sm font-bold text-foreground">{card.title}</h4>
                   <p className="mt-1 text-xs text-muted-foreground">{card.description}</p>
                 </div>
