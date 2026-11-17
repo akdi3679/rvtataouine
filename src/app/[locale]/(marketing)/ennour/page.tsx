@@ -42,7 +42,7 @@ export default function EnnourPage() {
                 <AcademyStorySection team="ennour" />
       <ClubPreviewSection team="ennour" />
 
-         <Gallery />
+         <Gallery team="ennour" />
 
       <section id="boutique"><FeaturedProductsSection team="ennour" /></section>
       <section id="tv"><FeaturedVideosSection team="ennour" /></section>

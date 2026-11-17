@@ -42,7 +42,7 @@ export default function AvenirPage() {
      <AcademyStorySection team="avenir" /> 
       <ClubPreviewSection team="avenir" />
 
-           <Gallery />      
+           <Gallery team="avenir" />      
 
       <section id="boutique"><FeaturedProductsSection team="avenir" /></section>
       <section id="tv"><FeaturedVideosSection team="avenir" /></section>
