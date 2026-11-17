@@ -37,7 +37,7 @@ export function FinalCTASection({ team }: FinalCTASectionProps = {}) {
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-        <div className="-translate-y-[120px] lg:translate-y-0">
+        <div className={cta.titleShiftClass ?? "-translate-y-[120px] lg:translate-y-0"}>
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
             {cta.title}
           </h2>
