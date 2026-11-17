@@ -30,7 +30,8 @@ export interface TeamContact {
 export interface TeamStat { icon: IconName; value: string; label: string; }
 export interface TeamValue { number?: string; icon?: IconName; title: string; description: string; }
 export interface TeamGalleryItem { id: string; label: string; span: string; }
-export interface TeamMission { kicker: string; title: string; titleLine2?: string;  paragraphs: string[]; }
+export interface TeamMission { kicker: string; title: string; titleLine2?: string;  paragraphs: string[];
+  cards?: { title: string; description: string }[]; }
 export interface TeamVision { kicker: string; titleLine1: string; titleLine2: string; paragraph: string; }
 export interface TeamCTA { title: string; paragraph: string; buttonLabel: string; }
 export interface TeamPromise {
@@ -59,7 +60,8 @@ export interface ClubContent {
   heroKicker: string; heroTitle1: string; heroTitle2: string;
   heroParagraph: string; heroImage: string;
   historyKicker: string; historyYearFrom: string; historyYearTo: string;
-  historyParagraphs: string[];
+  historyparagraphs: string[];
+  cards?: { title: string; description: string }[];
   philosophyKicker: string; philosophyTitle: string; philosophy: TeamValue[];
   stadeKicker: string; stadeTitle1: string; stadeTitle2: string;
   stadeParagraph: string; stadeStats: ClubStat[];
