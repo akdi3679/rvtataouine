@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { videos, type Video } from "@/data/videos";
 import { TvView } from "@/components/sections/tv-view";
 import { TeamFilter } from "@/components/global/team-filter";
-import { parseTeamQuery } from "@/data/team-theme";
+import { parseTeamQuery, getTeamVars } from "@/data/team-theme";
 
 export const metadata: Metadata = {
   title: "ARV TV | ARV Tataouine",
@@ -22,5 +22,5 @@ export default async function TvPage({
   const filtered: Video[] =
     team === "all" ? videos : videos.filter((v) => v.team === team);
 
-  return <TvView videos={filtered} team={team} />;
+  return (<div style={team === "all" ? undefined : getTeamVars(team)}><TvView videos={filtered} team={team} /></div>);
 }

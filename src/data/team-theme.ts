@@ -171,23 +171,23 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     name: "Groupe ARV",
     shortName: "Groupe",
     initials: "ARV",
-    hex: "#26691c",
-    hexDark: "#1a4913",
+    hex: "#00cd23",
+    hexDark: "#00cd23",
     hexLight: "#00cd23",
-    bgClass: "bg-[#26691c]",
-    textClass: "text-[#26691c]",
-    bgSoftClass: "bg-[#26691c]/10",
-    borderClass: "border-[#26691c]",
-    heroGradient: "from-[#00cd23] via-[#3ea82d] to-[#1a4913]",
-    heroOverlayR: "from-[#26691c]/70 via-transparent to-[#3ea82d]/60",
+    bgClass: "bg-[#00cd23]",
+    textClass: "text-[#00cd23]",
+    bgSoftClass: "bg-[#00cd23]/10",
+    borderClass: "border-[#00cd23]",
+    heroGradient: "from-[#00cd23] via-[#00cd23] to-[#00cd23]",
+    heroOverlayR: "from-[#00cd23]/70 via-transparent to-[#00cd23]/60",
     logoPath: "/images/logo/logo.png",
     carousel: {
-      button: "bg-[#00cd23] text-black hover:bg-[#3ea82d]",
+      button: "bg-[#00cd23] text-white hover:bg-[#00cd23]",
       progress: "bg-[#00cd23]",
     },
     vars: {
-      primary: "112 58% 26%", primaryDark: "112 58% 18%", primaryLight: "112 58% 42%",
-      accent: "112 58% 26%", accentDark: "112 58% 18%", accentLight: "112 58% 42%",
+      primary: "130 100% 40%", primaryDark: "130 100% 40%", primaryLight: "130 100% 40%",
+      accent: "130 100% 40%", accentDark: "130 100% 40%", accentLight: "130 100% 40%",
     },
     nav: {
       dropdowns: [
@@ -279,7 +279,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     formTagline: "Toutes les équipes du groupe",
     formIcon: "shield",
         selectionBg: "#00cd23",    // orange — matches group CTA
-    selectionText: "#000000",  // navy — matches group CTA text
+    selectionText: "#FFFFFF",  // navy — matches group CTA text
     content: {
       shortDescription:
         "Un projet éducatif, social et sportif qui accompagne les jeunes de Tataouine dans leur développement personnel et sportif.",

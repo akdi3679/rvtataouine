@@ -11,7 +11,7 @@ import {
 import { wallpaperTemplates } from "@/data/wallpapers";
 import { WallpaperGenerator } from "@/components/interactive/wallpaper-generator";
 import { TeamFilter } from "@/components/global/team-filter";
-import { parseTeamQuery } from "@/data/team-theme";
+import { parseTeamQuery, getTeamVars } from "@/data/team-theme";
 
 export const metadata: Metadata = {
   title: "Boutique | ARV Tataouine",
@@ -32,7 +32,7 @@ export default async function BoutiquePage({
     team === "all" ? products : products.filter((p) => p.team === team);
 
   return (
-    <div className="flex flex-col bg-white">
+    <div style={team === "all" ? undefined : getTeamVars(team)} className="flex flex-col bg-white">
            <section className="pt-10 lg:pt-14">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
