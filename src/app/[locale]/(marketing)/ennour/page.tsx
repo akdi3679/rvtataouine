@@ -27,9 +27,9 @@ export default function EnnourPage() {
   "--color-primary": "352 59% 30%",
   "--color-primary-dark": "352 59% 20%",
   "--color-primary-light": "352 59% 45%",
-  "--color-accent": "43 100% 60%",
-  "--color-accent-dark": "43 100% 50%",
-  "--color-accent-light": "43 100% 70%",
+  "--color-accent": "353 58% 40%",
+  "--color-accent-dark": "352 59% 30%",
+  "--color-accent-light": "353 58% 51%",
 } as React.CSSProperties;
 
   

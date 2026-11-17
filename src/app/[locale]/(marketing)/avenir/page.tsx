@@ -25,11 +25,11 @@ export default function AvenirPage() {
 
   const teamVars = {
     "--color-primary-light": "211 65% 27%",
-    "--color-accent": "43 100% 60%",
+    "--color-accent": "216 55% 26%",
     "--color-primary": "211 65% 17%",
-    "--color-accent-dark": "43 100% 50%",
+    "--color-accent-dark": "211 65% 17%",
     "--color-primary-dark": "211 65% 12%",
-    "--color-accent-light": "43 100% 70%",
+    "--color-accent-light": "216 55% 37%",
   } as React.CSSProperties;
 
   

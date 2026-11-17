@@ -114,9 +114,9 @@ export default function GroupHomePage() {
     "--color-primary": "202 79% 20%",
     "--color-primary-dark": "202 79% 14%",
     "--color-primary-light": "202 79% 30%",
-    "--color-accent": "43 100% 60%",
-    "--color-accent-dark": "43 100% 50%",
-    "--color-accent-light": "43 100% 70%",
+    "--color-accent": "204 74% 31%",
+    "--color-accent-dark": "202 79% 20%",
+    "--color-accent-light": "204 74% 42%",
   } as React.CSSProperties;
 
   return (
