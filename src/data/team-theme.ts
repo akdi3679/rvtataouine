@@ -201,6 +201,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         },
       ],
       primaryLinks: [
+        { label: "À propos", href: "/#mission" },
         { label: "TV", href: "/tv" },
         { label: "Actualités", href: "/actualites" },
         { label: "Boutique", href: "/boutique" },
@@ -218,6 +219,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         {
           title: "Le groupe",
           links: [
+            { label: "À propos", href: "/#mission" },
             { label: "TV", href: "/tv" },
             { label: "Actualités", href: "/actualites" },
             { label: "Boutique", href: "/boutique" },

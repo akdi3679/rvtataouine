@@ -29,7 +29,7 @@ export function AcademyStorySection({ team }: AcademyStorySectionProps = {}) {
     : promise.ctaHref;
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section id="mission" className="relative overflow-hidden bg-white">
       {/* Desktop image on right */}
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[55%] lg:flex lg:items-center lg:justify-end lg:py-10 lg:pr-6">
         <div className="relative h-full w-full">
