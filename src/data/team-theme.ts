@@ -950,6 +950,19 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
 };
 
 // ─── Legacy aliases ───
+// ARV-RV-PROMISE-FIX - align Valladolid content shape with the other 3 teams.
+// Reuses existing copy, adds no new wording. Delete this block to revert.
+const _rv = TEAMS.valladolid;
+const _rvClub = _rv.content.club!;
+_rv.content.mission = {
+  kicker: "Notre mission",
+  title: _rvClub.heroTitle1,
+  titleLine2: _rvClub.heroTitle2,
+  paragraphs: _rvClub.historyParagraphs,
+};
+_rv.content.missionImage = _rvClub.heroImage;
+_rv.content.valuesKicker = _rvClub.philosophyKicker;
+_rv.content.valuesTitle = _rvClub.philosophyTitle;
 export const TEAM_THEME = TEAMS;
 export const TEAM_IDS: TeamId[] = ["group", "valladolid", "ennour", "avenir"];
 export const ENTITY_IDS: TeamId[] = ["valladolid", "ennour", "avenir"];
