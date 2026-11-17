@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
-import { Play, X, Camera } from "lucide-react";
+import { Play, X } from "lucide-react";
 import { videoCategories, type Video } from "@/data/videos";
 import { GALLERY } from "@/data/gallery";
 import { TeamFilter } from "@/components/global/team-filter";
 import { TEAMS, type TeamId } from "@/data/team-theme";
+
 const CATEGORY_GRADIENT: Record<string, string> = {
   match: "from-accent via-accent/80 to-accent-dark",
   training: "from-primary via-primary/80 to-primary-dark",
@@ -15,25 +16,64 @@ const CATEGORY_GRADIENT: Record<string, string> = {
   tutorial: "from-success via-success/80 to-primary/70",
 };
 
+// --- BEAUTIFUL VIDEO CARD (Same as FeaturedVideosSection) ---
+function VideoCard({ video, theme }: { video: Video; theme: any }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  if (isLoaded) {
+    return (
+      <div className="relative w-full overflow-hidden rounded-2xl" style={{ aspectRatio: "16/9" }}>
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
+          title={video.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <button
+      onClick={() => setIsLoaded(true)}
+      className="group relative w-full overflow-hidden rounded-2xl bg-foreground focus:outline-none focus:ring-2 focus:ring-offset-2"
+      style={{ aspectRatio: "16/9", boxShadow: `0 0 0 2px ${theme.hex}20` }}
+      aria-label={`Lire la vidéo : ${video.title}`}
+    >
+      <Image
+        src={video.thumbnail}
+        alt={video.title}
+        fill
+        sizes="(max-width: 768px) 100vw, 33vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+      <div className="absolute bottom-4 left-4">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/95 shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-white">
+          <Play className="h-5 w-5 ml-0.5" style={{ color: theme.hex, fill: theme.hex }} />
+        </div>
+      </div>
+    </button>
+  );
+}
+
 function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; team: TeamId | "all" }) {
-  const c = CATEGORY_GRADIENT[video.category] ?? CATEGORY_GRADIENT.match;
-  const teamTheme = team !== "all" ? TEAMS[team] : null;
+  const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
 
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-6 pt-10 pb-8 lg:px-8 lg:pt-14 lg:pb-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex-1">
-            {teamTheme && (
-              <div className="mb-4 flex items-center gap-3">
-                <div className="relative h-8 w-8 overflow-hidden rounded-full bg-white shadow-sm">
-                  <Image src={teamTheme.logoPath} alt={teamTheme.name} fill className="object-contain p-1" />
-                </div>
-                <span className={`text-sm font-bold uppercase tracking-widest ${teamTheme.textClass}`}>
-                  {teamTheme.shortName} TV
-                </span>
+            <div className="mb-4 flex items-center gap-3">
+              <div className="relative h-8 w-8 overflow-hidden rounded-full bg-white shadow-sm">
+                <Image src={teamTheme.logoPath} alt={teamTheme.name} fill className="object-contain p-1" />
               </div>
-            )}
+              <span className={`text-sm font-bold uppercase tracking-widest ${teamTheme.textClass}`}>
+                {teamTheme.shortName} TV
+              </span>
+            </div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
               ARV TV
             </p>
@@ -48,7 +88,7 @@ function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; tea
             <TeamFilter currentTeam={team} />
           </div>
         </div>
-        
+
         <button
           onClick={onPlay}
           className="group relative mt-8 block w-full overflow-hidden rounded-2xl text-left"
@@ -114,9 +154,11 @@ function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; tea
 function VideoGrid({
   items,
   onPlay,
+  team,
 }: {
   items: Video[];
   onPlay: (v: Video) => void;
+  team: TeamId | "all";
 }) {
   if (items.length === 0) {
     return (
@@ -129,45 +171,25 @@ function VideoGrid({
     );
   }
 
+  const theme = team !== "all" ? TEAMS[team] : TEAMS.group;
+
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((v) => (
-        <button
-          key={v.id}
-          onClick={() => onPlay(v)}
-          className="group flex flex-col text-left"
-          aria-label={`Regarder : ${v.title}`}
-        >
-          <div className="relative aspect-video overflow-hidden rounded-xl bg-foreground">
-            <Image
-              src={v.thumbnail}
-              alt={v.title}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-2xl">
-                <Play className="ml-0.5 h-6 w-6 fill-foreground" />
-              </span>
-            </div>
-            <span className="absolute right-2 top-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-semibold text-white">
-              {v.duration}
-            </span>
-          </div>
+        <div key={v.id} className="flex flex-col">
+          <VideoCard video={v} theme={theme} />
           <div className="mt-3">
-            <span className="inline-flex rounded-full bg-secondary px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-foreground">
+            <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${theme.bgSoftClass} ${theme.textClass}`}>
               {v.categoryLabel}
             </span>
-<h3 className="mt-2 line-clamp-2 text-sm font-bold leading-snug text-foreground transition-colors group-hover:text-foreground">
+            <h3 className="mt-2 line-clamp-2 text-sm font-bold leading-snug text-foreground">
               {v.title}
             </h3>
             <p className="mt-1 text-[11px] text-muted-foreground">
               {v.publishedAt}
             </p>
           </div>
-        </button>
+        </div>
       ))}
     </div>
   );
@@ -188,108 +210,47 @@ function Gallery() {
             Les moments forts de la saison, sur et en dehors du terrain.
           </p>
         </div>
-
-        {/* Bento grid — tailles variées */}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-          {/* g1 — huge 2x2 */}
           <div className="group relative col-span-2 row-span-2 aspect-square overflow-hidden rounded-2xl sm:aspect-auto sm:min-h-[440px]">
-            <Image
-              src={GALLERY[0].image}
-              alt={GALLERY[0].label}
-              fill
-              sizes="(max-width: 640px) 100vw, 50vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              priority
-            />
+            <Image src={GALLERY[0].image} alt={GALLERY[0].label} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" priority />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-              <p className="text-sm font-semibold text-white sm:text-base">
-                {GALLERY[0].label}
-              </p>
+              <p className="text-sm font-semibold text-white sm:text-base">{GALLERY[0].label}</p>
             </div>
           </div>
-
-          {/* g2 — wide 2x1 */}
           <div className="group relative col-span-2 aspect-[2/1] overflow-hidden rounded-2xl sm:aspect-[2/1]">
-            <Image
-              src={GALLERY[1].image}
-              alt={GALLERY[1].label}
-              fill
-              sizes="(max-width: 640px) 100vw, 50vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            <Image src={GALLERY[1].image} alt={GALLERY[1].label} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-              <p className="text-sm font-semibold text-white">
-                {GALLERY[1].label}
-              </p>
+              <p className="text-sm font-semibold text-white">{GALLERY[1].label}</p>
             </div>
           </div>
-
-          {/* g3 + g4 — small squares côte à côte */}
           <div className="group relative aspect-square overflow-hidden rounded-2xl">
-            <Image
-              src={GALLERY[2].image}
-              alt={GALLERY[2].label}
-              fill
-              sizes="(max-width: 640px) 50vw, 25vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            <Image src={GALLERY[2].image} alt={GALLERY[2].label} fill sizes="(max-width: 640px) 50vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-3">
-              <p className="text-xs font-semibold text-white sm:text-sm">
-                {GALLERY[2].label}
-              </p>
+              <p className="text-xs font-semibold text-white sm:text-sm">{GALLERY[2].label}</p>
             </div>
           </div>
-
           <div className="group relative aspect-square overflow-hidden rounded-2xl">
-            <Image
-              src={GALLERY[3].image}
-              alt={GALLERY[3].label}
-              fill
-              sizes="(max-width: 640px) 50vw, 25vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            <Image src={GALLERY[3].image} alt={GALLERY[3].label} fill sizes="(max-width: 640px) 50vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-3">
-              <p className="text-xs font-semibold text-white sm:text-sm">
-                {GALLERY[3].label}
-              </p>
+              <p className="text-xs font-semibold text-white sm:text-sm">{GALLERY[3].label}</p>
             </div>
           </div>
-
-          {/* g5 — full-width wide */}
           <div className="group relative col-span-2 aspect-[2.4/1] overflow-hidden rounded-2xl">
-            <Image
-              src={GALLERY[4].image}
-              alt={GALLERY[4].label}
-              fill
-              sizes="(max-width: 640px) 100vw, 50vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            <Image src={GALLERY[4].image} alt={GALLERY[4].label} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-              <p className="text-sm font-semibold text-white">
-                {GALLERY[4].label}
-              </p>
+              <p className="text-sm font-semibold text-white">{GALLERY[4].label}</p>
             </div>
           </div>
-
-          {/* g6 — full-width wide */}
           <div className="group relative col-span-2 aspect-[2.4/1] overflow-hidden rounded-2xl">
-            <Image
-              src={GALLERY[5].image}
-              alt={GALLERY[5].label}
-              fill
-              sizes="(max-width: 640px) 100vw, 50vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            <Image src={GALLERY[5].image} alt={GALLERY[5].label} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-              <p className="text-sm font-semibold text-white">
-                {GALLERY[5].label}
-              </p>
+              <p className="text-sm font-semibold text-white">{GALLERY[5].label}</p>
             </div>
           </div>
         </div>
@@ -298,19 +259,11 @@ function Gallery() {
   );
 }
 
-function VideoPlayer({
-  video,
-  onClose,
-}: {
-  video: Video;
-  onClose: () => void;
-}) {
+function VideoPlayer({ video, onClose }: { video: Video; onClose: () => void }) {
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = prev;
@@ -320,36 +273,17 @@ function VideoPlayer({
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
-      <button
-        onClick={onClose}
-        className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
-        aria-label="Fermer"
-      >
+      <button onClick={onClose} className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20" aria-label="Fermer">
         <X className="h-5 w-5" />
       </button>
       <div className="w-full max-w-5xl">
-        <div
-          className="relative w-full overflow-hidden rounded-xl bg-black"
-          style={{ aspectRatio: "16/9" }}
-        >
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
-            title={video.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="absolute inset-0 h-full w-full"
-          />
+        <div className="relative w-full overflow-hidden rounded-xl bg-black" style={{ aspectRatio: "16/9" }}>
+          <iframe src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0`} title={video.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="absolute inset-0 h-full w-full" />
         </div>
         <div className="mt-4 px-1">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-white/60">
-            {video.categoryLabel}
-          </p>
-          <h3 className="mt-1 text-lg font-black text-white sm:text-2xl">
-            {video.title}
-          </h3>
-          <p className="mt-2 hidden text-sm text-white/70 sm:block">
-            {video.description}
-          </p>
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-white/60">{video.categoryLabel}</p>
+          <h3 className="mt-1 text-lg font-black text-white sm:text-2xl">{video.title}</h3>
+          <p className="mt-2 hidden text-sm text-white/70 sm:block">{video.description}</p>
         </div>
       </div>
     </div>
@@ -361,33 +295,19 @@ export function TvView({ videos, team }: { videos: Video[]; team: TeamId | "all"
   const [filter, setFilter] = useState<string>("all");
 
   const featured = videos.find((v) => v.featured) ?? videos[0];
-
-  const filtered = useMemo(
-    () =>
-      filter === "all" ? videos : videos.filter((v) => v.category === filter),
-    [filter],
-  );
-
-  const countFor = (id: string) =>
-    id === "all"
-      ? videos.length
-      : videos.filter((v) => v.category === id).length;
+  const filtered = useMemo(() => (filter === "all" ? videos : videos.filter((v) => v.category === filter)), [filter]);
+  const countFor = (id: string) => (id === "all" ? videos.length : videos.filter((v) => v.category === id).length);
 
   return (
     <>
       <div className="bg-white">
-<TvHero video={featured} onPlay={() => setActive(featured)} team={team} />
+        <TvHero video={featured} onPlay={() => setActive(featured)} team={team} />
         <section className="pb-14 lg:pb-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mb-6 flex items-end justify-between gap-4">
               <div>
-                <h2 className="text-2xl font-black text-foreground sm:text-3xl">
-                  Toutes les vidéos
-                </h2>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {filtered.length}{" "}
-                  {filtered.length === 1 ? "vidéo" : "vidéos"}
-                </p>
+                <h2 className="text-2xl font-black text-foreground sm:text-3xl">Toutes les vidéos</h2>
+                <p className="mt-1 text-xs text-muted-foreground">{filtered.length} {filtered.length === 1 ? "vidéo" : "vidéos"}</p>
               </div>
             </div>
 
@@ -400,19 +320,11 @@ export function TvView({ videos, team }: { videos: Video[]; team: TeamId | "all"
                       <button
                         onClick={() => setFilter(c.id)}
                         className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-xs font-semibold transition-colors ${
-                          activeFilter
-                            ? "bg-foreground text-background"
-                            : "border border-border bg-white text-foreground hover:border-foreground/30 hover:bg-secondary/50"
+                          activeFilter ? "bg-foreground text-background" : "border border-border bg-white text-foreground hover:border-foreground/30 hover:bg-secondary/50"
                         }`}
                       >
                         {c.label}
-                        <span
-                          className={`text-[10px] tabular-nums ${
-                            activeFilter
-                              ? "text-background/60"
-                              : "text-muted-foreground"
-                          }`}
-                        >
+                        <span className={`text-[10px] tabular-nums ${activeFilter ? "text-background/60" : "text-muted-foreground"}`}>
                           {countFor(c.id)}
                         </span>
                       </button>
@@ -422,13 +334,11 @@ export function TvView({ videos, team }: { videos: Video[]; team: TeamId | "all"
               </ul>
             </div>
 
-            <VideoGrid items={filtered} onPlay={setActive} />
+            <VideoGrid items={filtered} onPlay={setActive} team={team} />
           </div>
         </section>
-
         <Gallery />
       </div>
-
       {active && <VideoPlayer video={active} onClose={() => setActive(null)} />}
     </>
   );

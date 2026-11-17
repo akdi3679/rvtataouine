@@ -31,9 +31,13 @@ export default async function ProductPage({
 }) {
   const { slug } = await params;
   const product = getProductBySlug(slug);
-     const teamId = (product.team as TeamId) || "group";
-   const theme = TEAMS[teamId];
+  
+  // 1. Early return if not found (TypeScript understands this narrows the type)
   if (!product) notFound();
+
+  // 2. NOW it is 100% safe to access product.team
+  const teamId = (product.team as TeamId) || "group";
+  const theme = TEAMS[teamId];
 
   const firstVariant = product.variants[0];
 
