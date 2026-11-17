@@ -49,7 +49,7 @@ export function FinalCTASection({ team }: FinalCTASectionProps = {}) {
         <div className="mt-28 flex flex-col items-center justify-center gap-4 sm:flex-row lg:mt-10">
           <Link
             href={`/${currentLocale}/inscription`}
-            className={`inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-bold text-gold transition-all hover:opacity-90 hover:scale-105 ${theme.bgClass}`}
+            className={`inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-bold text-white transition-all hover:opacity-90 hover:scale-105 ${theme.bgClass}`}
           >
             {cta.ctaLabel} <ArrowRight className="h-5 w-5" />
           </Link>

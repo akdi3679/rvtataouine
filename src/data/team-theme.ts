@@ -776,14 +776,14 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     name: "Avenir Sportif",
     shortName: "Avenir",
     initials: "AV",
-    hex: "#0F2A47",
+    hex: "#00cd23",
     hexDark: "#081A2E",
     hexLight: "#1E3B66",
-    bgClass: "bg-[#0F2A47]",
-    textClass: "text-[#0F2A47]",
-    bgSoftClass: "bg-[#0F2A47]/10",
-    borderClass: "border-[#0F2A47]",
-    heroGradient: "from-[#0F2A47] via-[#1E3B66] to-[#0F2A47]",
+    bgClass: "bg-[#00cd23]",
+    textClass: "text-[#00cd23]",
+    bgSoftClass: "bg-[#00cd23]/10",
+    borderClass: "border-[#00cd23]",
+    heroGradient: "from-[#00cd23] via-[#1E3B66] to-[#00cd23]",
     logoPath: "/images/logo/avenir.png",
     carousel: {
       button: "bg-[#F0C419] text-[#081A2E] hover:bg-[#F0C419]/90",
@@ -870,7 +870,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     formTagline: "Football & Futsal",
     formIcon: "zap",
         selectionBg: "#F0C419",    // gold — matches Avenir CTA
-    selectionText: "#0F2A47",  // navy — matches Avenir CTA text
+    selectionText: "#00cd23",  // navy — matches Avenir CTA text
      newsletterAccent: {
       bg: "#38BDF8",                                    // light blue
       text: "#081A2E",                                  // Avenir dark navy

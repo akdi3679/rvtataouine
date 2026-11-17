@@ -23,18 +23,8 @@ export default function AvenirPage() {
   
   
 
-  const teamVars = {
-    "--color-primary-light": "211 65% 27%",
-    "--color-accent": "216 55% 26%",
-    "--color-primary": "211 65% 17%",
-    "--color-accent-dark": "211 65% 17%",
-    "--color-primary-dark": "211 65% 12%",
-    "--color-accent-light": "216 55% 37%",
-  } as React.CSSProperties;
-
-  
-  return (
-    <div style={teamVars} className="flex flex-col bg-white">
+return (
+    <div style={getTeamVars("avenir")} className="flex flex-col bg-white">
       <HeroCarousel team="avenir" />
       <PartnersStrip />
 

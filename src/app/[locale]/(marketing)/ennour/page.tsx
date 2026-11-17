@@ -34,7 +34,7 @@ export default function EnnourPage() {
 
   
   return (
-    <div style={teamVars} className="flex flex-col bg-white">
+    <div style={getTeamVars("ennour")} className="flex flex-col bg-white">
       <HeroCarousel team="ennour" />
       <PartnersStrip />
 
