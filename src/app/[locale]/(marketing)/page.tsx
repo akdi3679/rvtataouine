@@ -10,7 +10,8 @@ import { NewsletterSection } from "@/components/sections/newsletter-section";
 import { FinalCTASection } from "@/components/sections/final-cta";
 import { HeroCarousel } from "@/components/sections/hero-carousel";
 import { TEAMS, ENTITY_LIST } from "@/data/team-theme";
-import { TeamPresentationSection } from "@/components/sections/team-presentation";
+import { AcademyStorySection } from "@/components/sections/academy-story";
+import { ClubPreviewSection } from "@/components/sections/club-preview";
 export const metadata: Metadata = {
   title: "Groupe Sportif ARV Tataouine",
   description:
@@ -123,8 +124,9 @@ export default function GroupHomePage() {
       <HeroCarousel team="group" />
 
       <PartnersStrip />
-      
-<TeamPresentationSection team="group" />
+      <AcademyStorySection team="group" />
+      <ClubPreviewSection team="group" />
+
       <EntitiesSection />
       <NewsSection />
       <FeaturedVideosSection />

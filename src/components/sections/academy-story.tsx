@@ -2,24 +2,40 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Target, Users, MapPin, Trophy, Sparkles } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { getTeamFromPath, TEAMS, type TeamId } from "@/data/team-theme";
+import { TeamIcon } from "@/components/global/icon";
 
-const VALUE_PROPS = [
-  { icon: Target, title: "MÃ©thode espagnole", desc: "Philosophie Real Valladolid" },
-  { icon: Users, title: "Encadrement pro", desc: "EntraÃ®neurs diplÃ´mÃ©s UEFA" },
-  { icon: MapPin, title: "Infrastructures", desc: "Terrains, salle, analyse vidÃ©o" },
-  { icon: Trophy, title: "OpportunitÃ©s", desc: "DÃ©tection, stages en Espagne" },
-];
+interface AcademyStorySectionProps {
+  team?: TeamId;
+}
 
-export function AcademyStorySection() {
+export function AcademyStorySection({ team }: AcademyStorySectionProps = {}) {
+  const pathname = usePathname();
+  const currentLocale = pathname.split("/")[1] || "fr";
+  const activeTeam = team ?? getTeamFromPath(pathname);
+  const theme = TEAMS[activeTeam];
+
+  const promise = theme.content.promise;
+  const mission = theme.content.mission;
+  const values = theme.content.values ?? [];
+  const image = theme.content.missionImage ?? "/images/academy/kids-trophy.jpg";
+
+  if (!promise || !mission) return null;
+
+  const ctaHref = promise.ctaHref.startsWith("/")
+    ? `/${currentLocale}${promise.ctaHref}`
+    : promise.ctaHref;
+
   return (
     <section className="relative overflow-hidden bg-white">
-      {/* Desktop image â€” full visible, faded into content on left */}
+      {/* Desktop image on right */}
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[55%] lg:flex lg:items-center lg:justify-end lg:py-10 lg:pr-6">
         <div className="relative h-full w-full">
           <Image
-            src="/images/academy/kids-trophy.jpg"
-            alt="Enfants de l'acadÃ©mie avec le trophÃ©e"
+            src={image}
+            alt={theme.name}
             fill
             sizes="55vw"
             className="object-contain object-right"
@@ -38,24 +54,28 @@ export function AcademyStorySection() {
       <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
         <div className="lg:max-w-[42%]">
           {/* Badge */}
-          <span className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-accent">
+          <span
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest ${theme.bgSoftClass} ${theme.textClass}`}
+          >
             <Sparkles className="h-3 w-3" />
-            Notre promesse
+            {promise.badge}
           </span>
 
           {/* Title */}
           <h2 className="mt-5 text-4xl font-black leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-[3.25rem]">
-            Former des champions,
-            <span className="block text-accent">
-              sur et en dehors du terrain
-            </span>
+            {mission.title}
+            {mission.titleLine2 && (
+              <span className={`block ${theme.textClass}`}>
+                {mission.titleLine2}
+              </span>
+            )}
           </h2>
 
-          {/* Mobile image â€” edge-to-edge, overlaps title, no frame */}
+          {/* Mobile image */}
           <div className="relative z-10 -mx-6 -mt-8 lg:hidden">
             <Image
-              src="/images/academy/kids-trophy.jpg"
-              alt="Enfants de l'acadÃ©mie avec le trophÃ©e"
+              src={image}
+              alt={theme.name}
               width={1400}
               height={1000}
               sizes="100vw"
@@ -63,43 +83,46 @@ export function AcademyStorySection() {
             />
           </div>
 
-          {/* Description */}
+          {/* Description — first paragraph only */}
           <p className="mt-6 text-base leading-relaxed text-muted-foreground lg:mt-5">
-            Depuis 2016, nous accompagnons les jeunes talents du sud tunisien
-            avec une mÃ©thodologie espagnole Ã©prouvÃ©e, un encadrement
-            professionnel et des infrastructures modernes.
+            {mission.paragraphs[0]}
           </p>
 
-          {/* Cards */}
-          <div className="mt-8 grid grid-cols-2 gap-3">
-            {VALUE_PROPS.map((v) => {
-              const Icon = v.icon;
-              return (
+          {/* 4 value cards */}
+          {values.length > 0 && (
+            <div className="mt-8 grid grid-cols-2 gap-3">
+              {values.slice(0, 4).map((v) => (
                 <div
                   key={v.title}
-                  className="group rounded-xl border border-border bg-white p-4 transition-all hover:border-accent/40 hover:shadow-md"
+                  className="group rounded-xl border border-border bg-white p-4 transition-all hover:shadow-md"
                 >
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
-                    <Icon className="h-4 w-4" />
+                  <div
+                    className={`flex h-9 w-9 items-center justify-center rounded-lg ${theme.bgSoftClass}`}
+                  >
+                    <TeamIcon
+                      name={v.icon!}
+                      className="h-4 w-4"
+                      style={{ color: theme.hex }}
+                    />
                   </div>
                   <h3 className="mt-3 text-sm font-bold leading-tight text-foreground">
                     {v.title}
                   </h3>
                   <p className="mt-1 text-xs leading-snug text-muted-foreground">
-                    {v.desc}
+                    {v.description}
                   </p>
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
 
-          {/* CTA â€” centered in the left half */}
+          {/* CTA */}
           <div className="mt-8 flex justify-center">
             <Link
-              href="/inscription?team=valladolid"
-              className="inline-flex items-center gap-3 rounded-md bg-accent px-10 py-4 text-base font-bold text-white shadow-xl shadow-accent/25 transition-all hover:bg-accent/90 hover:shadow-2xl hover:shadow-accent/30 hover:-translate-y-0.5"
+              href={ctaHref}
+              className={`inline-flex items-center gap-3 rounded-md px-10 py-4 text-base font-bold shadow-xl transition-all hover:-translate-y-0.5 hover:opacity-90 ${theme.carousel.button}`}
             >
-              Inscrire mon enfant
+              {promise.ctaLabel}
               <ArrowRight className="h-5 w-5" />
             </Link>
           </div>

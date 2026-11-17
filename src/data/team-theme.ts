@@ -31,6 +31,26 @@ export interface TeamGalleryItem { id: string; label: string; span: string; }
 export interface TeamMission { kicker: string; title: string; titleLine2?: string;  paragraphs: string[]; }
 export interface TeamVision { kicker: string; titleLine1: string; titleLine2: string; paragraph: string; }
 export interface TeamCTA { title: string; paragraph: string; buttonLabel: string; }
+export interface TeamPromise {
+  badge: string;          // e.g. "Notre promesse"
+  ctaLabel: string;
+  ctaHref: string;        // without locale — component prepends
+}
+
+export interface TeamStory {
+  kicker: string;
+  titleLine1: string;
+  titleLine2: string;
+  paragraph: string;
+  pillars: { icon: IconName; label: string; value: string }[];
+  ctaLabel: string;
+  ctaHref: string;
+  yearFrom: string;
+  yearTo: string;
+  yearParagraph: string;
+  stat1: { value: string; label: string };
+  stat2: { value: string; label: string };
+}
 export interface ClubFeature { icon: IconName; title: string; description: string; features: string[]; }
 export interface ClubStat { value: string; label: string; }
 export interface ClubContent {
@@ -64,6 +84,8 @@ export interface TeamContent {
   galleryTitle?: string;
   gallerySubtitle?: string;
   galleryIcon?: IconName;
+  promise?: TeamPromise;
+  story?: TeamStory;
   gallery?: TeamGalleryItem[];
   stats?: TeamStat[];
   cta?: TeamCTA;
@@ -259,6 +281,37 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
       ],
       entitiesKicker: "Nos entités",
       entitiesTitle: "Trois équipes, une famille",
+            values: [
+        { icon: "trophy", title: "Excellence", description: "Recherche constante du haut niveau technique et tactique." },
+        { icon: "heart",  title: "Famille",    description: "Un esprit collectif qui unit joueurs, staff et familles." },
+        { icon: "flame",  title: "Passion",    description: "L'amour du football, le respect de l'adversaire, la joie de jouer." },
+        { icon: "shield", title: "Discipline", description: "Sérieux, ponctualité et respect sur et en dehors du terrain." },
+      ],
+      promise: {
+        badge: "Notre promesse",
+        ctaLabel: "Découvrir nos équipes",
+        ctaHref: "/#entities",
+      },
+      story: {
+        kicker: "Notre histoire",
+        titleLine1: "Plus qu'un groupe,",
+        titleLine2: "une famille",
+        paragraph:
+          "Fondé en 2016, le Groupe Sportif ARV Tataouine réunit trois équipes autour d'une même vision : offrir aux jeunes du sud tunisien un cadre d'excellence pour grandir, sur et en dehors du terrain.",
+        pillars: [
+          { icon: "trophy", label: "Trois équipes",   value: "Valladolid · Ennour · Avenir" },
+          { icon: "target", label: "Méthodologie",    value: "Partenariat Real Valladolid" },
+          { icon: "heart",  label: "Valeurs",         value: "Excellence et respect" },
+        ],
+        ctaLabel: "Découvrir nos équipes",
+        ctaHref: "/#entities",
+        yearFrom: "2016",
+        yearTo: "2026",
+        yearParagraph:
+          "Dix ans d'engagement au service de la jeunesse de Tataouine.",
+        stat1: { value: "150+", label: "Joueurs formés" },
+        stat2: { value: "23",   label: "Devenus pros" },
+      },
             history: {
         milestones: [
           { year: "2016", title: "Fondation", description: "Naissance du groupe à Tataouine" },
@@ -469,6 +522,37 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         { icon: "star",   value: "5",    label: "Bourses NCAA" },
         { icon: "zap",    value: "30+",  label: "Stages en Espagne" },
       ],
+            values: [
+        { icon: "target",  title: "Méthode espagnole", description: "Philosophie Real Valladolid" },
+        { icon: "users",   title: "Encadrement pro",   description: "Entraîneurs diplômés UEFA" },
+        { icon: "map-pin", title: "Infrastructures",   description: "Terrains, salle, analyse vidéo" },
+        { icon: "trophy",  title: "Opportunités",      description: "Détection, stages en Espagne" },
+      ],
+      promise: {
+        badge: "Notre promesse",
+        ctaLabel: "Inscrire mon enfant",
+        ctaHref: "/inscription?team=valladolid",
+      },
+      story: {
+        kicker: "Notre histoire",
+        titleLine1: "Plus qu'un club,",
+        titleLine2: "une famille",
+        paragraph:
+          "Fondée en 2016, notre académie est née d'une vision : apporter l'excellence du football européen au sud de la Tunisie. Grâce à notre partenariat avec le Real Valladolid CF, nous formons les champions de demain avec une méthodologie éprouvée.",
+        pillars: [
+          { icon: "target",  label: "Philosophie",   value: "4 piliers de formation" },
+          { icon: "map-pin", label: "Installations", value: "Qualité professionnelle" },
+          { icon: "heart",   label: "Valeurs",       value: "Respect et excellence" },
+        ],
+        ctaLabel: "Découvrir notre club",
+        ctaHref: "/valladolid/club",
+        yearFrom: "2016",
+        yearTo: "2026",
+        yearParagraph:
+          "Dix ans d'excellence et de formation au service des jeunes talents du sud tunisien.",
+        stat1: { value: "150+", label: "Joueurs formés" },
+        stat2: { value: "23",   label: "Devenus pros" },
+      },
             finalCta: {
         title: "Rejoignez Real Valladolid",
         subtitle: "Formez votre enfant à l'excellence espagnole",
@@ -620,6 +704,31 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         paragraph:
           "Vous êtes une jeune joueuse ou un parent ? Contactez-nous pour découvrir nos programmes et venir essayer.",
         buttonLabel: "Inscrire ma fille",
+      },
+            promise: {
+        badge: "Notre promesse",
+        ctaLabel: "Inscrire ma fille",
+        ctaHref: "/inscription?team=ennour",
+      },
+      story: {
+        kicker: "Notre histoire",
+        titleLine1: "Plus qu'une équipe,",
+        titleLine2: "une famille",
+        paragraph:
+          "Fondée en 2019, Ennour Sportif est née de la volonté d'offrir aux jeunes filles de Tataouine un cadre structuré pour pratiquer leur passion. Un projet porté par des entraîneuses engagées et des familles qui croient au football féminin.",
+        pillars: [
+          { icon: "sparkles", label: "Excellence",    value: "Même niveau que les équipes masculines" },
+          { icon: "heart",    label: "Bienveillance", value: "Un cadre qui fait grandir" },
+          { icon: "users",    label: "Sororité",      value: "Une famille soudée" },
+        ],
+        ctaLabel: "Découvrir Ennour",
+        ctaHref: "/ennour#mission",
+        yearFrom: "2019",
+        yearTo: "2026",
+        yearParagraph:
+          "Sept ans d'engagement pour le football féminin dans le sud tunisien.",
+        stat1: { value: "40+", label: "Joueuses formées" },
+        stat2: { value: "1",   label: "Devenue pro" },
       },
             history: {
         milestones: [
@@ -793,6 +902,31 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         paragraph:
           "Football à 11 ou futsal — nos portes sont ouvertes à tous les joueurs motivés, quel que soit leur niveau de départ.",
         buttonLabel: "Inscrire mon enfant",
+      },
+            promise: {
+        badge: "Notre promesse",
+        ctaLabel: "Inscrire mon enfant",
+        ctaHref: "/inscription?team=avenir",
+      },
+      story: {
+        kicker: "Notre histoire",
+        titleLine1: "Plus qu'un sport,",
+        titleLine2: "deux disciplines",
+        paragraph:
+          "Fondé en 2020, Avenir Sportif complète l'offre sportive du groupe en réunissant football à 11 et futsal. Une double formation qui prépare des joueurs complets, adaptables, prêts pour tous les terrains.",
+        pillars: [
+          { icon: "zap",    label: "Deux disciplines", value: "Football à 11 + Futsal" },
+          { icon: "target", label: "Polyvalence",      value: "Formation complète" },
+          { icon: "trophy", label: "Compétition",      value: "Championnats régionaux" },
+        ],
+        ctaLabel: "Découvrir Avenir",
+        ctaHref: "/avenir#mission",
+        yearFrom: "2020",
+        yearTo: "2026",
+        yearParagraph:
+          "Six ans de formation et deux disciplines structurées au plus haut niveau régional.",
+        stat1: { value: "80+", label: "Joueurs formés" },
+        stat2: { value: "2",   label: "Disciplines" },
       },
             history: {
         milestones: [

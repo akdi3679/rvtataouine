@@ -9,13 +9,14 @@ import { NewsletterSection } from "@/components/sections/newsletter-section";
 import { HeroCarousel } from "@/components/sections/hero-carousel";
 import { TeamIcon } from "@/components/global/icon";
 import { Gallery } from "@/components/sections/gallery";
-import { TeamPresentationSection } from "@/components/sections/team-presentation";
 import { TEAMS } from "@/data/team-theme";
+import { AcademyStorySection } from "@/components/sections/academy-story";
+import { ClubPreviewSection } from "@/components/sections/club-preview";
 import { FinalCTASection } from "@/components/sections/final-cta";
 export const metadata: Metadata = {
-  title: "Avenir Sportif Tataouine â€” Football & Futsal",
+  title: "Avenir Sportif Tataouine , Football & Futsal",
   description:
-    "La section football Ã  11 et futsal du Groupe Sportif ARV Tataouine. Formation polyvalente pour les joueurs du sud tunisien.",
+    "La section football  11 et futsal du Groupe Sportif ARV Tataouine. Formation polyvalente pour les joueurs du sud tunisien.",
 };
 
 export default function AvenirPage() {
@@ -40,7 +41,8 @@ export default function AvenirPage() {
       <PartnersStrip />
 
       {/* Mission + stats */}
-      <TeamPresentationSection team="avenir" />
+     <AcademyStorySection team="avenir" /> 
+      <ClubPreviewSection team="avenir" />
       {/* Values */}
       <section className="border-y border-border bg-secondary/30 py-16 lg:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">

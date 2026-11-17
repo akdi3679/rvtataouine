@@ -9,7 +9,8 @@ import { NewsletterSection } from "@/components/sections/newsletter-section";
 import { HeroCarousel } from "@/components/sections/hero-carousel";
 import { TeamIcon } from "@/components/global/icon";
 import { TEAMS } from "@/data/team-theme";
-import { TeamPresentationSection } from "@/components/sections/team-presentation";
+import { AcademyStorySection } from "@/components/sections/academy-story";
+import { ClubPreviewSection } from "@/components/sections/club-preview";
 import { Gallery } from "@/components/sections/gallery";
 import { FinalCTASection } from "@/components/sections/final-cta";
 export const metadata: Metadata = {
@@ -24,14 +25,14 @@ export default function EnnourPage() {
   const values = t.content.values!;
   
 
-  const teamVars = {
-    "--color-primary-light": "352 59% 45%",
-    "--color-accent": "43 100% 60%",
-    "--color-primary": "352 59% 30%",
-    "--color-accent-dark": "43 100% 50%",
-    "--color-primary-dark": "352 59% 20%",
-    "--color-accent-light": "43 100% 70%",
-  } as React.CSSProperties;
+ const teamVars = {
+  "--color-primary": "352 59% 30%",
+  "--color-primary-dark": "352 59% 20%",
+  "--color-primary-light": "352 59% 45%",
+  "--color-accent": "43 100% 60%",
+  "--color-accent-dark": "43 100% 50%",
+  "--color-accent-light": "43 100% 70%",
+} as React.CSSProperties;
 
   
   return (
@@ -40,8 +41,8 @@ export default function EnnourPage() {
       <PartnersStrip />
 
       {/* Mission + stats */}
-           <TeamPresentationSection team="ennour" />
-
+                <AcademyStorySection team="ennour" />
+      <ClubPreviewSection team="ennour" />
       {/* Values */}
       <section className="border-y border-border bg-secondary/30 py-16 lg:py-24">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
