@@ -905,7 +905,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         { icon: "zap", title: "Futsal", description: "Technique et rapidité en salle" },
         { icon: "star", title: "Polyvalence", description: "Joueurs adaptables à tous les postes" },
         { icon: "trophy", title: "Progression", description: "Parcours structuré de développement" },
-      
+      ] , 
       mission: {
         kicker: "Notre mission",
         title: "Former des joueurs complets",
