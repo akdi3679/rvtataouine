@@ -754,8 +754,8 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
           { icon: "heart",    label: "Bienveillance", value: "Un cadre qui fait grandir" },
           { icon: "users",    label: "Sororité",      value: "Une famille soudée" },
         ],
-         ctaLabel: "Inscrire ma fille",         // <-- CHANGE THIS
-        ctaHref: "/inscription?team=ennour", 
+                 ctaLabel: "Voir la galerie",
+        ctaHref: "/ennour#gallery",
                 yearFrom: "2019",
         yearTo: "2026",
         yearParagraph:
@@ -960,8 +960,8 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
           { icon: "target", label: "Polyvalence",      value: "Formation complète" },
           { icon: "trophy", label: "Compétition",      value: "Championnats régionaux" },
         ],
-          ctaLabel: "Inscrire mon enfant",       // <-- CHANGE THIS
-        ctaHref: "/inscription?team=avenir",
+                  ctaLabel: "Voir la galerie",
+        ctaHref: "/avenir#gallery",
         yearFrom: "2020",
         yearTo: "2026",
         yearParagraph:
