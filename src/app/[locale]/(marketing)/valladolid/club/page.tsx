@@ -85,7 +85,7 @@ export default function ClubPage() {
           </div>
 
           <div className="mt-8 grid gap-6 md:grid-cols-2 md:gap-10">
-            {c.historyParagraphs.map((p, i) => (
+            {c.historyparagraphs.map((p, i) => (
               <p key={i} className="text-base leading-relaxed text-foreground">
                 {p}
               </p>

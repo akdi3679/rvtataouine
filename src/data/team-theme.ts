@@ -504,7 +504,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
         historyKicker: "Notre histoire",
         historyYearFrom: "2016",
         historyYearTo: "2026",
-        historyParagraphs: [
+        historyparagraphs: [
           "Une passion née à Tataouine. Fondée en 2016 par des passionnés de football, l'académie est née d'une vision : apporter l'excellence du football européen au sud de la Tunisie.",
           "Grâce à notre partenariat officiel avec le Real Valladolid CF, nous intégrons une méthodologie structurée tout en valorisant le talent local. Aujourd'hui, nous accompagnons des jeunes joueurs dans leur progression sportive, éducative et humaine.",
         ],
