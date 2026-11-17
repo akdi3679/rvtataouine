@@ -12,7 +12,7 @@ import {
 import { wallpaperTemplates } from "@/data/wallpapers";
 import { WallpaperGenerator } from "@/components/interactive/wallpaper-generator";
 import { TeamFilter } from "@/components/global/team-filter";
-import { parseTeamQuery, getTeamVars } from "@/data/team-theme";
+import { parseTeamQuery, getTeamVars, TEAMS } from "@/data/team-theme";
 
 export const metadata: Metadata = {
   title: "Boutique | ARV Tataouine",
