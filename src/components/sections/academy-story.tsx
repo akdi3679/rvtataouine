@@ -105,6 +105,16 @@ export function AcademyStorySection({ team }: AcademyStorySectionProps = {}) {
                       style={{ color: theme.hex }}
                     />
                   </div>
+          {mission.cards && mission.cards.length > 0 && (
+            <div className="mt-8 grid grid-cols-2 gap-3">
+              {mission.cards.map((card, i) => (
+                <div key={i} className="rounded-lg border border-border bg-secondary/30 p-4">
+                  <h4 className="text-sm font-bold text-foreground">{card.title}</h4>
+                  <p className="mt-1 text-xs text-muted-foreground">{card.description}</p>
+                </div>
+              ))}
+            </div>
+          )}
                   <h3 className="mt-3 text-sm font-bold leading-tight text-foreground">
                     {v.title}
                   </h3>
