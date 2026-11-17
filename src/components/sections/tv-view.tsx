@@ -48,7 +48,68 @@ function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; tea
             <TeamFilter currentTeam={team} />
           </div>
         </div>
-        {/* ... keep the rest of TvHero exactly as it was ... */}
+        
+        <button
+          onClick={onPlay}
+          className="group relative mt-8 block w-full overflow-hidden rounded-2xl text-left"
+          aria-label={`Regarder : ${video.title}`}
+        >
+          <div className="relative aspect-[4/5] sm:aspect-[21/9]">
+            <Image
+              src={video.thumbnail}
+              alt={video.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 1280px"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+
+            <div className="absolute right-4 top-4 z-10 flex items-center gap-2 sm:right-6 sm:top-6">
+              <span className="rounded-md bg-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
+                {video.categoryLabel}
+              </span>
+              <span className="rounded-md bg-black/40 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur">
+                {video.duration}
+              </span>
+            </div>
+
+            <div className="absolute inset-0 z-10 flex items-center justify-center pb-20 sm:hidden">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-2xl transition-transform group-hover:scale-105">
+                <Play className="ml-1 h-7 w-7 fill-foreground text-foreground" />
+              </div>
+            </div>
+
+            <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-7 lg:p-10">
+              <div className="flex items-end justify-between gap-4">
+                <div className="min-w-0 max-w-2xl">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/70">
+                    À la une
+                  </p>
+                  <h2 className="mt-1.5 text-2xl font-black leading-tight text-white sm:text-2xl lg:text-4xl">
+                    {video.title}
+                  </h2>
+                  <p className="mt-2 hidden max-w-xl text-sm text-white/80 sm:line-clamp-2 sm:block">
+                    {video.description}
+                  </p>
+                  <p className="mt-2 text-[11px] font-medium text-white/60 sm:hidden">
+                    {video.publishedAt} · {video.duration}
+                  </p>
+                </div>
+                <div className="hidden shrink-0 sm:block">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-foreground shadow-xl transition-transform group-hover:scale-105">
+                    <Play className="h-4 w-4 fill-foreground" />
+                    Regarder
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+    </section>
+  );
+}
 
 function VideoGrid({
   items,
