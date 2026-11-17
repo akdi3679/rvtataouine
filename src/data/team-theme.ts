@@ -171,23 +171,23 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     name: "Groupe ARV",
     shortName: "Groupe",
     initials: "ARV",
-    hex: "#0B3E5C",
-    hexDark: "#082B42",
-    hexLight: "#155C8A",
-    bgClass: "bg-[#0B3E5C]",
-    textClass: "text-[#0B3E5C]",
-    bgSoftClass: "bg-[#0B3E5C]/10",
-    borderClass: "border-[#0B3E5C]",
-    heroGradient: "from-[#0B3E5C] via-[#0B3E5C] to-[#0F2A47]",
-    heroOverlayR: "from-[#0B3E5C]/70 via-transparent to-[#0F2A47]/60",
+    hex: "#26691c",
+    hexDark: "#1a4913",
+    hexLight: "#00cd23",
+    bgClass: "bg-[#26691c]",
+    textClass: "text-[#26691c]",
+    bgSoftClass: "bg-[#26691c]/10",
+    borderClass: "border-[#26691c]",
+    heroGradient: "from-[#00cd23] via-[#3ea82d] to-[#1a4913]",
+    heroOverlayR: "from-[#26691c]/70 via-transparent to-[#3ea82d]/60",
     logoPath: "/images/logo/logo.png",
     carousel: {
-      button: "bg-[#F97316] text-[#082B42] hover:bg-[#F97316]/90",
-      progress: "bg-[#F0C419]",
+      button: "bg-[#00cd23] text-black hover:bg-[#3ea82d]",
+      progress: "bg-[#00cd23]",
     },
     vars: {
-      primary: "202 79% 20%", primaryDark: "202 79% 14%", primaryLight: "202 79% 30%",
-      accent: "204 74% 31%", accentDark: "202 79% 20%", accentLight: "204 74% 42%",
+      primary: "112 58% 26%", primaryDark: "112 58% 18%", primaryLight: "112 58% 42%",
+      accent: "112 58% 26%", accentDark: "112 58% 18%", accentLight: "112 58% 42%",
     },
     nav: {
       dropdowns: [
@@ -278,8 +278,8 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     ],
     formTagline: "Toutes les équipes du groupe",
     formIcon: "shield",
-        selectionBg: "#F97316",    // orange — matches group CTA
-    selectionText: "#082B42",  // navy — matches group CTA text
+        selectionBg: "#00cd23",    // orange — matches group CTA
+    selectionText: "#000000",  // navy — matches group CTA text
     content: {
       shortDescription:
         "Un projet éducatif, social et sportif qui accompagne les jeunes de Tataouine dans leur développement personnel et sportif.",
