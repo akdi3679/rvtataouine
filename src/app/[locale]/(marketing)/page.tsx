@@ -9,7 +9,7 @@ import { NewsSection } from "@/components/sections/news-section";
 import { NewsletterSection } from "@/components/sections/newsletter-section";
 import { FinalCTASection } from "@/components/sections/final-cta";
 import { HeroCarousel } from "@/components/sections/hero-carousel";
-import { TEAMS, ENTITY_LIST } from "@/data/team-theme";
+import { TEAMS, ENTITY_LIST, getTeamVars } from "@/data/team-theme";
 import { AcademyStorySection } from "@/components/sections/academy-story";
 import { ClubPreviewSection } from "@/components/sections/club-preview";
 export const metadata: Metadata = {
