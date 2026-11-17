@@ -784,7 +784,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
   // ════════════════════════════════════════════════════════════
   // AVENIR
   // ════════════════════════════════════════════════════════════
-  $1211 65% 17%", primaryDark: "211 65% 12%", primaryLight: "211 65% 27%",
+      primary: "211 65% 17%", primaryDark: "211 65% 12%", primaryLight: "211 65% 27%",
       accent: "216 55% 26%", accentDark: "211 65% 17%", accentLight: "216 55% 37%",
     },
     nav: {
