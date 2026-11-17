@@ -182,8 +182,8 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     heroOverlayR: "from-[#00cd23]/70 via-transparent to-[#00cd23]/60",
     logoPath: "/images/logo/logo.png",
     carousel: {
-      button: "bg-[#00cd23] text-white hover:bg-[#00cd23]",
-      progress: "bg-[#00cd23]",
+      button: "bg-white text-[#00cd23] hover:bg-white/90",
+      progress: "bg-[#F0C419]",
     },
     vars: {
       primary: "130 100% 40%", primaryDark: "130 100% 40%", primaryLight: "130 100% 40%",
@@ -600,6 +600,11 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
       button: "bg-white text-[#7A1F2B] hover:bg-white/90",
       progress: "bg-[#F0C419]",
     },
+    newsletterAccent: {
+      bg: "#7A1F2B",
+      text: "#FFFFFF",
+      buttonClass: "bg-[#7A1F2B] text-white hover:bg-[#5C1620]",
+    },
     vars: {
       primary: "352 59% 30%", primaryDark: "352 59% 20%", primaryLight: "352 59% 45%",
       accent: "353 58% 40%", accentDark: "352 59% 30%", accentLight: "353 58% 51%",
@@ -693,6 +698,12 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
           "Ennour Sportif Tataouine est la section féminine du groupe. Fondée pour offrir aux jeunes filles de la région un cadre structuré pour pratiquer le football, elle incarne notre engagement pour l'égalité des chances dans le sport.",
           "Nos joueuses bénéficient du même encadrement professionnel, des mêmes installations et de la même exigence que les équipes masculines. Un projet ambitieux, porté par des entraîneuses passionnées et des familles engagées.",
         ],
+      cards: [
+        { title: "Formation", description: "Entraînements adaptés au football féminin" },
+        { title: "Accompagnement", description: "Suivi scolaire et développement personnel" },
+        { title: "Compétition", description: "Participation aux tournois régionaux" },
+        { title: "Communauté", description: "Esprit d'équipe et valeurs partagées" },
+      ],
       },
        missionImage: "/images/academy/kids-trophy.jpg",
       galleryKicker: "En images",
@@ -887,6 +898,12 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
           "Avenir Sportif Tataouine est la section football à 11 et futsal du groupe. Elle complète l'offre sportive en proposant aux joueurs une formation polyvalente, adaptée aux différentes disciplines du football moderne.",
           "Le futsal apporte une technique individuelle affinée, une lecture de jeu rapide et une intelligence tactique que le football à 11 valorise. Nos joueurs bénéficient du meilleur des deux mondes.",
         ],
+      cards: [
+        { title: "Football à 11", description: "Formation complète sur grand terrain" },
+        { title: "Futsal", description: "Technique et rapidité en salle" },
+        { title: "Polyvalence", description: "Joueurs adaptables à tous les postes" },
+        { title: "Progression", description: "Parcours structuré de développement" },
+      ],
       },
       missionImage: "/images/academy/kids-trophy.jpg",
       galleryKicker: "En images",
