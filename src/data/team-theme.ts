@@ -173,7 +173,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
     name: "Groupe ARV",
     shortName: "Groupe",
     initials: "ARV",
-    hex: "#00cd23",
+    hex: "#1E3A8A",
     hexDark: "#00cd23",
     hexLight: "#00cd23",
     bgClass: "bg-[#00cd23]",
@@ -611,7 +611,7 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
       primary: "352 59% 30%", primaryDark: "352 59% 20%", primaryLight: "352 59% 45%",
       accent: "353 58% 40%", accentDark: "352 59% 30%", accentLight: "353 58% 51%",
     },
-    promiseButton: "bg-[#00cd23] text-white hover:bg-[#00cd23]/90",
+    promiseButton: "bg-[#7A1F2B] text-white hover:bg-[#5C1620]",
     nav: {
       primaryLinks: [
         { label: "À propos", href: "/ennour#mission" },
@@ -784,6 +784,25 @@ export const TEAMS: Record<TeamId, TeamConfig> = {
   // ════════════════════════════════════════════════════════════
   // AVENIR
   // ════════════════════════════════════════════════════════════
+  avenir: {
+    id: "avenir",
+    name: "Avenir Sportif",
+    shortName: "Avenir",
+    initials: "AV",
+    hex: "#1E3A8A",
+    hexDark: "#081A2E",
+    hexLight: "#1E3B66",
+    bgClass: "bg-[#00cd23]",
+    textClass: "text-[#00cd23]",
+    bgSoftClass: "bg-[#00cd23]/10",
+    borderClass: "border-[#00cd23]",
+    heroGradient: "from-[#00cd23] via-[#1E3B66] to-[#00cd23]",
+    logoPath: "/images/logo/avenir.png",
+    carousel: {
+      button: "bg-[#F0C419] text-[#081A2E] hover:bg-[#F0C419]/90",
+      progress: "bg-[#F0C419]",
+    },
+    vars: {
       primary: "211 65% 17%", primaryDark: "211 65% 12%", primaryLight: "211 65% 27%",
       accent: "216 55% 26%", accentDark: "211 65% 17%", accentLight: "216 55% 37%",
     },
@@ -972,7 +991,7 @@ _rv.content.mission = {
   kicker: "Notre mission",
   title: _rvClub.heroTitle1,
   titleLine2: _rvClub.heroTitle2,
-  paragraphs: _rvClub.historyparagraphs,
+  paragraphs: _rvClub.historyParagraphs,
 };
 _rv.content.missionImage = _rvClub.heroImage;
 _rv.content.valuesKicker = _rvClub.philosophyKicker;
