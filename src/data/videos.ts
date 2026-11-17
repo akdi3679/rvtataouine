@@ -15,8 +15,8 @@ export interface Video {
 export const videos: Video[] = [
   {
     id: "v-001",
-    title: "Finale du Tournoi de Sfax ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Highlights U15",
-    description: "Les meilleurs moments de notre victoire en finale du tournoi rÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©gional de Sfax.",
+    title: "Finale du Tournoi de Sfax — Highlights U15",
+    description: "Les meilleurs moments de notre victoire en finale du tournoi régional de Sfax.",
     youtubeId: "dQw4w9WgXcQ",
     category: "match",
     categoryLabel: "Match",
@@ -28,11 +28,11 @@ export const videos: Video[] = [
   },
   {
     id: "v-002",
-    title: "SÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ance d'entraÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®nement ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Travail technique",
-    description: "Immersion dans une sÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ance de travail technique avec nos U12.",
+    title: "Séance d'entraînement — Travail technique",
+    description: "Immersion dans une séance de travail technique avec nos U12.",
     youtubeId: "dQw4w9WgXcQ",
     category: "training",
-    categoryLabel: "EntraÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®nement",
+    categoryLabel: "Entraînement",
     duration: "12:15",
     team: "valladolid",
     publishedAt: "2026-11-01",
@@ -41,8 +41,8 @@ export const videos: Video[] = [
   },
   {
     id: "v-003",
-    title: "Interview ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Ahmed Ben Ali, promotion 2020",
-    description: "Notre alumni aujourd'hui ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â  l'EspÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©rance de Tunis revient sur sa formation ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â  l'acadÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©mie.",
+    title: "Interview — Ahmed Ben Ali, promotion 2020",
+    description: "Notre alumni aujourd'hui à l'Espérance de Tunis revient sur sa formation à l'académie.",
     youtubeId: "dQw4w9WgXcQ",
     category: "interview",
     categoryLabel: "Interview",
@@ -55,7 +55,7 @@ export const videos: Video[] = [
   {
     id: "v-004",
     title: "Les coulisses du stage en Espagne",
-    description: "DÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©couvrez comment s'est dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©roulÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© notre stage estival au Real Valladolid CF.",
+    description: "Découvrez comment s'est déroulé notre stage estival au Real Valladolid CF.",
     youtubeId: "dQw4w9WgXcQ",
     category: "behind-scenes",
     categoryLabel: "Coulisses",
@@ -67,8 +67,8 @@ export const videos: Video[] = [
   },
   {
     id: "v-005",
-    title: "Tutoriel ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Le contrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â´le orientÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©",
-    description: "Notre directeur technique explique les bases du contrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â´le orientÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©.",
+    title: "Tutoriel — Le contrôle orienté",
+    description: "Notre directeur technique explique les bases du contrôle orienté.",
     youtubeId: "dQw4w9WgXcQ",
     category: "tutorial",
     categoryLabel: "Tutoriel",
@@ -80,8 +80,8 @@ export const videos: Video[] = [
   },
   {
     id: "v-006",
-    title: "Match complet ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ARV vs AS GabÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨s (finale)",
-    description: "Le match dans son intÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©gralitÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©, pour revivre la victoire.",
+    title: "Match complet — ARV vs AS Gabès (finale)",
+    description: "Le match dans son intégralité, pour revivre la victoire.",
     youtubeId: "dQw4w9WgXcQ",
     category: "match",
     categoryLabel: "Match",
@@ -148,7 +148,7 @@ export const videos: Video[] = [
 export const videoCategories = [
   { id: "all", label: "Toutes" },
   { id: "match", label: "Matchs" },
-  { id: "training", label: "EntraÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â®nements" },
+  { id: "training", label: "Entraînements" },
   { id: "interview", label: "Interviews" },
   { id: "behind-scenes", label: "Coulisses" },
   { id: "tutorial", label: "Tutoriels" },
