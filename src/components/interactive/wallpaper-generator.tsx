@@ -9,10 +9,11 @@ import {
   resolutions,
   type WallpaperTemplate,
 } from "@/data/wallpapers";
-import { TEAMS } from "@/data/team-theme";
+import { TEAMS, type TeamId } from "@/data/team-theme";
 
 interface WallpaperGeneratorProps {
   template: WallpaperTemplate;
+  team?: string; // <-- Added team prop
 }
 
 function useImageLoader(src: string | null) {
@@ -24,7 +25,6 @@ function useImageLoader(src: string | null) {
       return;
     }
     const image = new window.Image();
-    // NO crossOrigin — same-origin, prevents canvas tainting
     image.onload = () => setImg(image);
     image.onerror = () => {
       console.warn("Failed to load image:", src);
@@ -36,9 +36,12 @@ function useImageLoader(src: string | null) {
   return img;
 }
 
-export function WallpaperGenerator({ template }: WallpaperGeneratorProps) {
+export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
+  
+  // Safely resolve the team theme, defaulting to group
+  const teamTheme = team && team !== "all" ? TEAMS[team as TeamId] : TEAMS.group;
+
   const [selectedLogo, setSelectedLogo] = useState(
     template.availableLogos?.[0] ?? "",
   );
@@ -87,9 +90,10 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
     if (bgImg) {
       ctx.drawImage(bgImg, 0, 0, previewW, previewH);
     } else {
+      // Use dynamic team colors for the fallback gradient
       const grad = ctx.createLinearGradient(0, 0, previewW, previewH);
-        grad.addColorStop(0, TEAMS.valladolid.hex);
-      grad.addColorStop(1, "#E7001C");
+      grad.addColorStop(0, teamTheme.hex);
+      grad.addColorStop(1, teamTheme.hexDark || teamTheme.hex);
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, previewW, previewH);
     }
@@ -104,7 +108,7 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
       ctx.drawImage(logoImg, x, y, size, size);
       ctx.shadowColor = "transparent";
     }
-  }, [bgImg, logoImg, res]);
+  }, [bgImg, logoImg, res, teamTheme]);
 
   const handleDownload = async () => {
     setIsGenerating(true);
@@ -118,9 +122,10 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
       if (bgImg) {
         ctx.drawImage(bgImg, 0, 0, res.width, res.height);
       } else {
+        // Use dynamic team colors for the fallback gradient
         const grad = ctx.createLinearGradient(0, 0, res.width, res.height);
-         grad.addColorStop(0, TEAMS.valladolid.hex);
-        grad.addColorStop(1, "#E7001C");
+        grad.addColorStop(0, teamTheme.hex);
+        grad.addColorStop(1, teamTheme.hexDark || teamTheme.hex);
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, res.width, res.height);
       }
@@ -143,7 +148,6 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
         ctx.fillText("ARV", res.width / 2, res.height / 2);
       }
 
-      // toBlob + createObjectURL — reliable download
       const blob = await new Promise<Blob | null>((resolve) =>
         canvas.toBlob(resolve, "image/png", 1.0),
       );
@@ -170,7 +174,7 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl  border border-border bg-white shadow-sm">
+    <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
       {/* Preview */}
       <div className="flex items-center justify-center bg-secondary/40 p-6">
         <canvas
@@ -285,13 +289,13 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
           </div>
         </div>
 
-        {/* Download — always clickable now (falls back if images missing) */}
+        {/* Download */}
         <div>
           <button
             onClick={handleDownload}
             disabled={isGenerating}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl  px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/20 transition-all  hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
-             style={{ backgroundColor: teamTheme.hex }}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-bold text-white shadow-lg transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+            style={{ backgroundColor: teamTheme.hex }}
           >
             {isGenerating ? (
               <>
