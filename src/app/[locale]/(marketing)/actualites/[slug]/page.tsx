@@ -1,47 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Clock,
-  FileText,
-  Quote,
-} from "lucide-react";
-import { TEAMS, type TeamId } from "@/data/team-theme";
+import { ArrowLeft, ArrowRight, Clock, Quote } from "lucide-react";
+import { TEAMS, type TeamId, getTeamVars } from "@/data/team-theme";
 import { getArticleBySlug, getRelatedArticles } from "@/data/news";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
-const CATEGORY: Record<
-  string,
-  { gradient: string; badge: string; bullet: string }
-> = {
-  match: {
-    gradient: "from-accent via-accent/85 to-accent-dark",
-    badge: "theme.hex text-white",
-    bullet: "bg-accent",
-  },
-  stage: {
-    gradient: "from-primary via-primary/85 to-primary-dark",
-    badge: "bg-primary text-white",
-    bullet: "bg-primary",
-  },
-  academie: {
-    gradient: "from-info via-info/85 to-primary/70",
-    badge: "bg-info text-white",
-    bullet: "bg-info",
-  },
-  alumni: {
-    gradient: "from-warning via-warning/85 to-accent/70",
-    badge: "bg-warning text-white",
-    bullet: "bg-warning",
-  },
-  conseil: {
-    gradient: "from-success via-success/85 to-primary/70",
-    badge: "bg-success text-white",
-    bullet: "bg-success",
-  },
-};
 
 export async function generateMetadata({
   params,
@@ -72,13 +36,13 @@ export default async function ArticlePage({
   const { slug } = await params;
   const article = getArticleBySlug(slug);
   if (!article) notFound();
-   const teamId = (article.team as TeamId) || "group";
-   const theme = TEAMS[teamId];
+
+  const teamId = (article.team as TeamId) || "group";
+  const theme = TEAMS[teamId];
   const related = getRelatedArticles(slug, 3);
-  const c = CATEGORY[article.category] ?? CATEGORY.match;
 
   return (
-    <article className="bg-white">
+    <article style={getTeamVars(teamId)} className="bg-white">
       {/* Header — narrow column */}
       <header className="mx-auto max-w-3xl px-6 pt-10 pb-8 lg:pt-16">
         <Link
@@ -91,7 +55,8 @@ export default async function ArticlePage({
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <span
-            className={`inline-flex rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${c.badge}`}
+            className="inline-flex rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white"
+            style={{ backgroundColor: theme.hex }}
           >
             {article.categoryLabel}
           </span>
@@ -130,17 +95,17 @@ export default async function ArticlePage({
 
       {/* Hero cover — wider than the text */}
       <div className="mx-auto max-w-5xl px-6">
-  <div className="relative aspect-[16/9] overflow-hidden rounded-2xl">
-    <Image
-      src={article.image}
-      alt={article.title}
-      fill
-      sizes="(max-width: 1024px) 100vw, 1024px"
-      className="object-cover"
-      priority
-    />
-  </div>
-</div>
+        <div className="relative aspect-[16/9] overflow-hidden rounded-2xl">
+          <Image
+            src={article.image}
+            alt={article.title}
+            fill
+            sizes="(max-width: 1024px) 100vw, 1024px"
+            className="object-cover"
+            priority
+          />
+        </div>
+      </div>
 
       {/* Body — narrow column, editorial typography */}
       <div className="mx-auto max-w-3xl px-6 py-10 lg:py-14">
@@ -148,20 +113,14 @@ export default async function ArticlePage({
           {article.content.map((block, i) => {
             if (block.type === "paragraph")
               return (
-                <p
-                  key={i}
-                  className="text-[17px] leading-[1.75] text-foreground"
-                >
+                <p key={i} className="text-[17px] leading-[1.75] text-foreground">
                   {block.text}
                 </p>
               );
 
             if (block.type === "heading")
               return (
-                <h2
-                  key={i}
-                  className="pt-4 text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
-                >
+                <h2 key={i} className="pt-4 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
                   {block.text}
                 </h2>
               );
@@ -170,9 +129,10 @@ export default async function ArticlePage({
               return (
                 <blockquote
                   key={i}
-                  className="my-8 border-l-4 theme.hex pl-6"
+                  className="my-8 pl-6"
+                  style={{ borderLeft: `4px solid ${theme.hex}` }}
                 >
-                  <Quote className="h-6 w-6 text-accent/30" />
+                  <Quote className="h-6 w-6" style={{ color: theme.hex, opacity: 0.3 }} />
                   <p className="mt-2 text-lg font-medium italic leading-relaxed text-foreground sm:text-xl">
                     {block.text}
                   </p>
@@ -187,13 +147,8 @@ export default async function ArticlePage({
                   </p>
                   <ul className="space-y-2.5">
                     {block.items?.map((item, j) => (
-                      <li
-                        key={j}
-                        className="flex items-start gap-3 text-base leading-relaxed text-foreground"
-                      >
-                        <span
-                          className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${c.bullet}`}
-                        />
+                      <li key={j} className="flex items-start gap-3 text-base leading-relaxed text-foreground">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: theme.hex }} />
                         {item}
                       </li>
                     ))}
@@ -209,10 +164,7 @@ export default async function ArticlePage({
         {article.tags.length > 0 && (
           <div className="mt-12 flex flex-wrap gap-2 border-t border-border pt-8">
             {article.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-foreground"
-              >
+              <span key={tag} className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-foreground">
                 #{tag}
               </span>
             ))}
@@ -245,12 +197,11 @@ export default async function ArticlePage({
         <div className="border-t border-border bg-secondary/20">
           <div className="mx-auto max-w-7xl px-6 py-14 lg:px-8 lg:py-16">
             <div className="mb-8 flex items-end justify-between">
-              <h2 className="text-2xl font-black text-foreground">
-                À lire aussi
-              </h2>
+              <h2 className="text-2xl font-black text-foreground">À lire aussi</h2>
               <Link
                 href="/actualites"
-                className="hidden shrink-0 items-center gap-1 text-sm font-semibold text-foreground transition-colors hover:text-accent sm:inline-flex"
+                className="hidden shrink-0 items-center gap-1 text-sm font-semibold transition-colors hover:opacity-80 sm:inline-flex"
+                style={{ color: theme.hex }}
               >
                 Tous les articles
                 <ArrowRight className="h-4 w-4" />
@@ -258,27 +209,27 @@ export default async function ArticlePage({
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((r) => {
-                const rc = CATEGORY[r.category] ?? CATEGORY.match;
+                const rTeamId = (r.team as TeamId) || "group";
+                const rTheme = TEAMS[rTeamId];
                 return (
-                  <Link
-                    key={r.slug}
-                    href={`/actualites/${r.slug}`}
-                    className="group flex flex-col"
-                  >
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
-  <Image
-    src={r.image}
-    alt={r.title}
-    fill
-    sizes="(max-width: 640px) 100vw, 33vw"
-    className="object-cover transition-transform duration-500 group-hover:scale-105"
-  />
-  <span className={`absolute left-3 top-3 rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${rc.badge}`}>
-    {r.categoryLabel}
-  </span>
-</div>
+                  <Link key={r.slug} href={`/actualites/${r.slug}`} className="group flex flex-col">
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
+                      <Image
+                        src={r.image}
+                        alt={r.title}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <span
+                        className="absolute left-3 top-3 rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white"
+                        style={{ backgroundColor: rTheme.hex }}
+                      >
+                        {r.categoryLabel}
+                      </span>
+                    </div>
                     <div className="mt-3">
-                      <h3 className="line-clamp-2 text-sm font-bold leading-snug text-foreground transition-colors group-hover:text-accent">
+                      <h3 className="line-clamp-2 text-sm font-bold leading-snug text-foreground transition-colors group-hover:opacity-80" style={{ color: rTheme.hex }}>
                         {r.title}
                       </h3>
                       <p className="mt-2 text-[11px] text-muted-foreground">

@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  ShoppingBag,
-  Truck,
-  ShieldCheck,
-  RotateCcw,
-} from "lucide-react";
-import { TEAMS, type TeamId } from "@/data/team-theme";
+import { ArrowLeft, ShoppingBag, Truck, ShieldCheck, RotateCcw } from "lucide-react";
+import { TEAMS, type TeamId, getTeamVars } from "@/data/team-theme";
 import { getProductBySlug, formatPrice } from "@/data/products";
 import { AddToCartButton } from "@/components/interactive/add-to-cart-button";
 import Image from "next/image";
+
 export async function generateMetadata({
   params,
 }: {
@@ -20,7 +15,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getProductBySlug(slug);
   return {
-    title: product ? product.name + " | Boutique ARV" : "Produit",
+    title: product ? `${product.name} | Boutique ARV` : "Produit",
   };
 }
 
@@ -42,7 +37,7 @@ export default async function ProductPage({
   const firstVariant = product.variants[0];
 
   return (
-    <div className="bg-white">
+    <div style={getTeamVars(teamId)} className="bg-white">
       <div className="mx-auto max-w-6xl px-6 py-10 lg:px-8 lg:py-16">
         <Link
           href="/boutique"
@@ -53,27 +48,30 @@ export default async function ProductPage({
         </Link>
 
         <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
-         <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary/60">
-  {product.images[0] ? (
-    <Image
-      src={product.images[0]}
-      alt={product.name}
-      fill
-      sizes="(max-width: 1024px) 100vw, 50vw"
-      className="object-cover"
-      priority
-    />
-  ) : (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <ShoppingBag className="h-24 w-24 text-foreground/15" />
-    </div>
-  )}
-     {product.isNew && (
-     <span className="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white" style={{ backgroundColor: theme.hex }}>
-       Nouveau
-     </span>
-   )}
-</div>
+          <div className="relative aspect-square overflow-hidden rounded-2xl bg-secondary/60">
+            {product.images[0] ? (
+              <Image
+                src={product.images[0]}
+                alt={product.name}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+                priority
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <ShoppingBag className="h-24 w-24 text-foreground/15" />
+              </div>
+            )}
+            {product.isNew && (
+              <span
+                className="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white"
+                style={{ backgroundColor: theme.hex }}
+              >
+                Nouveau
+              </span>
+            )}
+          </div>
 
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -135,15 +133,10 @@ export default async function ProductPage({
         <div className="mt-16 border-t border-border pt-10">
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              <h2 className="text-lg font-bold text-foreground">
-                Détails du produit
-              </h2>
+              <h2 className="text-lg font-bold text-foreground">Détails du produit</h2>
               <ul className="mt-4 space-y-2">
                 {product.details.map((d, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-2 text-sm text-muted-foreground"
-                  >
+                  <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                     <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-foreground" />
                     {d}
                   </li>
@@ -155,10 +148,7 @@ export default async function ProductPage({
                 <h2 className="text-lg font-bold text-foreground">Entretien</h2>
                 <ul className="mt-4 space-y-2">
                   {product.care.map((d, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-2 text-sm text-muted-foreground"
-                    >
+                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-foreground" />
                       {d}
                     </li>
