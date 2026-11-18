@@ -13,7 +13,7 @@ import { TEAMS, type TeamId } from "@/data/team-theme";
 
 interface WallpaperGeneratorProps {
   template: WallpaperTemplate;
-  team?: string; // <-- Added team prop
+  team?: string;
 }
 
 function useImageLoader(src: string | null) {
@@ -39,28 +39,29 @@ function useImageLoader(src: string | null) {
 export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
-  // Safely resolve the team theme, defaulting to group
-  const teamTheme = team && team !== "all" ? TEAMS[team as TeamId] : TEAMS.group;
+  // 1. Safely resolve the team theme. If "all" or undefined, default to "group".
+  const teamId = (team && team !== "all" ? team : "group") as TeamId;
+  const teamTheme = TEAMS[teamId];
 
   const [selectedLogo, setSelectedLogo] = useState(
-    template.availableLogos?.[0] ?? "",
+    template.availableLogos?.[0] ?? ""
   );
   const [selectedBg, setSelectedBg] = useState(
-    template.availableBackgrounds?.[0] ?? "",
+    template.availableBackgrounds?.[0] ?? ""
   );
   const [selectedResolution, setSelectedResolution] = useState(
-    resolutions[0].id,
+    resolutions[0].id
   );
   const [isGenerating, setIsGenerating] = useState(false);
 
   const availableLogos = useMemo(
     () => logos.filter((l) => template.availableLogos?.includes(l.id)),
-    [template.availableLogos],
+    [template.availableLogos]
   );
   const availableBackgrounds = useMemo(
     () =>
       backgrounds.filter((b) => template.availableBackgrounds?.includes(b.id)),
-    [template.availableBackgrounds],
+    [template.availableBackgrounds]
   );
 
   const logo =
@@ -74,7 +75,7 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
   const logoImg = useImageLoader(logo?.path ?? null);
   const bgImg = useImageLoader(bg?.path ?? null);
 
-  // Preview
+  // Preview Canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -90,7 +91,7 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
     if (bgImg) {
       ctx.drawImage(bgImg, 0, 0, previewW, previewH);
     } else {
-      // Use dynamic team colors for the fallback gradient
+      // Fallback gradient uses the dynamic team color
       const grad = ctx.createLinearGradient(0, 0, previewW, previewH);
       grad.addColorStop(0, teamTheme.hex);
       grad.addColorStop(1, teamTheme.hexDark || teamTheme.hex);
@@ -122,7 +123,7 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
       if (bgImg) {
         ctx.drawImage(bgImg, 0, 0, res.width, res.height);
       } else {
-        // Use dynamic team colors for the fallback gradient
+        // Fallback gradient uses the dynamic team color
         const grad = ctx.createLinearGradient(0, 0, res.width, res.height);
         grad.addColorStop(0, teamTheme.hex);
         grad.addColorStop(1, teamTheme.hexDark || teamTheme.hex);
@@ -140,7 +141,6 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
         ctx.drawImage(logoImg, x, y, size, size);
         ctx.shadowColor = "transparent";
       } else {
-        // Fallback: draw ARV text
         ctx.fillStyle = "rgba(255,255,255,0.95)";
         ctx.font = `900 ${Math.round(res.width * 0.15)}px system-ui, sans-serif`;
         ctx.textAlign = "center";
@@ -149,7 +149,7 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
       }
 
       const blob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, "image/png", 1.0),
+        canvas.toBlob(resolve, "image/png", 1.0)
       );
       if (!blob) throw new Error("Blob generation failed");
 
@@ -166,7 +166,7 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
       alert(
         `Le téléchargement a échoué : ${
           err instanceof Error ? err.message : "erreur inconnue"
-        }`,
+        }`
       );
     } finally {
       setIsGenerating(false);
@@ -289,7 +289,7 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
           </div>
         </div>
 
-        {/* Download */}
+        {/* Download Button */}
         <div>
           <button
             onClick={handleDownload}
