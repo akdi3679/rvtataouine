@@ -10,6 +10,7 @@ import {
   type WallpaperTemplate,
 } from "@/data/wallpapers";
 import { TEAMS } from "@/data/team-theme";
+
 interface WallpaperGeneratorProps {
   template: WallpaperTemplate;
 }
@@ -37,7 +38,7 @@ function useImageLoader(src: string | null) {
 
 export function WallpaperGenerator({ template }: WallpaperGeneratorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
+const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
   const [selectedLogo, setSelectedLogo] = useState(
     template.availableLogos?.[0] ?? "",
   );
@@ -289,7 +290,8 @@ export function WallpaperGenerator({ template }: WallpaperGeneratorProps) {
           <button
             onClick={handleDownload}
             disabled={isGenerating}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/20 transition-all hover:bg-accent/90 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl  px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-accent/20 transition-all  hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+             style={{ backgroundColor: teamTheme.hex }}
           >
             {isGenerating ? (
               <>

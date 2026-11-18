@@ -74,9 +74,9 @@ function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; tea
                 {teamTheme.shortName} TV
               </span>
             </div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
-              ARV TV
-            </p>
+            <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${teamTheme.textClass}`}>
+  ARV TV
+</p>
             <h1 className="mt-3 text-4xl font-black tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               En vidéo
             </h1>
@@ -195,14 +195,15 @@ function VideoGrid({
   );
 }
 
-function Gallery() {
+function Gallery({ team }: { team: TeamId | "all" }) {
+  const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
   return (
     <section className="bg-secondary/30 py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mb-8">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
-            En images
-          </p>
+          <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${teamTheme.textClass}`}>
+  En images
+</p>
           <h2 className="mt-2 text-2xl font-black text-foreground sm:text-3xl">
             Galerie
           </h2>
@@ -337,7 +338,7 @@ export function TvView({ videos, team }: { videos: Video[]; team: TeamId | "all"
             <VideoGrid items={filtered} onPlay={setActive} team={team} />
           </div>
         </section>
-        <Gallery />
+        <Gallery team={team} />
       </div>
       {active && <VideoPlayer video={active} onClose={() => setActive(null)} />}
     </>

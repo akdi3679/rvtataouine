@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Phone, Mail, MapPin, MessageCircle, ArrowRight,
   Loader2, CheckCircle2, HelpCircle, ChevronDown,
@@ -108,7 +108,13 @@ export default function ContactPage() {
     ) => {
       setForm((p) => ({ ...p, [k]: e.target.value }));
     };
-
+  // Sync form team with URL instantly when TeamFilter is used
+  useEffect(() => {
+    const urlTeam = teamParam === "all" ? "group" : teamParam;
+    if (urlTeam !== form.team) {
+      setForm((prev) => ({ ...prev, team: urlTeam }));
+    }
+  }, [teamParam]);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
