@@ -72,7 +72,6 @@ export function TeamFilter({ currentTeam }: { currentTeam: TeamId | "all" }) {
             {currentTeam === "all" && <Check className="h-4 w-4" />}
           </button>
 
-         // Replace the ENTITY_LIST.map block with this:
 {TEAM_IDS.map((teamId) => {
   const team = TEAMS[teamId];
   const active = currentTeam === teamId;

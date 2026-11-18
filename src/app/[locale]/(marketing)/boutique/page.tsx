@@ -27,7 +27,8 @@ export default async function BoutiquePage({
   searchParams: SearchParams;
 }) {
   const params = await searchParams;
-  const team = parseTeamQuery(params.team);
+const team = parseTeamQuery(params.team);
+ 
 const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
   const filtered: Product[] =
     team === "all" ? products : products.filter((p) => p.team === team);
@@ -39,7 +40,7 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex-1">
 <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${teamTheme.textClass}`}>Boutique</p>
-              
+
               <h1 className="mt-3 text-4xl font-black tracking-tight text-foreground sm:text-5xl">
                 Boutique officielle
               </h1>
@@ -143,8 +144,8 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
           <div className="mt-10 flex justify-center">
             <div className="w-full max-w-lg">
               {wallpaperTemplates.map((t) => (
-                <WallpaperGenerator key={t.id} template={t} />
-              ))}
+  <WallpaperGenerator key={t.id} template={t} team={team} />
+))}
             </div>
           </div>
         </div>

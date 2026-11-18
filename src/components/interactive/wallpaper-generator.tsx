@@ -13,7 +13,7 @@ import { TEAMS, type TeamId } from "@/data/team-theme";
 
 interface WallpaperGeneratorProps {
   template: WallpaperTemplate;
-  team?: string;
+  team?: TeamId | "all" | string;
 }
 
 function useImageLoader(src: string | null) {
@@ -39,8 +39,13 @@ function useImageLoader(src: string | null) {
 export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
-  // 1. Safely resolve the team theme. If "all" or undefined, default to "group".
-  const teamId = (team && team !== "all" ? team : "group") as TeamId;
+  // BULLETPROOF team resolution
+  let teamId: TeamId = "group";
+  if (team && team !== "all" && team !== "group") {
+    if (team === "valladolid" || team === "ennour" || team === "avenir") {
+      teamId = team;
+    }
+  }
   const teamTheme = TEAMS[teamId];
 
   const [selectedLogo, setSelectedLogo] = useState(
@@ -91,7 +96,6 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
     if (bgImg) {
       ctx.drawImage(bgImg, 0, 0, previewW, previewH);
     } else {
-      // Fallback gradient uses the dynamic team color
       const grad = ctx.createLinearGradient(0, 0, previewW, previewH);
       grad.addColorStop(0, teamTheme.hex);
       grad.addColorStop(1, teamTheme.hexDark || teamTheme.hex);
@@ -123,7 +127,6 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
       if (bgImg) {
         ctx.drawImage(bgImg, 0, 0, res.width, res.height);
       } else {
-        // Fallback gradient uses the dynamic team color
         const grad = ctx.createLinearGradient(0, 0, res.width, res.height);
         grad.addColorStop(0, teamTheme.hex);
         grad.addColorStop(1, teamTheme.hexDark || teamTheme.hex);
@@ -175,7 +178,6 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
-      {/* Preview */}
       <div className="flex items-center justify-center bg-secondary/40 p-6">
         <canvas
           ref={canvasRef}
@@ -184,7 +186,6 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
       </div>
 
       <div className="space-y-6 p-6">
-        {/* Background picker */}
         <div>
           <p className="mb-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
             Fond d&apos;écran
@@ -225,7 +226,6 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
           </div>
         </div>
 
-        {/* Logo picker */}
         <div>
           <p className="mb-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
             Logo
@@ -263,7 +263,6 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
           </div>
         </div>
 
-        {/* Resolution picker */}
         <div>
           <p className="mb-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
             Format
@@ -289,7 +288,6 @@ export function WallpaperGenerator({ template, team }: WallpaperGeneratorProps) 
           </div>
         </div>
 
-        {/* Download Button */}
         <div>
           <button
             onClick={handleDownload}
