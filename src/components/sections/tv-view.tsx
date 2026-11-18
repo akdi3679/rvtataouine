@@ -1,63 +1,137 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
-import { Play, X } from "lucide-react";
+import { Play, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { videoCategories, type Video } from "@/data/videos";
 import { GALLERY } from "@/data/gallery";
 import { TeamFilter } from "@/components/global/team-filter";
 import { TEAMS, type TeamId } from "@/data/team-theme";
 
-const CATEGORY_GRADIENT: Record<string, string> = {
-  match: "from-accent via-accent/80 to-accent-dark",
-  training: "from-primary via-primary/80 to-primary-dark",
-  interview: "from-info via-info/80 to-primary/70",
-  "behind-scenes": "from-warning via-warning/80 to-accent/70",
-  tutorial: "from-success via-success/80 to-primary/70",
-};
-
-// --- BEAUTIFUL VIDEO CARD (Same as FeaturedVideosSection) ---
-function VideoCard({ video, theme }: { video: Video; theme: any }) {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  if (isLoaded) {
-    return (
-      <div className="relative w-full overflow-hidden rounded-2xl" style={{ aspectRatio: "16/9" }}>
-        <iframe
-          src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
-          title={video.title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="absolute inset-0 h-full w-full"
-        />
-      </div>
-    );
-  }
-
+// --- Netflix-style Video Card ---
+function NetflixVideoCard({ video, onPlay, theme }: { video: Video; onPlay: () => void; theme: any }) {
   return (
     <button
-      onClick={() => setIsLoaded(true)}
-      className="group relative w-full overflow-hidden rounded-2xl bg-foreground focus:outline-none focus:ring-2 focus:ring-offset-2"
-      style={{ aspectRatio: "16/9", boxShadow: `0 0 0 2px ${theme.hex}20` }}
-      aria-label={`Lire la vidéo : ${video.title}`}
+      onClick={onPlay}
+      className="group relative flex-shrink-0 w-[280px] sm:w-[320px] lg:w-[360px] overflow-hidden rounded-lg text-left transition-all duration-300 hover:scale-105 hover:z-10 hover:shadow-2xl"
+      aria-label={`Regarder : ${video.title}`}
     >
-      <Image
-        src={video.thumbnail}
-        alt={video.title}
-        fill
-        sizes="(max-width: 768px) 100vw, 33vw"
-        className="object-cover transition-transform duration-500 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-      <div className="absolute bottom-4 left-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/95 shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-white">
-          <Play className="h-5 w-5 ml-0.5" style={{ color: theme.hex, fill: theme.hex }} />
+      <div className="relative aspect-video overflow-hidden rounded-lg bg-foreground">
+        <Image
+          src={video.thumbnail}
+          alt={video.title}
+          fill
+          sizes="360px"
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        
+        {/* Play button on hover */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/95 shadow-2xl transition-transform group-hover:scale-110">
+            <Play className="h-6 w-6 ml-0.5" style={{ color: theme.hex, fill: theme.hex }} />
+          </div>
+        </div>
+
+        {/* Duration badge (always visible) */}
+        <span className="absolute right-2 top-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-semibold text-white backdrop-blur">
+          {video.duration}
+        </span>
+
+        {/* Info overlay on hover */}
+        <div className="absolute inset-x-0 bottom-0 p-3 translate-y-full transition-transform duration-300 group-hover:translate-y-0">
+          <span className={`inline-flex rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white mb-1.5`} style={{ backgroundColor: theme.hex }}>
+            {video.categoryLabel}
+          </span>
+          <h3 className="line-clamp-2 text-sm font-bold text-white leading-tight">
+            {video.title}
+          </h3>
+          <p className="mt-1 line-clamp-2 text-[11px] text-white/80">
+            {video.description}
+          </p>
         </div>
       </div>
     </button>
   );
 }
 
+// --- Netflix-style Horizontal Row ---
+function NetflixRow({ 
+  title, 
+  videos, 
+  onPlay, 
+  theme 
+}: { 
+  title: string; 
+  videos: Video[]; 
+  onPlay: (v: Video) => void; 
+  theme: any;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const scrollAmount = scrollRef.current.clientWidth * 0.8;
+    scrollRef.current.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  if (videos.length === 0) return null;
+
+  return (
+    <section className="relative py-6 group/row">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Row title */}
+        <div className="mb-4 flex items-center gap-3">
+          <h2 className="text-xl font-black text-foreground sm:text-2xl">
+            {title}
+          </h2>
+          <span className="text-xs font-medium text-muted-foreground">
+            {videos.length} {videos.length === 1 ? "vidéo" : "vidéos"}
+          </span>
+        </div>
+
+        {/* Scrollable row */}
+        <div className="relative">
+          {/* Left arrow */}
+          <button
+            onClick={() => scroll("left")}
+            className="absolute left-0 top-0 bottom-0 z-20 hidden w-12 items-center justify-center bg-gradient-to-r from-white via-white/80 to-transparent opacity-0 transition-opacity group-hover/row:opacity-100 lg:flex"
+            aria-label="Défiler à gauche"
+          >
+            <ChevronLeft className="h-8 w-8 text-foreground" />
+          </button>
+
+          {/* Videos container */}
+          <div
+            ref={scrollRef}
+            className="flex gap-3 overflow-x-auto scroll-smooth scrollbar-hide pb-2"
+            style={{ scrollSnapType: "x mandatory" }}
+          >
+            {videos.map((v) => (
+              <div key={v.id} className="flex-shrink-0" style={{ scrollSnapAlign: "start" }}>
+                <NetflixVideoCard video={v} onPlay={() => onPlay(v)} theme={theme} />
+              </div>
+            ))}
+          </div>
+
+          {/* Right arrow */}
+          <button
+            onClick={() => scroll("right")}
+            className="absolute right-0 top-0 bottom-0 z-20 hidden w-12 items-center justify-center bg-gradient-to-l from-white via-white/80 to-transparent opacity-0 transition-opacity group-hover/row:opacity-100 lg:flex"
+            aria-label="Défiler à droite"
+          >
+            <ChevronRight className="h-8 w-8 text-foreground" />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// --- Hero Section (Featured Video) ---
 function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; team: TeamId | "all" }) {
   const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
 
@@ -75,8 +149,8 @@ function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; tea
               </span>
             </div>
             <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${teamTheme.textClass}`}>
-  ARV TV
-</p>
+              ARV TV
+            </p>
             <h1 className="mt-3 text-4xl font-black tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               En vidéo
             </h1>
@@ -89,6 +163,7 @@ function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; tea
           </div>
         </div>
 
+        {/* Featured video hero */}
         <button
           onClick={onPlay}
           className="group relative mt-8 block w-full overflow-hidden rounded-2xl text-left"
@@ -126,14 +201,11 @@ function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; tea
                   <p className="text-[10px] font-bold uppercase tracking-widest text-white/70">
                     À la une
                   </p>
-                  <h2 className="mt-1.5 text-2xl font-black leading-tight text-white sm:text-2xl lg:text-4xl">
+                  <h2 className="mt-1.5 text-2xl font-black leading-tight text-white sm:text-3xl lg:text-4xl">
                     {video.title}
                   </h2>
                   <p className="mt-2 hidden max-w-xl text-sm text-white/80 sm:line-clamp-2 sm:block">
                     {video.description}
-                  </p>
-                  <p className="mt-2 text-[11px] font-medium text-white/60 sm:hidden">
-                    {video.publishedAt} · {video.duration}
                   </p>
                 </div>
                 <div className="hidden shrink-0 sm:block">
@@ -151,59 +223,17 @@ function TvHero({ video, onPlay, team }: { video: Video; onPlay: () => void; tea
   );
 }
 
-function VideoGrid({
-  items,
-  onPlay,
-  team,
-}: {
-  items: Video[];
-  onPlay: (v: Video) => void;
-  team: TeamId | "all";
-}) {
-  if (items.length === 0) {
-    return (
-      <div className="rounded-2xl border border-dashed border-border py-20 text-center">
-        <Play className="mx-auto h-10 w-10 text-muted-foreground/30" />
-        <p className="mt-4 text-sm font-semibold text-foreground">
-          Aucune vidéo dans cette catégorie
-        </p>
-      </div>
-    );
-  }
-
-  const theme = team !== "all" ? TEAMS[team] : TEAMS.group;
-
-  return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((v) => (
-        <div key={v.id} className="flex flex-col">
-          <VideoCard video={v} theme={theme} />
-          <div className="mt-3">
-            <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${theme.bgSoftClass} ${theme.textClass}`}>
-              {v.categoryLabel}
-            </span>
-            <h3 className="mt-2 line-clamp-2 text-sm font-bold leading-snug text-foreground">
-              {v.title}
-            </h3>
-            <p className="mt-1 text-[11px] text-muted-foreground">
-              {v.publishedAt}
-            </p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
+// --- Gallery Section ---
 function Gallery({ team }: { team: TeamId | "all" }) {
   const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
+
   return (
     <section className="bg-secondary/30 py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mb-8">
           <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${teamTheme.textClass}`}>
-  En images
-</p>
+            En images
+          </p>
           <h2 className="mt-2 text-2xl font-black text-foreground sm:text-3xl">
             Galerie
           </h2>
@@ -211,6 +241,7 @@ function Gallery({ team }: { team: TeamId | "all" }) {
             Les moments forts de la saison, sur et en dehors du terrain.
           </p>
         </div>
+
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           <div className="group relative col-span-2 row-span-2 aspect-square overflow-hidden rounded-2xl sm:aspect-auto sm:min-h-[440px]">
             <Image src={GALLERY[0].image} alt={GALLERY[0].label} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" priority />
@@ -219,7 +250,7 @@ function Gallery({ team }: { team: TeamId | "all" }) {
               <p className="text-sm font-semibold text-white sm:text-base">{GALLERY[0].label}</p>
             </div>
           </div>
-          <div className="group relative col-span-2 aspect-[2/1] overflow-hidden rounded-2xl sm:aspect-[2/1]">
+          <div className="group relative col-span-2 aspect-[2/1] overflow-hidden rounded-2xl">
             <Image src={GALLERY[1].image} alt={GALLERY[1].label} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
@@ -260,8 +291,9 @@ function Gallery({ team }: { team: TeamId | "all" }) {
   );
 }
 
+// --- Video Player Modal ---
 function VideoPlayer({ video, onClose }: { video: Video; onClose: () => void }) {
-  useEffect(() => {
+  useState(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -270,7 +302,7 @@ function VideoPlayer({ video, onClose }: { video: Video; onClose: () => void }) 
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
     };
-  }, [onClose]);
+  });
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
@@ -291,55 +323,50 @@ function VideoPlayer({ video, onClose }: { video: Video; onClose: () => void }) 
   );
 }
 
+// --- Main TV View ---
 export function TvView({ videos, team }: { videos: Video[]; team: TeamId | "all" }) {
   const [active, setActive] = useState<Video | null>(null);
-  const [filter, setFilter] = useState<string>("all");
+  const theme = team !== "all" ? TEAMS[team] : TEAMS.group;
 
   const featured = videos.find((v) => v.featured) ?? videos[0];
-  const filtered = useMemo(() => (filter === "all" ? videos : videos.filter((v) => v.category === filter)), [filter]);
-  const countFor = (id: string) => (id === "all" ? videos.length : videos.filter((v) => v.category === id).length);
+
+  // Group videos by category (Netflix-style)
+  const videosByCategory = videoCategories
+    .map((cat) => ({
+      ...cat,
+      videos: videos.filter((v) => v.category === cat.id),
+    }))
+    .filter((cat) => cat.videos.length > 0);
 
   return (
     <>
       <div className="bg-white">
-        <TvHero video={featured} onPlay={() => setActive(featured)} team={team} />
-        <section className="pb-14 lg:pb-20">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mb-6 flex items-end justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-black text-foreground sm:text-3xl">Toutes les vidéos</h2>
-                <p className="mt-1 text-xs text-muted-foreground">{filtered.length} {filtered.length === 1 ? "vidéo" : "vidéos"}</p>
-              </div>
-            </div>
+        {featured && <TvHero video={featured} onPlay={() => setActive(featured)} team={team} />}
 
-            <div className="-mx-6 mb-8 overflow-x-auto scrollbar-hide px-6 lg:mx-0 lg:px-0">
-              <ul className="flex gap-1.5 whitespace-nowrap">
-                {videoCategories.map((c) => {
-                  const activeFilter = filter === c.id;
-                  return (
-                    <li key={c.id}>
-                      <button
-                        onClick={() => setFilter(c.id)}
-                        className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-xs font-semibold transition-colors ${
-                          activeFilter ? "bg-foreground text-background" : "border border-border bg-white text-foreground hover:border-foreground/30 hover:bg-secondary/50"
-                        }`}
-                      >
-                        {c.label}
-                        <span className={`text-[10px] tabular-nums ${activeFilter ? "text-background/60" : "text-muted-foreground"}`}>
-                          {countFor(c.id)}
-                        </span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
+        {/* Netflix-style category rows */}
+        <div className="pb-14 lg:pb-20">
+          {videosByCategory.length === 0 ? (
+            <div className="mx-auto max-w-7xl px-6 py-20 text-center lg:px-8">
+              <Play className="mx-auto h-12 w-12 text-muted-foreground/30" />
+              <p className="mt-4 text-base font-semibold text-foreground">Aucune vidéo disponible</p>
+              <p className="mt-1 text-sm text-muted-foreground">Les vidéos de cette équipe arrivent bientôt.</p>
             </div>
+          ) : (
+            videosByCategory.map((cat) => (
+              <NetflixRow
+                key={cat.id}
+                title={cat.label}
+                videos={cat.videos}
+                onPlay={setActive}
+                theme={theme}
+              />
+            ))
+          )}
+        </div>
 
-            <VideoGrid items={filtered} onPlay={setActive} team={team} />
-          </div>
-        </section>
         <Gallery team={team} />
       </div>
+
       {active && <VideoPlayer video={active} onClose={() => setActive(null)} />}
     </>
   );

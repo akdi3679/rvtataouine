@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Clock, FileText, Newspaper, ArrowUpRight } from "lucide-react";
 import type { Article } from "@/data/news";
-import { TeamFilter } from "@/components/global/team-filter";
+import { TeamFilterWithGroup } from "@/components/global/team-filter-with-group";
 import { TEAMS, type TeamId } from "@/data/team-theme";
 import Image from "next/image";
 const FILTERS = [
@@ -223,7 +223,7 @@ const teamTheme = team !== "all" ? TEAMS[team] : TEAMS.group;
                 <Newspaper className="h-3.5 w-3.5" />
                 {filtered.length} {filtered.length === 1 ? "article" : "articles"}
               </span>
-              <TeamFilter currentTeam={team} />
+<TeamFilterWithGroup currentTeam={team} />
             </div>
           </div>
 
