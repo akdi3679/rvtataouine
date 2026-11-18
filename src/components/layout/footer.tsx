@@ -126,7 +126,7 @@ export function Footer() {
               href={`tel:${theme.contact.phone.replace(/\s+/g, "")}`}
               className="inline-flex items-center gap-2 hover:text-background transition-colors"
             >
-              <Phone className="h-3.5 w-3.5 text-gold" />
+              <Phone className="h-3.5 w-3.5 text-white" />
               {theme.contact.phone}
             </a>
             <span aria-hidden className="text-background/20">·</span>
@@ -134,12 +134,12 @@ export function Footer() {
               href={`mailto:${theme.contact.email}`}
               className="inline-flex items-center gap-2 hover:text-background transition-colors"
             >
-              <Mail className="h-3.5 w-3.5 text-gold" />
+              <Mail className="h-3.5 w-3.5 text-white" />
               {theme.contact.email}
             </a>
             <span aria-hidden className="text-background/20">·</span>
             <span className="inline-flex items-center gap-2">
-              <MapPin className="h-3.5 w-3.5 text-gold" />
+              <MapPin className="h-3.5 w-3.5 text-white" />
               {theme.contact.address.city}, {theme.contact.address.country}
             </span>
           </div>

@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import { ChevronDown, Check, Globe } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { TEAMS, ENTITY_LIST, type TeamId } from "@/data/team-theme";
+import { TEAMS, TEAM_IDS, type TeamId } from "@/data/team-theme";
 import Image from "next/image";
 
 export function TeamFilter({ currentTeam }: { currentTeam: TeamId | "all" }) {
@@ -72,26 +72,28 @@ export function TeamFilter({ currentTeam }: { currentTeam: TeamId | "all" }) {
             {currentTeam === "all" && <Check className="h-4 w-4" />}
           </button>
 
-          {ENTITY_LIST.map((team) => {
-            const active = currentTeam === team.id;
-            return (
-              <button
-                key={team.id}
-                onClick={() => handleSelect(team.id)}
-                className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition-colors ${
-                  active ? "bg-secondary font-semibold text-foreground" : "text-foreground hover:bg-secondary/50"
-                }`}
-                role="option"
-                aria-selected={active}
-              >
-                <div className="relative h-5 w-5 overflow-hidden rounded-full bg-white">
-                  <Image src={team.logoPath} alt={team.name} fill className="object-contain p-0.5" />
-                </div>
-                <span className="flex-1">{team.name}</span>
-                {active && <Check className="h-4 w-4" />}
-              </button>
-            );
-          })}
+         // Replace the ENTITY_LIST.map block with this:
+{TEAM_IDS.map((teamId) => {
+  const team = TEAMS[teamId];
+  const active = currentTeam === teamId;
+  return (
+    <button
+      key={teamId}
+      onClick={() => handleSelect(teamId)}
+      className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition-colors ${
+        active ? "bg-secondary font-semibold text-foreground" : "text-foreground hover:bg-secondary/50"
+      }`}
+      role="option"
+      aria-selected={active}
+    >
+      <div className="relative h-5 w-5 overflow-hidden rounded-full bg-white">
+        <Image src={team.logoPath} alt={team.name} fill className="object-contain p-0.5" />
+      </div>
+      <span className="flex-1">{team.name}</span>
+      {active && <Check className="h-4 w-4" />}
+    </button>
+  );
+})}
         </div>
       )}
     </div>

@@ -1021,14 +1021,13 @@ export const getSectionFromPath = getTeamFromPath;
 export function getTeamLogoPath(team: TeamId): string {
   return TEAMS[team].logoPath;
 }
-
 export function parseTeamQuery(value: string | undefined | null): TeamId | "all" {
   if (!value) return "all";
+  if (value === "group") return "group"; // <-- Allow "group" as a valid team
   return (ENTITY_IDS as readonly string[]).includes(value)
     ? (value as TeamId)
     : "all";
 }
-
 export function getTeamVars(team: TeamId): CSSProperties {
   const v = TEAMS[team].vars;
   return {
